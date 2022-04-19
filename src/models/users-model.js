@@ -30,18 +30,31 @@ const usersSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    isAdmin: {
-        type: Boolean,
+    userPicture: {
+        type: String,
         required: true
     },
-    isOperator: {
-        type: Boolean,
+    companyPicture: {
+        type: String,
         required: true
     },
-    isClient: {
-        type: Boolean,
+    lastReportDate: {
+        type: String,
         required: true
     },
+    memberSince: {
+        type: String,
+        required: true
+    },
+    userType: {
+        type: String,
+        required: true
+    },
+    pagos: [{
+        required: false,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pagos'
+    }],
     reportes: [{
         required: false,
         type: mongoose.Schema.Types.ObjectId,
