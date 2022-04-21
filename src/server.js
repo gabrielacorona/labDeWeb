@@ -61,16 +61,18 @@ const {
     PORT,
     JWT_KEY
 } = require('./config');
-const userRoutes = require('./api/routes/users');
 
 //app.use('/uploads', express.static('uploads'))
+const userRoutes = require('./api/routes/routes/users');
+
+app.use('/users',userRoutes);
 app.use(cors);
 app.use(express.static("public"));
 app.use(morgan('dev'));
 
 ////------------------>SERVER<------------------
 app.listen(PORT, () => {
-    console.log("This server is RUNNING ㅇㅅㅇ");
+    //console.log("This server is RUNNING ㅇㅅㅇ");
 
     new Promise((resolve, reject) => {
             const settings = {
