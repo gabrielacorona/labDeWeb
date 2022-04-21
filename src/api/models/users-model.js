@@ -46,7 +46,7 @@ const usersSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    userType: {
+    userType: { // a = admin, c = cliente, o = operador
         type: String,
         required: true
     },
@@ -99,6 +99,7 @@ const Users = {
             })
     },
     getUserById: function (idUser) {
+        console.log("hola",usersCollection)
         return usersCollection
             .findOne({
                 id: idUser

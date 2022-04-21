@@ -8,6 +8,8 @@ const cors = require('./middleware/cors');
 
 const http = require('http');
 const app = express();
+require('dotenv').config()
+
 
 
 
@@ -91,8 +93,7 @@ app.listen(PORT, () => {
     new Promise((resolve, reject) => {
             const settings = {
                 useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true
+                useUnifiedTopology: true
             };
 
             mongoose.connect(DATABASE_URL, settings, (err) => {
