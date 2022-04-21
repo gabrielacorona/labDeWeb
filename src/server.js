@@ -7,7 +7,7 @@ const multer = require('multer');
 const cors = require('./middleware/cors');
 
 const http = require('http');
-const app = require('./serverApp');
+const app = express();
 
 
 
@@ -62,17 +62,31 @@ const {
     JWT_KEY
 } = require('./config');
 
+// TODO: handle foto uploads con S3? no borrar abajo
 //app.use('/uploads', express.static('uploads'))
-const userRoutes = require('./api/routes/routes/users');
+////------------------>ENDPOINTS ROUTING<------------------
+const adminsRoutes = require('./api/routes/admins');
+const fotosRoutes = require('./api/routes/fotos');
+const moldesRoutes = require('./api/routes/moldes');
+const pagosRoutes = require('./api/routes/pagos');
+const reportesRoutes = require('./api/routes/reportes');
+const userRoutes = require('./api/routes/users');
 
-app.use('/users',userRoutes);
+app.use('/admins', adminsRoutes);
+app.use('/fotos', fotosRoutes);
+app.use('/moldes', moldesRoutes);
+app.use('/pagos', pagosRoutes);
+app.use('/reportes', reportesRoutes);
+app.use('/users', userRoutes);
+
+
 app.use(cors);
 app.use(express.static("public"));
 app.use(morgan('dev'));
 
 ////------------------>SERVER<------------------
 app.listen(PORT, () => {
-    //console.log("This server is RUNNING ㅇㅅㅇ");
+    console.log("This server is RUNNING ㅇㅅㅇ");
 
     new Promise((resolve, reject) => {
             const settings = {

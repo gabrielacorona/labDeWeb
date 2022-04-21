@@ -3,18 +3,18 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
-        message: "handling GET request to users"
+        message: "handling GET request to pagos"
     });
 });
 
 router.post('/', (req, res, next) => {
     res.status(200).json({
-        message: "handling POST request to users"
+        message: "handling POST request to pagos"
     });
 });
 
-router.get('/:userId', (req, res, next) => {
-    const id = req.params.userId;
+router.get('/:pagoId', (req, res, next) => {
+    const id = req.params.pagoId;
     if (id == 'unId'){
         res.status(200).json({
             message: "owo un id",
@@ -29,15 +29,15 @@ router.get('/:userId', (req, res, next) => {
     }
 });
 
-router.patch('/:userId', (req, res, next) => {
+router.patch('/:pagoId', (req, res, next) => {
     res.status(200).json({
-        message: "user updates",
+        message: "pago updates",
     });
 });
 
-router.delete('/:userId', (req, res, next) => {
+router.delete('/:pagoId', (req, res, next) => {
     res.status(200).json({
-        message: "deleting user"
+        message: "deleting pago"
     });
 });
 

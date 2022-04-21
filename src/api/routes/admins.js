@@ -3,17 +3,17 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
-        message: "handling GET request to users"
+        message: "handling GET request to admins"
     });
 });
 
 router.post('/', (req, res, next) => {
     res.status(200).json({
-        message: "handling POST request to users"
+        message: "handling POST request to admins"
     });
 });
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:adminId', (req, res, next) => {
     const id = req.params.userId;
     if (id == 'unId'){
         res.status(200).json({
@@ -29,15 +29,15 @@ router.get('/:userId', (req, res, next) => {
     }
 });
 
-router.patch('/:userId', (req, res, next) => {
+router.patch('/:adminId', (req, res, next) => {
     res.status(200).json({
-        message: "user updates",
+        message: "admin  updates",
     });
 });
 
-router.delete('/:userId', (req, res, next) => {
+router.delete('/:adminId', (req, res, next) => {
     res.status(200).json({
-        message: "deleting user"
+        message: "deleting admin"
     });
 });
 

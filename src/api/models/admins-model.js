@@ -21,7 +21,7 @@ const adminSchema = mongoose.Schema({
     }]
 });
 
-const adminsCollection = mongoose.model('users', adminSchema);
+const adminsCollection = mongoose.model('admins', adminSchema);
 
 
 const Admins = {
