@@ -1,16 +1,53 @@
 const express = require('express');
+const { Moldes } = require('../models/moldes-model');
 const router = express.Router();
 
+const {Reportes} = require('./../models/reportes-model');
+
+//get all reports
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: "handling GET request to reportes"
-    });
+    console.log("getting all reports")
+    Reportes
+        .getReportes()
+        .then(reportes => {
+            res.status(200).json(reportes);
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong while retrieving the reportes";
+            return res.status(500).end();
+        });
 });
 
 router.post('/', (req, res, next) => {
-    res.status(200).json({
-        message: "handling POST request to reportes"
-    });
+    let id = uuid.v4();
+    let titulo = req.body.titulo;
+    let fecha = req.body.fecha;
+    let autor = req.body.autor;
+    let descripcion = req.body.descricion;
+    let diagnostico = req.body.diagnostico;
+    let costoEstimado = req.body.costoEstimado
+    let fotos = [];
+    let newReporte = {
+        id,
+        titulo,
+        fecha,
+        autor,
+        descripcion,
+        diagnostico,
+        costoEstimado,
+        fotos
+    };
+    console.log(newReporte)
+    Reportes
+        .createMolde(newReporte)
+        .then(result =>{
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end()
+        });
+
 });
 
 router.get('/:reporteId', (req, res, next) => {
