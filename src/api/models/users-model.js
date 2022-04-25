@@ -99,7 +99,6 @@ const Users = {
             })
     },
     getUserById: function (idUser) {
-        console.log("hola",usersCollection)
         return usersCollection
             .findOne({
                 id: idUser
@@ -138,6 +137,33 @@ const Users = {
             .catch(err => {
                 return err;
             });
+    },
+    patchUserById: function (id, firstName, lastName, email, password, company, telephone, userPicture, companyPicture, lastReportDate, memberSince, userType) {
+        return usersCollection
+            .updateOne({
+                id: id
+            }, {
+                $set: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    company: company,
+                    telephone: telephone, 
+                    userPicture: userPicture,
+                    companyPicture: companyPicture,
+                    lastReportDate: lastReportDate,
+                    memberSince: memberSince,
+                    userType: userType
+                },
+
+            })
+            .then(updatedUser => {
+                return updatedUser;
+            })
+            .catch(err => {
+                return err;
+            })
     }
 }
 
