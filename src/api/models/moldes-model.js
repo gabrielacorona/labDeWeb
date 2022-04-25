@@ -6,35 +6,53 @@ const moldesSchema = mongoose.Schema({
         unique: true,
         required: true,
     },
-    titulo: {
+    nombreMolde: {
         type: String,
         required: true,
-    },
-    fecha: {
-        type: String,
-        required: true
-    },
-    autor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
     },
     descripcion: {
         type: String,
         required: true
     },
-    diagnostico: {
+    costo: {
+        type: Number,
+        required: true
+    },
+    fotoPrincipal: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'fotos',
+        required: true
+    },
+    tipoColada: {
         type: String,
         required: true
     },
-    costoEstimado: {
-        type: Number,
+    ultimaReparacion: {
+        type: String,
+        required: true
+    },
+    ultimoReporte: {
+        type: String,
+        required: true
+    },
+    fechaAdquisicion: {
+        type: String,
+        required: true
+    },
+    encargado: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
         required: true
     },
     fotos: [{
         required: false,
         type: mongoose.Schema.Types.ObjectId,
         ref: 'fotos'
+    }],
+    reportes: [{
+        required: false,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'reportes'
     }]
 });
 
