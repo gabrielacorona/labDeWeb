@@ -49,6 +49,7 @@ const Reportes = {
                 return createdReporte;
             })
             .catch(err => {
+                console.log(err);
                 throw new Error(err);
             });
     },

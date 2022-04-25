@@ -1,5 +1,7 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
+const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Moldes} = require('./../models/moldes-model');
@@ -18,25 +20,32 @@ router.get('/', (req, res, next) => {
         });
 });
 
-// TODO: Cambiar esa función cuando tengamos el nuevo modelo de moldes
 router.post('/', jsonParser, (req, res, next) => {
     let id = uuid.v4();
-    let titulo = req.body.titulo;
-    let fecha = req.body.fecha;
-    let autor = req.body.autor;
-    let descripcion = req.body.descricion;
-    let diagnostico = req.body.diagnostico;
-    let costoEstimado = req.body.costoEstimado
+    let nombreMolde = req.body.nombreMolde;
+    let descripcion = req.body.descripcion;
+    let costo = req.body.costo;
+    let fotoPrincipal = req.body.fotoPrincipal;
+    let tipoColada = req.body.tipoColada
+    let ultimaReparacion = req.body.ultimaReparacion
+    let ultimoReporte = req.body.ultimoReporte
+    let fechaAdquisicion = req.body.fechaAdquisicion
+    let encargado = req.body.encargado
     let fotos = [];
+    let reportes = [];
     let newMolde = {
         id,
-        titulo,
-        fecha,
-        autor,
+        nombreMolde,
         descripcion,
-        diagnostico,
-        costoEstimado,
-        fotos
+        costo,
+        fotoPrincipal,
+        tipoColada,
+        ultimaReparacion,
+        ultimoReporte,
+        fechaAdquisicion,
+        encargado,
+        fotos,
+        reportes
     };
     console.log(newMolde)
     Moldes

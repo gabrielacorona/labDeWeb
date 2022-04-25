@@ -1,6 +1,9 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const { Moldes } = require('../models/moldes-model');
 const router = express.Router();
+const uuid = require('uuid');
+const jsonParser = bodyParser.json();
 
 const {Reportes} = require('./../models/reportes-model');
 
@@ -18,12 +21,12 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let titulo = req.body.titulo;
     let fecha = req.body.fecha;
     let autor = req.body.autor;
-    let descripcion = req.body.descricion;
+    let descripcion = req.body.descripcion;
     let diagnostico = req.body.diagnostico;
     let costoEstimado = req.body.costoEstimado
     let fotos = [];
@@ -39,9 +42,9 @@ router.post('/', (req, res, next) => {
     };
     console.log(newReporte)
     Reportes
-        .createMolde(newReporte)
+        .createReporte(newReporte)
         .then(result =>{
-            return res.status(201).json(result)
+            return res.status(201).json(result);
         })
         .catch(err => {
             res.statusMessage = "Something went wrong with the DB. Try again later.";
