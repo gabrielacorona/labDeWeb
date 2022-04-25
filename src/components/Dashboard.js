@@ -1,3 +1,5 @@
+/* TODO - DELETE FILE, USING IT AS EXAMPLE RN */
+
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,9 +19,9 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from './sidebar/listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Deposits from './Content';
 import Orders from './Orders';
 
 function Copyright(props) {

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Title from './Title';
+import Title from './utils/Title';
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function Content(props) {
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>{props.title}</Title>
       <Typography component="p" variant="h4">
         $3,024.00
       </Typography>
