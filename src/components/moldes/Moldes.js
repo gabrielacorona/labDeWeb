@@ -2,12 +2,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography'
 import Title from '../utils/Title'
-import Content from '../Content';
-import HomeCard  from './HomeCard';
 import DetailCard  from './DetailCard';
+
+const mockProp = {
+    moldes: [
+        {nombre: "molde1", id: "abc"},
+        {nombre: "molde2", id: "def"},
+        {nombre: "molde3", id: "ghi"},
+    ]
+}
 
 export default function Moldes() {
   return (
@@ -28,8 +32,9 @@ export default function Moldes() {
                 <Grid item xs={12} md={12} lg={12}>
                     <Title>Moldes </Title>
                 </Grid>
-                <DetailCard/>
-                <DetailCard/>
+                {mockProp.moldes.map(({ id}, index) => (
+                    <DetailCard idMolde={id} cardNumber={index + 1}/>
+                ))}
             </Grid>
         </Container>
   </Box>
