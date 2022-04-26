@@ -6,9 +6,11 @@ const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Reportes} = require('./../models/reportes-model');
+const checkUserAuth = require('../middleware/check-user-auth');
+
 
 //get all reports
-router.get('/', (req, res, next) => {
+router.get('/', checkUserAuth, (req, res, next) => {
     console.log("getting all reports")
     Reportes
         .getReportes()
@@ -21,7 +23,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let titulo = req.body.titulo;
     let fecha = req.body.fecha;
@@ -53,7 +55,7 @@ router.post('/', jsonParser, (req, res, next) => {
 
 });
 
-router.get('/:reporteId', (req, res, next) => {
+router.get('/:reporteId', checkUserAuth, (req, res, next) => {
     const id = req.params.reporteId;
     if (id == 'unId'){
         res.status(200).json({
@@ -75,13 +77,13 @@ router.get('/:reporteId', (req, res, next) => {
     }
 });
 
-router.patch('/:reporteId', (req, res, next) => {
+router.patch('/:reporteId', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "reporte updates",
     });
 });
 
-router.delete('/:reporteId', (req, res, next) => {
+router.delete('/:reporteId', checkUserAuth, (req, res, next) => {
     const id = req.params.reporteId;
     if (id == 'unId'){
         res.status(200).json({

@@ -5,8 +5,10 @@ const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Pagos} = require('./../models/pagos-model');
+const checkUserAuth = require('../middleware/check-user-auth');
 
-router.get('/', (req, res, next) => {
+
+router.get('/', checkUserAuth, (req, res, next) => {
     console.log("getting all pagos")
     Pagos
         .getPagos()
@@ -19,7 +21,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let fecha = req.body.fecha;
     let ultimoPago = req.body.ultimoPago;
@@ -46,7 +48,7 @@ router.post('/', jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/:pagoId', (req, res, next) => {
+router.get('/:pagoId', checkUserAuth, (req, res, next) => {
     const id = req.params.pagoId;
     if (id == 'unId'){
         res.status(200).json({
@@ -68,13 +70,13 @@ router.get('/:pagoId', (req, res, next) => {
     }
 });
 
-router.patch('/:pagoId', (req, res, next) => {
+router.patch('/:pagoId', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "pago updates",
     });
 });
 
-router.delete('/:pagoId', (req, res, next) => {
+router.delete('/:pagoId', checkUserAuth, (req, res, next) => {
     const id = req.params.pagoId;
     if (id == 'unId'){
         res.status(200).json({

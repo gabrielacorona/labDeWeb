@@ -5,9 +5,11 @@ const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Moldes} = require('./../models/moldes-model');
+const checkUserAuth = require('../middleware/check-user-auth');
+
 
 // get all moldes
-router.get('/', (req, res, next) => {
+router.get('/', checkUserAuth, (req, res, next) => {
     console.log("getting all moldes")
     Moldes
         .getMoldes()
@@ -20,7 +22,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let nombreMolde = req.body.nombreMolde;
     let descripcion = req.body.descripcion;
@@ -59,7 +61,7 @@ router.post('/', jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/:moldeId', (req, res, next) => {
+router.get('/:moldeId', checkUserAuth, (req, res, next) => {
     const id = req.params.moldeId;
     if (id == 'unId'){
         res.status(200).json({
@@ -81,13 +83,13 @@ router.get('/:moldeId', (req, res, next) => {
     }
 });
 
-router.patch('/:userId', (req, res, next) => {
+router.patch('/:userId', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "molde updates",
     });
 });
 
-router.delete('/:moldeId', (req, res, next) => {
+router.delete('/:moldeId', checkUserAuth, (req, res, next) => {
     const id = req.params.moldeId;
     if (id == 'unId'){
         res.status(200).json({

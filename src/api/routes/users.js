@@ -7,10 +7,11 @@ const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
-const {Users} = require('./../models/users-model');
-
+const { Users } = require('./../models/users-model');
+const { JWT_KEY } = require('../../config');
+const checkUserAuth = require('../middleware/check-user-auth');
 //get all users
-router.get('/', (req, res, next) => {
+router.get('/', checkUserAuth, (req, res, next) => {
     console.log("getting all users")
     Users
         .getUsers()
@@ -24,7 +25,7 @@ router.get('/', (req, res, next) => {
 });
 
 //get users by id
-router.get('/byId', jsonParser, (req, res, next) => {
+router.get('/byId', checkUserAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
     let id = req.body.id;
     if(!id){
@@ -48,7 +49,7 @@ router.get('/byId', jsonParser, (req, res, next) => {
 });
 
 //get users by email
-router.get('/byEmail', jsonParser, (req, res, next) => {
+router.get('/byEmail',  checkUserAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")
     let email = req.body.email;
     if (!email) {
@@ -71,9 +72,72 @@ router.get('/byEmail', jsonParser, (req, res, next) => {
         });
 });
 
+router.post('/signIn', jsonParser, (req, res, next) => {
+    let email = req.body.email
+    let password = req.body.password
+
+    Users
+        .getUserByEmail(email)
+        .then(user => {
+            if (user.length === 0) {
+                res.statusMessage = "Auth failed.";
+                return res.status(401).end();
+            }
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (err) {
+                    res.statusMessage = "Auth failed.";
+                    return res.status(401).end();
+                }
+                if (result) {
+                    const token = jwt.sign({
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        password: user.password,
+                        company: user.company,
+                        telephone: user.telephone, 
+                        userPicture: user.userPicture,
+                        companyPicture: user.companyPicture,
+                        lastReportDate: user.lastReportDate,
+                        memberSince: user.memberSince,
+                        userType: user.userType
+                    }, JWT_KEY, {
+                        expiresIn: "1h"
+                    });
+                    res.statusMessage = "Auth successful.";
+                    //console.log(token)
+                    result = {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        password: user.password,
+                        company: user.company,
+                        telephone: user.telephone, 
+                        userPicture: user.userPicture,
+                        companyPicture: user.companyPicture,
+                        lastReportDate: user.lastReportDate,
+                        memberSince: user.memberSince,
+                        userType: user.userType,
+                        token: token
+                    }
+                    return res.status(200).json(result);
+                }
+                res.statusMessage = "Auth failed.";
+                return res.status(401).end();
+            });
+        })
+        .catch(err => {
+            console.log(err)
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
 //TODO: hacer config para que solo admin o cliente de misma compañía puedan hacer users
 //router.post('/', checkAdmin, jsonParser, (req, res, next) => {
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {
@@ -145,7 +209,7 @@ router.post('/', jsonParser, (req, res, next) => {
 });
 
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkUserAuth, jsonParser, (req, res, next) => {
     console.log("updating a user owo")
     const {
         id,
@@ -200,7 +264,7 @@ router.patch('/', jsonParser, (req, res, next) => {
     });
 });
 
-router.delete('/', jsonParser, (req, res, next) => {
+router.delete('/', checkUserAuth, jsonParser, (req, res, next) => {
     //TODO: agregar middleware de checar que user sea cliente o admin
     console.log("deleting a user u.u")
     let id = req.body.id;
