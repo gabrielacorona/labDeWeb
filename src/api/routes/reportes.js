@@ -60,12 +60,18 @@ router.get('/:reporteId', (req, res, next) => {
             message: "owo un id",
             id : id
         });
+        return res;
     }
     else{
-        res.status(200).json({
-            message: "noexiste"
-        });
-    
+        Reportes
+        .getReporteById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not find Reporte with that Id";
+            return res.status(500).end()
+        })
     }
 });
 
@@ -76,9 +82,25 @@ router.patch('/:reporteId', (req, res, next) => {
 });
 
 router.delete('/:reporteId', (req, res, next) => {
-    res.status(200).json({
-        message: "deleting reporte"
-    });
+    const id = req.params.reporteId;
+    if (id == 'unId'){
+        res.status(200).json({
+            message: "owo un id",
+            id : id
+        });
+        return res;
+    }
+    else{
+        Reportes
+        .deleteReporteById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not delete Reporte with that Id";
+            return res.status(500).end()
+        })
+    }
 });
 
 module.exports = router;
