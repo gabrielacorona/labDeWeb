@@ -149,41 +149,43 @@ router.patch('/', jsonParser, (req, res, next) => {
         memberSince,
         userType
     } = req.body;
+    bcrypt.hash(password, 5, (err, hash) => {
+        console.log(hash)
+        if (!id) {
+            res.statusMessage = "missing id, verify  query"
+            return res.status(406).end();
+        }
 
-
-    if (!id) {
-        res.statusMessage = "missing id, verify  query"
-        return res.status(406).end();
-    }
-
-    Users
-        .getUserById(id)
-        .then(userToUpdate => {
-            if (userToUpdate.length === 0) {
-                res.statusMessage = "id not found";
-                return res.status(404).end();
-            } else {
-                Users
-                    .patchUserById(id, firstName, lastName, email, password, company, telephone, userPicture, companyPicture, lastReportDate, memberSince, userType)
-                    .then(result => {
-                        if (!result) {
-                            res.statusMessage = "Id not found";
-                            return res.status(404).end();
-                        } else {
-                            res.statusMessage = "updated successfully";
-                            return res.status(200).json(result);
-                        }
-                    })
-                    .catch(err => {
-                        res.statusMessage = "Something went wrong with the DB. Try again later.";
-                        return res.status(500).end();
-                    })
-            }
-        })
-        .catch(err => {
-            res.statusMessage = "Something went wrong with the DB. Try again later.";
-            return res.status(500).end();
-        })
+        Users
+            .getUserById(id)
+            .then(userToUpdate => {
+                if (userToUpdate.length === 0) {
+                    res.statusMessage = "id not found";
+                    return res.status(404).end();
+                } else {
+                    Users
+                        .patchUserById(id, firstName, lastName, email, hash, company, telephone, userPicture, companyPicture, lastReportDate, memberSince, userType)
+                        .then(result => {
+                            //TODO: handling si cambió de lo que estaba guardado anteriormente y si password cambia encriptarlo, maybe coordinar con frontend?
+                            if (!result) {
+                                res.statusMessage = "Id not found";
+                                return res.status(404).end();
+                            } else {
+                                res.statusMessage = "updated successfully";
+                                return res.status(200).json(result);
+                            }
+                        })
+                        .catch(err => {
+                            res.statusMessage = "Something went wrong with the DB. Try again later.";
+                            return res.status(500).end();
+                        })
+                }
+            })
+            .catch(err => {
+                res.statusMessage = "Something went wrong with the DB. Try again later.";
+                return res.status(500).end();
+            })
+    });
 });
 
 router.delete('/', jsonParser, (req, res, next) => {
