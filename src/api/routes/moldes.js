@@ -66,12 +66,18 @@ router.get('/:moldeId', (req, res, next) => {
             message: "owo un id",
             id : id
         });
+        return res;
     }
     else{
-        res.status(200).json({
-            message: "noexiste"
-        });
-    
+        Moldes
+        .getMoldeById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not find Molde with that Id";
+            return res.status(500).end()
+        })
     }
 });
 
@@ -82,9 +88,25 @@ router.patch('/:userId', (req, res, next) => {
 });
 
 router.delete('/:moldeId', (req, res, next) => {
-    res.status(200).json({
-        message: "deleting molde"
-    });
+    const id = req.params.moldeId;
+    if (id == 'unId'){
+        res.status(200).json({
+            message: "owo un id",
+            id : id
+        });
+        return res;
+    }
+    else{
+        Moldes
+        .deleteMoldeById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not delete Molde with that Id";
+            return res.status(500).end()
+        })
+    }
 });
 
 module.exports = router;

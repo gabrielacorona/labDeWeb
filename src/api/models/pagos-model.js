@@ -39,6 +39,7 @@ const Pagos = {
                 return createdPago;
             })
             .catch(err => {
+                console.log(err);
                 throw new Error(err);
             });
     },
