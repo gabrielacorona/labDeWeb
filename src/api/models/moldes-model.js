@@ -21,7 +21,7 @@ const moldesSchema = mongoose.Schema({
     fotoPrincipal: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'fotos',
-        required: true
+        required: false
     },
     tipoColada: {
         type: String,
@@ -67,6 +67,7 @@ const Moldes = {
                 return createdMolde;
             })
             .catch(err => {
+                console.log(err);
                 throw new Error(err);
             });
     },
