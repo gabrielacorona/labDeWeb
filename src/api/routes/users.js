@@ -74,62 +74,75 @@ router.get('/byEmail', jsonParser, (req, res, next) => {
 //TODO: hacer config para que solo admin o cliente de misma compañía puedan hacer users
 //router.post('/', checkAdmin, jsonParser, (req, res, next) => {
 router.post('/', jsonParser, (req, res, next) => {
-    bcrypt.hash(req.body.password, 5, (err, hash) => {
-        if (err) {
-            res.statusMessage = "Something went wrong with the DB. Try again later.";
-            return res.status(500).end();
-        } else {
-            let id = uuid.v4();
-            let firstName = req.body.firstName;
-            let lastName = req.body.lastName;
-            let email = req.body.email;
-            let password = hash;
-            let company = req.body.company;
-            let telephone = req.body.telephone;
-            let userPicture = "pendiente";
-            let companyPicture = "pendiente";
-            let lastReportDate = req.body.lastReportDate;
-            let memberSince = req.body.memberSince;
-            let userType = " ";
-            let pagos = [];
-            let reportes = [];
-            let moldes = [];
-            let operadores = [];
-            if (!email || !password) {
-                res.statusMessage = "missing param";
-                console.log(req.body.title);
-                return res.status(406).end(); //not accept status
-            }
-            let newUser = {
-                id,
-                firstName,
-                lastName,
-                email,
-                password,
-                company,
-                telephone,
-                userPicture,
-                companyPicture,
-                lastReportDate,
-                memberSince,
-                userType,
-                pagos,
-                reportes,
-                moldes,
-                operadores
-            };
-            console.log(newUser)
-            Users
-                .createUser(newUser)
-                .then(result => {
-                    return res.status(201).json(result);
-                })
-                .catch(err => {
-                    res.statusMessage = "Something went wrong with the DB. Try again later.";
-                    return res.status(500).end();
-                })
-        }
-    })
+    Users
+        .getUserByEmail(req.body.email)
+        .then(person => {
+            if (person) {
+                res.statusMessage = `User with the provided email ${req.body.email} already exists"`;
+                return res.status(409).end();
+            } else {
+                bcrypt.hash(req.body.password, 5, (err, hash) => {
+                    if (err) {
+                        res.statusMessage = "Something went wrong with the DB. Try again later.";
+                        return res.status(500).end();
+                    } else {
+                        let id = uuid.v4();
+                        let firstName = req.body.firstName;
+                        let lastName = req.body.lastName;
+                        let email = req.body.email;
+                        let password = hash;
+                        let company = req.body.company;
+                        let telephone = req.body.telephone;
+                        let userPicture = "pendiente";
+                        let companyPicture = "pendiente";
+                        let lastReportDate = req.body.lastReportDate;
+                        let memberSince = req.body.memberSince;
+                        let userType = " ";
+                        let pagos = [];
+                        let reportes = [];
+                        let moldes = [];
+                        let operadores = [];
+                        if (!email || !password) {
+                            res.statusMessage = "missing param";
+                            console.log(req.body.title);
+                            return res.status(406).end(); //not accept status
+                        }
+                        let newUser = {
+                            id,
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            company,
+                            telephone,
+                            userPicture,
+                            companyPicture,
+                            lastReportDate,
+                            memberSince,
+                            userType,
+                            pagos,
+                            reportes,
+                            moldes,
+                            operadores
+                        };
+                        console.log(newUser)
+                        Users
+                            .createUser(newUser)
+                            .then(result => {
+                                return res.status(201).json(result);
+                            })
+                            .catch(err => {
+                                res.statusMessage = "Something went wrong with the DB. Try again later.";
+                                return res.status(500).end();
+                            })
+                        }
+                    })
+                }
+            })
+            .catch(err => {
+                res.statusMessage = "Something went wrong with the DB. Try again later.";
+                return res.status(500).end();
+            });
 });
 
 
