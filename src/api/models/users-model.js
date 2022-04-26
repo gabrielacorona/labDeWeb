@@ -158,7 +158,6 @@ const Users = {
                     memberSince: memberSince,
                     userType: userType
                 },
-
             })
             .then(updatedUser => {
                 return updatedUser;
