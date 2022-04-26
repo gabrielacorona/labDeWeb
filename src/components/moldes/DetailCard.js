@@ -1,29 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/Card';
 import Grid from '@mui/material/Grid'
 
-const PageTitle = styled(Typography)`
-    color: #000000;
-    font-weight: 500;
-    margin-bottom: 0;
-`;
-
-const CardTtitle = styled(Typography)`
-    font-weight: 500;
-`;
-
 function DetailCard(props) {
   return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
         <CardContent style={{padding: 20}} justifyContent="center">
-            <CardTtitle color="text.primary" component="h2" variant="h5" gutterBottom>
+            <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>
                 Molde {props.cardNumber}
-            </CardTtitle>
+            </Typography>
             <Grid
             container
             spacing={3}
