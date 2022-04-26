@@ -125,7 +125,6 @@ router.post('/', jsonParser, (req, res, next) => {
                             moldes,
                             operadores
                         };
-                        console.log(newUser)
                         Users
                             .createUser(newUser)
                             .then(result => {
