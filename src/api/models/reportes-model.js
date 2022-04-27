@@ -39,7 +39,6 @@ const reportesSchema = mongoose.Schema({
 });
 
 const ReportesCollection = mongoose.model('reportes', reportesSchema);
-const {Users} = require('./../models/users-model');
 
 const Reportes = {
     createReporte: function (newReporte) {
