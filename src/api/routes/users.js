@@ -10,8 +10,10 @@ const jwt = require('jsonwebtoken')
 const { Users } = require('./../models/users-model');
 const { JWT_KEY } = require('../../config');
 const checkUserAuth = require('../middleware/check-user-auth');
+const checkAdminAuth = require('./../middleware/check-admin-auth');
+const checkClienteAuth = require('./../middleware/check-cliente-auth');
 //get all users
-router.get('/', checkUserAuth, (req, res, next) => {
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all users")
     Users
         .getUsers()
@@ -24,8 +26,32 @@ router.get('/', checkUserAuth, (req, res, next) => {
         });
 });
 
+//get users by company
+router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting user by their company");
+    let id = req.body.company;
+    if(!id){
+        res.statusMessage = "please send 'company' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getUsersByCompany(id)
+        .then(user => {
+            if (user === null || user.length == 0 ) {
+                res.statusMessage = `no user with the provided company ${company}"`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(user);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
 //get users by id
-router.get('/byId', checkUserAuth, jsonParser, (req, res, next) => {
+router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
     let id = req.body.id;
     if(!id){
@@ -49,7 +75,7 @@ router.get('/byId', checkUserAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by email
-router.get('/byEmail',  checkUserAuth, jsonParser, (req, res, next) => {
+router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")
     let email = req.body.email;
     if (!email) {
@@ -137,7 +163,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
 
 //TODO: hacer config para que solo admin o cliente de misma compañía puedan hacer users
 //router.post('/', checkAdmin, jsonParser, (req, res, next) => {
-router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.post('/', checkAdminAuth,  jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {
@@ -161,7 +187,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
                         let companyPicture = "pendiente";
                         let lastReportDate = req.body.lastReportDate;
                         let memberSince = req.body.memberSince;
-                        let userType = " ";
+                        let userType =req.body.userType;
                         let pagos = [];
                         let reportes = [];
                         let moldes = [];
@@ -209,7 +235,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
 });
 
 
-router.patch('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("updating a user owo")
     const {
         id,
@@ -226,7 +252,6 @@ router.patch('/', checkUserAuth, jsonParser, (req, res, next) => {
         userType
     } = req.body;
     bcrypt.hash(password, 5, (err, hash) => {
-        console.log(hash)
         if (!id) {
             res.statusMessage = "missing id, verify  query"
             return res.status(406).end();
@@ -264,7 +289,7 @@ router.patch('/', checkUserAuth, jsonParser, (req, res, next) => {
     });
 });
 
-router.delete('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.delete('/', checkAdminAuth, jsonParser, (req, res, next) => {
     //TODO: agregar middleware de checar que user sea cliente o admin
     console.log("deleting a user u.u")
     let id = req.body.id;

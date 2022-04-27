@@ -100,6 +100,20 @@ const Users = {
                 throw new Error(err);
             })
     },
+    getUsersByCompany: function (company) {
+        return usersCollection
+            .find({company: company})
+            .then(users => {
+                if (!users) {
+                    throw new Error('User not found');
+                }
+                return users
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            });
+    },
     getUserById: function (idUser) {
         return usersCollection
             .findOne({
