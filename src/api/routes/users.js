@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken')
 
 const { Users } = require('./../models/users-model');
 const { JWT_KEY } = require('../../config');
+
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');

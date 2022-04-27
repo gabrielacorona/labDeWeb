@@ -5,11 +5,14 @@ const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Moldes} = require('./../models/moldes-model');
+
 const checkUserAuth = require('../middleware/check-user-auth');
+const checkAdminAuth = require('./../middleware/check-admin-auth');
+const checkClienteAuth = require('./../middleware/check-cliente-auth');
 
 
 // get all moldes
-router.get('/', checkUserAuth, (req, res, next) => {
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all moldes")
     Moldes
         .getMoldes()
@@ -22,7 +25,7 @@ router.get('/', checkUserAuth, (req, res, next) => {
         });
 });
 
-router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.post('/', checkClienteAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let nombreMolde = req.body.nombreMolde;
     let descripcion = req.body.descripcion;
@@ -61,7 +64,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId',jsonParser,  (req, res, next) => {
+router.get('/byId', checkUserAuth, jsonParser,  (req, res, next) => {
     const id = req.body.id;
     Moldes
     .getMoldeById(id)
@@ -74,16 +77,9 @@ router.get('/byId',jsonParser,  (req, res, next) => {
     })
 });
 
-router.get('/byUserId', jsonParser,(req, res, next) => {
+router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
     const encargado = req.body.encargado;
-    if (encargado == 'unId'){
-        res.status(200).json({
-            message: "owo un id"
-        });
-        return res;
-    }
-    else{
-        Moldes
+    Moldes
         .getMoldesByUserId(encargado)
         .then(result => {
             return res.status(201).json(result)
@@ -92,13 +88,13 @@ router.get('/byUserId', jsonParser,(req, res, next) => {
             res.statusMessage = "Could not find Molde with that Id";
             return res.status(500).end()
         })
-    }
+    
 });
 
-router.get('/byCompany', jsonParser, (req, res, next) => {
+router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
-        res.status(200).json({
+        res.status(404).json({
             message: "No hay compañía"
         });
         return res;
@@ -116,7 +112,7 @@ router.get('/byCompany', jsonParser, (req, res, next) => {
     }
 });
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a molde owo");
     console.log(req.body)
     const {
@@ -166,17 +162,17 @@ router.patch('/', jsonParser, (req, res, next) => {
         });
 });
 
-router.delete('/', jsonParser,(req, res, next) => {
+router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
     const id = req.body.id;
     Moldes
-    .deleteMoldeById(id)
-    .then(result => {
-        return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not delete Molde with that Id";
-        return res.status(500).end()
-    })
+        .deleteMoldeById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not delete Molde with that Id";
+            return res.status(500).end()
+        })
 });
 
 module.exports = router;
