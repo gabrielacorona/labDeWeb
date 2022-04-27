@@ -98,6 +98,7 @@ router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
+//TODO: agregar signIn para admins tmbn
 router.post('/signIn', jsonParser, (req, res, next) => {
     let email = req.body.email
     let password = req.body.password
@@ -161,9 +162,8 @@ router.post('/signIn', jsonParser, (req, res, next) => {
         });
 });
 
-//TODO: hacer config para que solo admin o cliente de misma compañía puedan hacer users
-//router.post('/', checkAdmin, jsonParser, (req, res, next) => {
-router.post('/', checkAdminAuth,  jsonParser, (req, res, next) => {
+//TODO: hacer config para que solo cliente de misma compañía puedan crear users
+router.post('/', checkClienteAuth,  jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {
@@ -235,7 +235,7 @@ router.post('/', checkAdminAuth,  jsonParser, (req, res, next) => {
 });
 
 
-router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
+router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a user owo")
     const {
         id,
@@ -289,7 +289,7 @@ router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
     });
 });
 
-router.delete('/', checkAdminAuth, jsonParser, (req, res, next) => {
+router.delete('/', checkClienteAuth, jsonParser, (req, res, next) => {
     //TODO: agregar middleware de checar que user sea cliente o admin
     console.log("deleting a user u.u")
     let id = req.body.id;

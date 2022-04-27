@@ -162,7 +162,7 @@ router.delete('/', jsonParser,(req, res, next) => {
     Reportes
     .deleteReporteById(id)
     .then(result => {
-       return res.status(201).json(result)
+        return res.status(201).json(result)
     })
     .catch(err => {
         res.statusMessage = "Could not delete Reporte with that Id";

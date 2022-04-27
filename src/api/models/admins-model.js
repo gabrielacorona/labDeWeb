@@ -9,13 +9,12 @@ const adminSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        match:/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     password: {
         type: String,
-        required: true,
-        match:/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-
+        required: true
     },
     userType: {
         type: String,
@@ -88,6 +87,24 @@ const Admins = {
             .catch(err => {
                 return err;
             });
+        },
+        patchAdminById: function (id,  email, password, userType) {
+        return adminsCollection
+            .updateOne({
+                id: id
+            }, {
+                $set: {
+                    email: email,
+                    password: password,
+                    userType: userType
+                },
+            })
+            .then(updatedAdmin => {
+                return updatedAdmin;
+            })
+            .catch(err => {
+                return err;
+            })
     }
 }
 
