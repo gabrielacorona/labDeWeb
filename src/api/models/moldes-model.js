@@ -126,13 +126,13 @@ const Moldes = {
         {$match: {
             "encargado.company": company
         }}]
-       ).then(reportes =>{
+        ).then(reportes =>{
             if (!reportes) {
                 throw new Error('reporte not found');
             }
-           return reportes;
-       })
-       .catch(err => {
+        return reportes;
+        })
+        .catch(err => {
             console.log(err)
             throw new Error(err);
         });

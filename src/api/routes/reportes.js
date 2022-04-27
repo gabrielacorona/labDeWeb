@@ -7,8 +7,13 @@ const jsonParser = bodyParser.json();
 
 const {Reportes} = require('./../models/reportes-model');
 
+const checkUserAuth = require('../middleware/check-user-auth');
+const checkAdminAuth = require('./../middleware/check-admin-auth');
+const checkClienteAuth = require('./../middleware/check-cliente-auth');
+
+
 //get all reports
-router.get('/', (req, res, next) => {
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all reports")
     Reportes
         .getReportes()
@@ -21,7 +26,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let titulo = req.body.titulo;
     let fecha = req.body.fecha;
@@ -40,7 +45,7 @@ router.post('/', jsonParser, (req, res, next) => {
         costoEstimado,
         fotos
     };
-    console.log(newReporte)
+    //console.log(newReporte)
     Reportes
         .createReporte(newReporte)
         .then(result =>{
@@ -53,17 +58,9 @@ router.post('/', jsonParser, (req, res, next) => {
 
 });
 
-router.get('/byId', jsonParser,(req, res, next) => {
+router.get('/byId', checkUserAuth,  jsonParser,(req, res, next) => {
     const id = req.body.id;
-    if (id == 'unId'){
-        res.status(200).json({
-            message: "owo un id",
-            id : id
-        });
-        return res;
-    }
-    else{
-        Reportes
+    Reportes
         .getReporteById(id)
         .then(result => {
             return res.status(201).json(result)
@@ -72,44 +69,44 @@ router.get('/byId', jsonParser,(req, res, next) => {
             res.statusMessage = "Could not find Reporte with that Id";
             return res.status(500).end()
         })
-    }
+    
 });
 
-router.get('/byUserId', jsonParser,(req, res, next) => {
+router.get('/byUserId', checkUserAuth,  jsonParser,(req, res, next) => {
     const autor = req.body.autor;
     Reportes
-    .getReportesByUserId(autor)
-    .then(result => {
-        return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not find Reporte with that Id";
-        return res.status(500).end()
-    });
+        .getReportesByUserId(autor)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not find Reporte with that author";
+            return res.status(500).end()
+        });
 });
 
-router.get('/byCompany', jsonParser, (req, res, next) => {
+router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
-        res.status(200).json({
+        res.status(404).json({
             message: "No hay compañía"
         });
         return res;
     }
     else{
         Reportes
-        .getReportesByCompany(company)
-        .then(result => {
-            return res.status(201).json(result)
-        })
-        .catch(err => {
-            res.statusMessage = "Could not find Reporte with that Id";
-            return res.status(500).end()
-        })
+            .getReportesByCompany(company)
+            .then(result => {
+                return res.status(201).json(result)
+            })
+            .catch(err => {
+                res.statusMessage = "Could not find Reporte with that company";
+                return res.status(500).end()
+            })
     }
 });
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a reporte owo");
     console.log(req.body)
     const {
@@ -136,36 +133,36 @@ router.patch('/', jsonParser, (req, res, next) => {
             }
             else {
                 Reportes
-                .patchReporteById(id, titulo, fecha, autor, descripcion, diagnostico, costoEstimado, fotos)
-                .then(result =>{
-                    if(!result){
-                        res.statusMessage = "Id not found";
-                        return res.status(404).end();
-                    }
-                    else{
-                        res.statusMessage = "updated successfully";
-                        return res.status(200).json(result);
-                    }
-                })
-                .catch(err =>{
-                    res.statusMessage = "Something went wrong with the DB. Try again later.";
-                    return res.status(500).end();
-                });
+                    .patchReporteById(id, titulo, fecha, autor, descripcion, diagnostico, costoEstimado, fotos)
+                    .then(result =>{
+                        if(!result){
+                            res.statusMessage = "Id not found";
+                            return res.status(404).end();
+                        }
+                        else{
+                            res.statusMessage = "updated successfully";
+                            return res.status(200).json(result);
+                        }
+                    })
+                    .catch(err =>{
+                        res.statusMessage = "Something went wrong with the DB. Try again later.";
+                        return res.status(500).end();
+                    });
             }
         });
 });
 
-router.delete('/', jsonParser,(req, res, next) => {
+router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
     const id = req.body.id;
     Reportes
-    .deleteReporteById(id)
-    .then(result => {
-       return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not delete Reporte with that Id";
-        return res.status(500).end()
-    });
+        .deleteReporteById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not delete Reporte with that Id";
+            return res.status(500).end()
+        });
 });
 
 module.exports = router;

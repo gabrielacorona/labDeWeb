@@ -61,8 +61,7 @@ const upload = multer({
 
 const {
     DATABASE_URL,
-    PORT,
-    JWT_KEY
+    PORT
 } = require('./config');
 
 // TODO: handle foto uploads con S3? no borrar abajo

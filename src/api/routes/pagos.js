@@ -6,7 +6,12 @@ const jsonParser = bodyParser.json();
 
 const {Pagos} = require('./../models/pagos-model');
 
-router.get('/', (req, res, next) => {
+
+const checkAdminAuth = require('./../middleware/check-admin-auth');
+const checkClienteAuth = require('./../middleware/check-cliente-auth');
+
+
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all pagos")
     Pagos
         .getPagos()
@@ -19,7 +24,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', jsonParser, (req, res, next) => {
+router.post('/', checkAdminAuth, jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let fecha = req.body.fecha;
     let ultimoPago = req.body.ultimoPago;
@@ -48,62 +53,55 @@ router.post('/', jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId', jsonParser, (req, res, next) => {
+router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
     const id = req.body.id;
     Pagos
-    .getPagoById(id)
-    .then(result => {
-        return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not find Pago with that Id";
-        return res.status(500).end()
-    })
+        .getPagoById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not find Pago with that Id";
+            return res.status(500).end()
+        })
 });
 
-router.get('/byUserId', jsonParser,(req, res, next) => {
+router.get('/byUserId', checkClienteAuth, jsonParser,(req, res, next) => {
     const cliente = req.body.cliente;
-    if (cliente == 'unId'){
-        res.status(200).json({
-            message: "owo un id"
-        });
-        return res;
-    }
-    else{
-        Pagos
+    Pagos
         .getPagosByUserId(cliente)
         .then(result => {
             return res.status(201).json(result)
         })
         .catch(err => {
-            res.statusMessage = "Could not find Cliente with that Id";
+            res.statusMessage = "Could not find company with that Id";
             return res.status(500).end()
         })
-    }
+    
 });
 
-router.get('/byCompany', jsonParser, (req, res, next) => {
+router.get('/byCompany', checkClienteAuth, jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
-        res.status(200).json({
+        res.status(404).json({
             message: "No hay compañía"
         });
         return res;
     }
     else{
         Pagos
-        .getPagosByCompany(company)
-        .then(result => {
-            return res.status(201).json(result)
-        })
-        .catch(err => {
-            res.statusMessage = "Could not find Cliente with that Id";
-            return res.status(500).end()
-        })
+            .getPagosByCompany(company)
+            .then(result => {
+                return res.status(201).json(result)
+            })
+            .catch(err => {
+                res.statusMessage = "Could not find company";
+                return res.status(500).end()
+            })
     }
 });
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("updating a pago owo");
     console.log(req.body)
     const {
@@ -129,36 +127,36 @@ router.patch('/', jsonParser, (req, res, next) => {
             }
             else {
                 Pagos
-                .patchPagoById(id, fecha, ultimoPago, cobroPorMes, dirFactura, deuda, cliente)
-                .then(result =>{
-                    if(!result){
-                        res.statusMessage = "Id not found";
-                        return res.status(404).end();
-                    }
-                    else{
-                        res.statusMessage = "updated successfully";
-                        return res.status(200).json(result);
-                    }
-                })
-                .catch(err =>{
-                    res.statusMessage = "Something went wrong with the DB. Try again later.";
-                    return res.status(500).end();
-                });
+                    .patchPagoById(id, fecha, ultimoPago, cobroPorMes, dirFactura, deuda, cliente)
+                    .then(result =>{
+                        if(!result){
+                            res.statusMessage = "Id not found";
+                            return res.status(404).end();
+                        }
+                        else{
+                            res.statusMessage = "updated successfully";
+                            return res.status(200).json(result);
+                        }
+                    })
+                    .catch(err =>{
+                        res.statusMessage = "Something went wrong with the DB. Try again later.";
+                        return res.status(500).end();
+                    });
             }
         });
 });
 
-router.delete('/', jsonParser, (req, res, next) => {
+router.delete('/', checkAdminAuth, jsonParser, (req, res, next) => {
     const id = req.body.id;
     Pagos
-    .deletePagoById(id)
-    .then(result => {
-        return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not delete Molde with that Id";
-        return res.status(500).end()
-    })
+        .deletePagoById(id)
+        .then(result => {
+            return res.status(201).json(result)
+        })
+        .catch(err => {
+            res.statusMessage = "Could not delete Pago with that Id";
+            return res.status(500).end()
+        })
 });
 
 module.exports = router;
