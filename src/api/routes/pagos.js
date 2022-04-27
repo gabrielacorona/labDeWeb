@@ -50,24 +50,15 @@ router.post('/', jsonParser, (req, res, next) => {
 
 router.get('/byId', jsonParser, (req, res, next) => {
     const id = req.body.id;
-    if (id == 'unId'){
-        res.status(200).json({
-            message: "owo un id",
-            id : id
-        });
-        return res;
-    }
-    else{
-        Pagos
-        .getPagoById(id)
-        .then(result => {
-            return res.status(201).json(result)
-        })
-        .catch(err => {
-            res.statusMessage = "Could not find Pago with that Id";
-            return res.status(500).end()
-        })
-    }
+    Pagos
+    .getPagoById(id)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not find Pago with that Id";
+        return res.status(500).end()
+    })
 });
 
 router.get('/byUserId', jsonParser,(req, res, next) => {
@@ -159,24 +150,15 @@ router.patch('/', jsonParser, (req, res, next) => {
 
 router.delete('/', jsonParser, (req, res, next) => {
     const id = req.body.id;
-    if (id == 'unId'){
-        res.status(200).json({
-            message: "owo un id",
-            id : id
-        });
-        return res;
-    }
-    else{
-        Pagos
-        .deletePagoById(id)
-        .then(result => {
-            return res.status(201).json(result)
-        })
-        .catch(err => {
-            res.statusMessage = "Could not delete Molde with that Id";
-            return res.status(500).end()
-        })
-    }
+    Pagos
+    .deletePagoById(id)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not delete Molde with that Id";
+        return res.status(500).end()
+    })
 });
 
 module.exports = router;
