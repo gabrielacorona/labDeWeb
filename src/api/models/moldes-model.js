@@ -99,6 +99,44 @@ const Moldes = {
                 throw new Error(err);
             });
     },
+    getMoldesByUserId: function (idUser) {
+        return MoldesCollection
+            .find({
+                "encargado": idUser
+            })
+            .then(reportes => {
+                if (!reportes) {
+                    throw new Error('reporte not found');
+                }
+                return reportes
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            });
+    },
+    getMoldesByCompany: function (company) {
+        return MoldesCollection.aggregate([
+        {$lookup: {
+            from:"users",
+            localField: "encargado",
+            foreignField: "_id",
+            as: "encargado"
+        }},
+        {$match: {
+            "encargado.company": company
+        }}]
+       ).then(reportes =>{
+            if (!reportes) {
+                throw new Error('reporte not found');
+            }
+           return reportes;
+       })
+       .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
     deleteMoldeById: function (query) {
         return MoldesCollection
             .deleteOne({
@@ -108,6 +146,34 @@ const Moldes = {
                 return moldeToDelete;
             })
             .catch(err => {
+                return err;
+            });
+    },
+    patchMoldeById: function (id, nombreMolde, descripcion, costo, fotoPrincipal, tipoColada, ultimaReparacion, ultimoReporte, fechaAdquisicion, encargado, fotos, reportes){
+        return MoldesCollection
+            .updateOne({
+                id:id
+            },
+            {
+                $set: {
+                    id: id,
+                    nombreMolde: nombreMolde,
+                    descripcion: descripcion,
+                    costo: costo,
+                    fotoPrincipal: fotoPrincipal,
+                    tipoColada: tipoColada,
+                    ultimaReparacion: ultimaReparacion,
+                    ultimoReporte: ultimoReporte,
+                    fechaAdquisicion: fechaAdquisicion,
+                    encargado: encargado,
+                    fotos: fotos,
+                    reportes: reportes
+                },
+            })
+            .then(updatedMolde =>{
+                return updatedMolde;
+            })
+            .catch(err =>{
                 return err;
             });
     }

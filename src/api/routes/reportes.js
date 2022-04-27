@@ -53,8 +53,8 @@ router.post('/', jsonParser, (req, res, next) => {
 
 });
 
-router.get('/:reporteId', (req, res, next) => {
-    const id = req.params.reporteId;
+router.get('/byId', jsonParser,(req, res, next) => {
+    const id = req.body.id;
     if (id == 'unId'){
         res.status(200).json({
             message: "owo un id",
@@ -75,32 +75,97 @@ router.get('/:reporteId', (req, res, next) => {
     }
 });
 
-router.patch('/:reporteId', (req, res, next) => {
-    res.status(200).json({
-        message: "reporte updates",
+router.get('/byUserId', jsonParser,(req, res, next) => {
+    const autor = req.body.autor;
+    Reportes
+    .getReportesByUserId(autor)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not find Reporte with that Id";
+        return res.status(500).end()
     });
 });
 
-router.delete('/:reporteId', (req, res, next) => {
-    const id = req.params.reporteId;
-    if (id == 'unId'){
+router.get('/byCompany', jsonParser, (req, res, next) => {
+    const company = req.body.company;
+    if (company == ""){
         res.status(200).json({
-            message: "owo un id",
-            id : id
+            message: "No hay compañía"
         });
         return res;
     }
     else{
         Reportes
-        .deleteReporteById(id)
+        .getReportesByCompany(company)
         .then(result => {
             return res.status(201).json(result)
         })
         .catch(err => {
-            res.statusMessage = "Could not delete Reporte with that Id";
+            res.statusMessage = "Could not find Reporte with that Id";
             return res.status(500).end()
         })
     }
+});
+
+router.patch('/', jsonParser, (req, res, next) => {
+    console.log("updating a reporte owo");
+    console.log(req.body)
+    const {
+        id,
+        titulo,
+        fecha,
+        autor,
+        descripcion,
+        diagnostico,
+        costoEstimado,
+        fotos
+    } = req.body;
+    if(!id){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+
+    Reportes
+        .getReporteById(id)
+        .then(reporteToUpdate =>{
+            if(reporteToUpdate.length === 0){
+                res.statusMessage = "id not found";
+                return res.status(404).end();
+            }
+            else {
+                Reportes
+                .patchReporteById(id, titulo, fecha, autor, descripcion, diagnostico, costoEstimado, fotos)
+                .then(result =>{
+                    if(!result){
+                        res.statusMessage = "Id not found";
+                        return res.status(404).end();
+                    }
+                    else{
+                        res.statusMessage = "updated successfully";
+                        return res.status(200).json(result);
+                    }
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+            }
+        });
+});
+
+router.delete('/', jsonParser,(req, res, next) => {
+    const id = req.body.id;
+    Reportes
+    .deleteReporteById(id)
+    .then(result => {
+       return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not delete Reporte with that Id";
+        return res.status(500).end()
+    });
 });
 
 module.exports = router;
