@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Content from '../Content';
 import CustomButton from '../utils/Button';
+import SpecsMolde from '../utils/SpecsMolde';
+import Title from '../utils/Title';
 
 export default function DetallesMoldes() {
   return (
@@ -64,6 +66,13 @@ export default function DetallesMoldes() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={9} lg={9}>
+                    <Container maxWidth="lg">
+                        <SpecsMolde title="Fecha de adquisición"/>
+                        <SpecsMolde title="Encargado"/>
+                        <SpecsMolde title="Tipo de Colada"/>
+                    </Container>
+                </Grid>
+                <Grid item xs={12} md={3} lg={3}>
                     <Paper
                     sx={{
                         p: 2,
@@ -72,24 +81,12 @@ export default function DetallesMoldes() {
                         height: 50,
                     }}
                     >
-                    <Content title="Descripcion"/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <Paper
-                    sx={{
-                        p: 0,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 150,
-                        mb: 4,
-                    }}
-                    >
                     <CustomButton title="Fotos"/>
                     </Paper>
                 </Grid>
             </Grid>
         </Container>
+
   </Box>
 );
 }
