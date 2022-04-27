@@ -61,18 +61,30 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/:moldeId', checkUserAuth, (req, res, next) => {
-    const id = req.params.moldeId;
-    if (id == 'unId'){
+router.get('/byId',jsonParser,  (req, res, next) => {
+    const id = req.body.id;
+    Moldes
+    .getMoldeById(id)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not find Molde with that Id";
+        return res.status(500).end()
+    })
+});
+
+router.get('/byUserId', jsonParser,(req, res, next) => {
+    const encargado = req.body.encargado;
+    if (encargado == 'unId'){
         res.status(200).json({
-            message: "owo un id",
-            id : id
+            message: "owo un id"
         });
         return res;
     }
     else{
         Moldes
-        .getMoldeById(id)
+        .getMoldesByUserId(encargado)
         .then(result => {
             return res.status(201).json(result)
         })
@@ -83,32 +95,88 @@ router.get('/:moldeId', checkUserAuth, (req, res, next) => {
     }
 });
 
-router.patch('/:userId', checkUserAuth, (req, res, next) => {
-    res.status(200).json({
-        message: "molde updates",
-    });
-});
-
-router.delete('/:moldeId', checkUserAuth, (req, res, next) => {
-    const id = req.params.moldeId;
-    if (id == 'unId'){
+router.get('/byCompany', jsonParser, (req, res, next) => {
+    const company = req.body.company;
+    if (company == ""){
         res.status(200).json({
-            message: "owo un id",
-            id : id
+            message: "No hay compañía"
         });
         return res;
     }
     else{
         Moldes
-        .deleteMoldeById(id)
+        .getMoldesByCompany(company)
         .then(result => {
             return res.status(201).json(result)
         })
         .catch(err => {
-            res.statusMessage = "Could not delete Molde with that Id";
+            res.statusMessage = "Could not find Molde with that Id";
             return res.status(500).end()
         })
     }
+});
+
+router.patch('/', jsonParser, (req, res, next) => {
+    console.log("updating a molde owo");
+    console.log(req.body)
+    const {
+        id,
+        nombreMolde,
+        descripcion,
+        costo,
+        fotoPrincipal,
+        tipoColada,
+        ultimaReparacion,
+        ultimoReporte,
+        fechaAdquisicion,
+        encargado,
+        fotos,
+        reportes
+    } = req.body;
+    if(!id){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+
+    Moldes
+        .getMoldeById(id)
+        .then(moldeToUpdate =>{
+            if(moldeToUpdate.length === 0){
+                res.statusMessage = "id not found";
+                return res.status(404).end();
+            }
+            else {
+                Moldes
+                .patchMoldeById(id, nombreMolde, descripcion, costo, fotoPrincipal, tipoColada, ultimaReparacion, ultimoReporte, fechaAdquisicion, encargado, fotos, reportes)
+                .then(result =>{
+                    if(!result){
+                        res.statusMessage = "Id not found";
+                        return res.status(404).end();
+                    }
+                    else{
+                        res.statusMessage = "updated successfully";
+                        return res.status(200).json(result);
+                    }
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+            }
+        });
+});
+
+router.delete('/', jsonParser,(req, res, next) => {
+    const id = req.body.id;
+    Moldes
+    .deleteMoldeById(id)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not delete Molde with that Id";
+        return res.status(500).end()
+    })
 });
 
 module.exports = router;

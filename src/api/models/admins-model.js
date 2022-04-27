@@ -8,17 +8,19 @@ const adminSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        match:/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+
     },
-    users: [{
-        required: false,
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-    }]
+    userType: {
+        type: String,
+        required: true
+    }
 });
 
 const adminsCollection = mongoose.model('admins', adminSchema);
