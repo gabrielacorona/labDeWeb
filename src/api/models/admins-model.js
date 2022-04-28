@@ -8,17 +8,18 @@ const adminSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        match:/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     password: {
         type: String,
         required: true
     },
-    users: [{
-        required: false,
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-    }]
+    userType: {
+        type: String,
+        required: true
+    }
 });
 
 const adminsCollection = mongoose.model('admins', adminSchema);
@@ -86,6 +87,24 @@ const Admins = {
             .catch(err => {
                 return err;
             });
+        },
+        patchAdminById: function (id,  email, password, userType) {
+        return adminsCollection
+            .updateOne({
+                id: id
+            }, {
+                $set: {
+                    email: email,
+                    password: password,
+                    userType: userType
+                },
+            })
+            .then(updatedAdmin => {
+                return updatedAdmin;
+            })
+            .catch(err => {
+                return err;
+            })
     }
 }
 

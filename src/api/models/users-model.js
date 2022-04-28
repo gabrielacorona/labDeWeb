@@ -16,7 +16,9 @@ const usersSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        unique:true,
+        required: true,
+        match:/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     company: {
         type: String,
@@ -98,8 +100,21 @@ const Users = {
                 throw new Error(err);
             })
     },
+    getUsersByCompany: function (company) {
+        return usersCollection
+            .find({company: company})
+            .then(users => {
+                if (!users) {
+                    throw new Error('User not found');
+                }
+                return users
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            });
+    },
     getUserById: function (idUser) {
-        console.log("hola",usersCollection)
         return usersCollection
             .findOne({
                 id: idUser
@@ -138,6 +153,32 @@ const Users = {
             .catch(err => {
                 return err;
             });
+    },
+    patchUserById: function (id, firstName, lastName, email, password, company, telephone, userPicture, companyPicture, lastReportDate, memberSince, userType) {
+        return usersCollection
+            .updateOne({
+                id: id
+            }, {
+                $set: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    company: company,
+                    telephone: telephone, 
+                    userPicture: userPicture,
+                    companyPicture: companyPicture,
+                    lastReportDate: lastReportDate,
+                    memberSince: memberSince,
+                    userType: userType
+                },
+            })
+            .then(updatedUser => {
+                return updatedUser;
+            })
+            .catch(err => {
+                return err;
+            })
     }
 }
 

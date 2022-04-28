@@ -40,7 +40,6 @@ const reportesSchema = mongoose.Schema({
 
 const ReportesCollection = mongoose.model('reportes', reportesSchema);
 
-
 const Reportes = {
     createReporte: function (newReporte) {
         return ReportesCollection
@@ -49,6 +48,7 @@ const Reportes = {
                 return createdReporte;
             })
             .catch(err => {
+                console.log(err);
                 throw new Error(err);
             });
     },
@@ -80,6 +80,44 @@ const Reportes = {
                 throw new Error(err);
             });
     },
+    getReportesByUserId: function (idUser) {
+        return ReportesCollection
+            .find({
+                "autor": idUser
+            })
+            .then(reportes => {
+                if (!reportes) {
+                    throw new Error('reporte not found');
+                }
+                return reportes
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            });
+    },
+    getReportesByCompany: function (company) {
+        return ReportesCollection.aggregate([
+        {$lookup: {
+            from:"users",
+            localField: "autor",
+            foreignField: "_id",
+            as: "autor"
+        }},
+        {$match: {
+            "autor.company": company
+        }}]
+       ).then(reportes =>{
+            if (!reportes) {
+                throw new Error('reporte not found');
+            }
+           return reportes;
+       })
+       .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
     deleteReporteById: function (query) {
         return ReportesCollection
             .deleteOne({
@@ -89,6 +127,30 @@ const Reportes = {
                 return reporteToDelete;
             })
             .catch(err => {
+                return err;
+            });
+    },
+    patchReporteById: function (id, titulo, fecha, autor, descripcion, diagnostico, costoEstimado, fotos){
+        return ReportesCollection
+            .updateOne({
+                id:id
+            },
+            {
+                $set: {
+                    id: id,
+                    titulo: titulo,
+                    fecha: fecha,
+                    autor: autor,
+                    descripcion: descripcion,
+                    diagnostico: diagnostico,
+                    costoEstimado: costoEstimado,
+                    fotos: fotos
+                },
+            })
+            .then(updatedReporte =>{
+                return updatedReporte;
+            })
+            .catch(err =>{
                 return err;
             });
     }
