@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -14,7 +16,15 @@ const mockProp = {
 }
 
 export default function Moldes() {
-  return (
+    const [moldes, setMoldes] = useState([]);
+
+    useEffect(() => {
+      axios.get('http://localhost:8080/moldes').then(res => {
+        setMoldes(res.data);
+   });
+    }, []);
+    
+    return (
     <Box
         component="main"
         sx={{
@@ -32,11 +42,11 @@ export default function Moldes() {
                 <Grid item xs={12} md={12} lg={12}>
                     <Title>Moldes </Title>
                 </Grid>
-                {mockProp.moldes.map(({ id}, index) => (
+                {moldes.map(({ id}, index) => (
                     <DetailCard idMolde={id} cardNumber={index + 1}/>
                 ))}
             </Grid>
         </Container>
-  </Box>
+    </Box>
 );
 }

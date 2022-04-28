@@ -12,7 +12,7 @@ const checkClienteAuth = require('./../middleware/check-cliente-auth');
 
 
 // get all moldes
-router.get('/', checkAdminAuth, (req, res, next) => {
+router.get('/', (req, res, next) => {
     console.log("getting all moldes")
     Moldes
         .getMoldes()
@@ -25,7 +25,7 @@ router.get('/', checkAdminAuth, (req, res, next) => {
         });
 });
 
-router.post('/', checkClienteAuth, jsonParser, (req, res, next) => {
+router.post('/', jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let nombreMolde = req.body.nombreMolde;
     let descripcion = req.body.descripcion;
@@ -64,7 +64,7 @@ router.post('/', checkClienteAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId', checkUserAuth, jsonParser,  (req, res, next) => {
+router.get('/byId', jsonParser,  (req, res, next) => {
     const id = req.body.id;
     Moldes
     .getMoldeById(id)
@@ -77,7 +77,7 @@ router.get('/byId', checkUserAuth, jsonParser,  (req, res, next) => {
     })
 });
 
-router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
+router.get('/byUserId', jsonParser,(req, res, next) => {
     const encargado = req.body.encargado;
     Moldes
         .getMoldesByUserId(encargado)
@@ -91,7 +91,7 @@ router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
+router.get('/byCompany', jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
         res.status(404).json({
@@ -112,7 +112,7 @@ router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
     }
 });
 
-router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
+router.patch('/', jsonParser, (req, res, next) => {
     console.log("updating a molde owo");
     console.log(req.body)
     const {
@@ -162,7 +162,7 @@ router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
+router.delete('/', jsonParser,(req, res, next) => {
     const id = req.body.id;
     Moldes
         .deleteMoldeById(id)

@@ -13,7 +13,7 @@ const checkClienteAuth = require('./../middleware/check-cliente-auth');
 
 
 //get all reports
-router.get('/', checkAdminAuth, (req, res, next) => {
+router.get('/', (req, res, next) => {
     console.log("getting all reports")
     Reportes
         .getReportes()
@@ -26,7 +26,7 @@ router.get('/', checkAdminAuth, (req, res, next) => {
         });
 });
 
-router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.post('/', jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let titulo = req.body.titulo;
     let fecha = req.body.fecha;
@@ -58,7 +58,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
 
 });
 
-router.get('/byId', checkUserAuth,  jsonParser,(req, res, next) => {
+router.get('/byId',  jsonParser,(req, res, next) => {
     const id = req.body.id;
     Reportes
         .getReporteById(id)
@@ -72,7 +72,7 @@ router.get('/byId', checkUserAuth,  jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byUserId', checkUserAuth,  jsonParser,(req, res, next) => {
+router.get('/byUserId',  jsonParser,(req, res, next) => {
     const autor = req.body.autor;
     Reportes
         .getReportesByUserId(autor)
@@ -85,7 +85,7 @@ router.get('/byUserId', checkUserAuth,  jsonParser,(req, res, next) => {
         });
 });
 
-router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
+router.get('/byCompany', jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
         res.status(404).json({
@@ -106,7 +106,7 @@ router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
     }
 });
 
-router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
+router.patch('/', jsonParser, (req, res, next) => {
     console.log("updating a reporte owo");
     console.log(req.body)
     const {
@@ -152,7 +152,7 @@ router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
+router.delete('/', jsonParser,(req, res, next) => {
     const id = req.body.id;
     Reportes
         .deleteReporteById(id)

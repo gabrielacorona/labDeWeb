@@ -11,7 +11,7 @@ const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
 
 
-router.get('/', checkAdminAuth, (req, res, next) => {
+router.get('/', (req, res, next) => {
     console.log("getting all pagos")
     Pagos
         .getPagos()
@@ -24,7 +24,7 @@ router.get('/', checkAdminAuth, (req, res, next) => {
         });
 });
 
-router.post('/', checkAdminAuth, jsonParser, (req, res, next) => {
+router.post('/', jsonParser, (req, res, next) => {
     let id = uuid.v4();
     let fecha = req.body.fecha;
     let ultimoPago = req.body.ultimoPago;
@@ -53,7 +53,7 @@ router.post('/', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/byId', jsonParser, (req, res, next) => {
     const id = req.body.id;
     Pagos
         .getPagoById(id)
@@ -66,7 +66,7 @@ router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
         })
 });
 
-router.get('/byUserId', checkClienteAuth, jsonParser,(req, res, next) => {
+router.get('/byUserId', jsonParser,(req, res, next) => {
     const cliente = req.body.cliente;
     Pagos
         .getPagosByUserId(cliente)
@@ -80,7 +80,7 @@ router.get('/byUserId', checkClienteAuth, jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byCompany', checkClienteAuth, jsonParser, (req, res, next) => {
+router.get('/byCompany', jsonParser, (req, res, next) => {
     const company = req.body.company;
     if (company == ""){
         res.status(404).json({
@@ -101,7 +101,7 @@ router.get('/byCompany', checkClienteAuth, jsonParser, (req, res, next) => {
     }
 });
 
-router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
+router.patch('/', jsonParser, (req, res, next) => {
     console.log("updating a pago owo");
     console.log(req.body)
     const {
@@ -146,7 +146,7 @@ router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.delete('/', checkAdminAuth, jsonParser, (req, res, next) => {
+router.delete('/', jsonParser, (req, res, next) => {
     const id = req.body.id;
     Pagos
         .deletePagoById(id)
