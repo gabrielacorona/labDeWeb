@@ -3,12 +3,22 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid'
 
 function DetailCard(props) {
   return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
+        <CardMedia
+            component="img"
+            alt="molde Botella"
+            height="140"
+            image="https://cdn.picpng.com/water_bottle/water-bottle-transparent-27778.png"
+            style={{objectFit: 'scale-down'}}
+        />
+
         <CardContent style={{padding: 20}} justifyContent="center">
             <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>
                 Molde {props.cardNumber}
