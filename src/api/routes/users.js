@@ -14,7 +14,7 @@ const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
 //get all users
-router.get('/', checkAdminAuth, (req, res, next) => {
+router.get('/', (req, res, next) => {
     console.log("getting all users")
     Users
         .getUsers()
@@ -164,7 +164,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
 });
 
 //TODO: hacer config para que solo cliente de misma compañía puedan crear users
-router.post('/', checkClienteAuth,  jsonParser, (req, res, next) => {
+router.post('/',  jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {

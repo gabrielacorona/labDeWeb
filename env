@@ -1,0 +1,2 @@
+DATABASE_URL="mongodb+srv://gabrielacorona:Ilikepie2.@cluster0.yw1jj.mongodb.net/controldemoldesdb?retryWrites=true&w=majority"
+exports.JWT_KEY = process.env.JWT_KEY || 'secret'

@@ -10,11 +10,11 @@ const useStyles = makeStyles({
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'white',
         height: 150,
-        padding: '0 30px',
+        width: '100%',
     },
   });
   
-  export default function CustomButton(props) {
+  export default function ButtonDetalleMolde(props) {
     const classes = useStyles();
     return <Button className={classes.root}>{props.title}</Button>;
   }

@@ -4,9 +4,39 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Content from '../Content';
-import CustomButton from '../utils/Button';
-import SpecsMolde from '../utils/SpecsMolde';
+import ButtonDetalleMolde from '../utils/ButtonDetalleMolde';
 import Title from '../utils/Title';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
+const mockProp = {
+    nombreMolde : "MOLDE SUPREME",
+    fechaAdquisicion : "12-03-2022",
+    descripcion : 'Este es un molde para hacer botellas',
+    tipoColada : 'Muy',
+    encargado : "Andres"
+}
+
+function SpecsMolde(props) {
+    return (
+    <div style={{marginLeft: 4, marginBottom: 15}}>
+        <Title>{props.title}</Title>
+        <Typography color="text.secondary" sx={{ flex: 1 }}>
+        {props.descripcion}
+        </Typography>
+    </div>
+    );
+}
+
+function SpecsWrapper(props){
+    return (
+        <div style={{paddingLeft: 10}}>
+            <SpecsMolde title="Fecha de adquisición" descripcion={mockProp.fechaAdquisicion}/>    
+            <SpecsMolde title="Encargado" descripcion={mockProp.encargado} />
+            <SpecsMolde title="Tipo de Colada" descripcion={mockProp.tipoColada}/>
+        </div>
+    )
+}
 
 export default function DetallesMoldes() {
   return (
@@ -26,6 +56,12 @@ export default function DetallesMoldes() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={9} lg={9}>
+                    <Title>{mockProp.nombreMolde}</Title>
+                </Grid>
+                <Grid item xs={12} md={3} lg={3}>
+                    <Button variant="outlined" style={{width: "50%"}}>Editar</Button>
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
                     <Paper
                     sx={{
                         p: 2,
@@ -38,55 +74,23 @@ export default function DetallesMoldes() {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>
-                    <Paper
-                    sx={{
-                        p: 0,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 150,
-                        mb: 4,
-                    }}
-                    >
-                    <CustomButton title="Fotos"/>
-                    </Paper>
-                    <Paper
-                    sx={{
-                        p: 0,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 150,
-                    }}
-                    >
-                    <CustomButton title="Reportes"/>
-                    </Paper>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <ButtonDetalleMolde title="Fotos"/>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <ButtonDetalleMolde title="Reportes"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
-        {/* CONTAINER WITH FECHA DE ADQUISICION AND AGREGAR MOLDE BUTTON */}
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
                 <Grid item xs={12} md={9} lg={9}>
-                    <Container maxWidth="lg">
-                        <SpecsMolde title="Fecha de adquisición"/>
-                        <SpecsMolde title="Encargado"/>
-                        <SpecsMolde title="Tipo de Colada"/>
-                    </Container>
+                    <SpecsWrapper />
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>
-                    <Paper
-                    sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 50,
-                    }}
-                    >
-                    <CustomButton title="Fotos"/>
-                    </Paper>
-                </Grid>
+                    <Button variant="contained" style={{width: "100%", height:"25%"}}>Agregar Molde</Button>
+                </Grid>        
             </Grid>
         </Container>
-
-  </Box>
+    </Box>
 );
 }
