@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 const mockProp = {
     nombreMolde : "MOLDE SUPREME",
+    id : "12345675992",
     fechaAdquisicion : "12-03-2022",
     descripcion : 'Este es un molde para hacer botellas',
     tipoColada : 'Muy',
@@ -59,7 +60,14 @@ export default function DetallesMoldes() {
                     <Title>{mockProp.nombreMolde}</Title>
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>
-                    <Button variant="outlined" style={{width: "50%"}}>Editar</Button>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Typography>ID: {mockProp.id}</Typography>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12} md={9} lg={9}>
                     <Paper
