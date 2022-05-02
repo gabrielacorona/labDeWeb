@@ -21,7 +21,10 @@ export default function Moldes() {
     useEffect(() => {
       axios.get('http://localhost:8080/moldes').then(res => {
         setMoldes(res.data);
-   });
+    }).catch(error => {
+        // TODO - Display error message
+        console.error('There was an error!', error);
+        });
     }, []);
     
     return (
