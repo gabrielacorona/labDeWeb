@@ -11,7 +11,7 @@ const checkAdminAuth = require('../middleware/check-admin-auth');
 const { Admins } = require('./../models/admins-model');
 
 //get all admins
-router.get('/', (req, res, next) => {
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all admins")
     Admins
         .getAdmins()
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
 });
 
 //get admins by id
-router.get('/byId', jsonParser, (req, res, next) => {
+router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting admin by their id");
     let id = req.body.id;
     if(!id){
@@ -49,7 +49,7 @@ router.get('/byId', jsonParser, (req, res, next) => {
 });
 
 //get admins by email
-router.get('/byEmail', jsonParser, (req, res, next) => {
+router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting admin by email")
     let email = req.body.email;
     if (!email) {
@@ -72,7 +72,7 @@ router.get('/byEmail', jsonParser, (req, res, next) => {
         });
 });
 
-router.post('/',  jsonParser, (req, res, next) => {
+router.post('/', checkAdminAuth,  jsonParser, (req, res, next) => {
     Admins
         .getAdminByEmail(req.body.email)
         .then(person => {
@@ -121,7 +121,7 @@ router.post('/',  jsonParser, (req, res, next) => {
 
 
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("updating an admin owo")
     const {
         id,
@@ -167,7 +167,7 @@ router.patch('/', jsonParser, (req, res, next) => {
     });
 });
 
-router.delete('/', jsonParser, (req, res, next) => {
+router.delete('/', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("deleting a admin u.u")
     let id = req.body.id;
     Admins

@@ -14,7 +14,7 @@ const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
 //get all users
-router.get('/', (req, res, next) => {
+router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all users")
     Users
         .getUsers()
@@ -28,7 +28,7 @@ router.get('/', (req, res, next) => {
 });
 
 //get users by company
-router.get('/byCompany', jsonParser, (req, res, next) => {
+router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their company");
     let id = req.body.company;
     if(!id){
@@ -52,7 +52,7 @@ router.get('/byCompany', jsonParser, (req, res, next) => {
 });
 
 //get users by id
-router.get('/byId', jsonParser, (req, res, next) => {
+router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
     let id = req.body.id;
     if(!id){
@@ -76,7 +76,7 @@ router.get('/byId', jsonParser, (req, res, next) => {
 });
 
 //get users by email
-router.get('/byEmail', jsonParser, (req, res, next) => {
+router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")
     let email = req.body.email;
     if (!email) {
@@ -164,7 +164,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
 });
 
 //TODO: hacer config para que solo cliente de misma compañía puedan crear users
-router.post('/',  jsonParser, (req, res, next) => {
+router.post('/', checkClienteAuth,  jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {
@@ -236,7 +236,7 @@ router.post('/',  jsonParser, (req, res, next) => {
 });
 
 
-router.patch('/', jsonParser, (req, res, next) => {
+router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a user owo")
     const {
         id,
@@ -290,7 +290,7 @@ router.patch('/', jsonParser, (req, res, next) => {
     });
 });
 
-router.delete('/', jsonParser, (req, res, next) => {
+router.delete('/', checkClienteAuth, jsonParser, (req, res, next) => {
     //TODO: agregar middleware de checar que user sea cliente o admin
     console.log("deleting a user u.u")
     let id = req.body.id;

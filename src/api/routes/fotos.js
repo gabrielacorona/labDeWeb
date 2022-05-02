@@ -5,19 +5,19 @@ const { Fotos } = require('./../models/fotos-model');
 const checkUserAuth = require('../middleware/check-user-auth');
 
 
-router.get('/', (req, res, next) => {
+router.get('/', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "handling GET request to fotos"
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "handling POST request to fotos"
     });
 });
 
-router.get('/:fotoId', (req, res, next) => {
+router.get('/:fotoId', checkUserAuth, (req, res, next) => {
     const id = req.params.userId;
     if (id == 'unId'){
         res.status(200).json({
@@ -33,13 +33,13 @@ router.get('/:fotoId', (req, res, next) => {
     }
 });
 
-router.patch('/:fotoId', (req, res, next) => {
+router.patch('/:fotoId', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "foto  updates",
     });
 });
 
-router.delete('/:fotoId', (req, res, next) => {
+router.delete('/:fotoId', checkUserAuth, (req, res, next) => {
     res.status(200).json({
         message: "deleting foto"
     });
