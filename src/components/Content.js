@@ -2,19 +2,24 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './utils/Title';
+import {styled} from '@mui/material/styles';
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
+const TituloRosa = styled(Typography)`
+    color: pink;
+`;
+
 export default function Content(props) {
   return (
     <React.Fragment>
       <Title>{props.title}</Title>
-      <Typography component="p" variant="h4">
+      <TituloRosa component="p" variant="h4">
         $3,024.00
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      </TituloRosa>
+      <Typography color="text.secondary">
         on 15 March, 2019
       </Typography>
       <div>
