@@ -8,7 +8,7 @@ import ButtonDetalleMolde from '../utils/ButtonDetalleMolde';
 import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const mockProp = {
     nombreMolde : "MOLDE SUPREME",
@@ -40,7 +40,7 @@ function SpecsWrapper(props){
     )
 }
 
-export default function DetallesMoldes() {
+export default function FotosMoldes() {
   return (
     <Box
         component="main"
@@ -57,18 +57,11 @@ export default function DetallesMoldes() {
         {/* CONTAINER WITH DESCRIPCION AND FOTOS AND REPORTES BUTTONS */}
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={9} lg={9}>
-                    <Title>{mockProp.nombreMolde}</Title>
+                <Grid item xs={12} md={2} lg={2}>
+                    <Button variant="outlined" style={{width: "100%"}} startIcon={<ArrowBackIcon />}>Regresar</Button>
                 </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Typography>ID: {mockProp.id}</Typography>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
-                        </Grid>
-                    </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Typography>ID: {mockProp.id}</Typography>
                 </Grid>
                 <Grid item xs={12} md={9} lg={9}>
                     <Paper
@@ -96,7 +89,7 @@ export default function DetallesMoldes() {
                     <SpecsWrapper />
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>
-                    <Button variant="contained" style={{width: "100%", height:"25%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
+                    <Button variant="contained" style={{width: "100%", height:"25%"}}>Agregar Molde</Button>
                 </Grid>        
             </Grid>
         </Container>
