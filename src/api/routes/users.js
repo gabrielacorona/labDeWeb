@@ -13,6 +13,8 @@ const { JWT_KEY } = require('../../config');
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
+const cors = require('../middleware/cors');
+
 //get all users
 router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all users")
