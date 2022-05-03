@@ -34,21 +34,23 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+    
     const user = {
         email: data.get('email'),
         password: data.get('password')
     }
-
-    axios.post('http://localhost:8080/users/signIn', {user}).then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json')
+    console.log(headers[0], user)
+    axios({
+        method: 'post',
+        url: 'http://localhost:8080/users/signIn',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
   };
 
   return (

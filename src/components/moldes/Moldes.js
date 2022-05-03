@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
-import DetailCard  from './DetailCard';
+import DetailCard  from '../utils/DetailCard';
 
 const mockProp = {
     moldes: [
