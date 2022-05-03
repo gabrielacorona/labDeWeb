@@ -24,7 +24,7 @@ function SpecsMolde(props) {
     <div style={{marginLeft: 4, marginBottom: 15}}>
         <Title>{props.title}</Title>
         <Typography color="text.secondary" sx={{ flex: 1 }}>
-        {props.descripcion}
+            {props.descripcion}
         </Typography>
     </div>
     );
@@ -79,7 +79,7 @@ export default function DetallesMoldes() {
                         height: 300,
                     }}
                     >
-                    <Content title="Descripcion"/>
+                        <Content title="Descripcion"/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>

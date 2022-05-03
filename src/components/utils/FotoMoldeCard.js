@@ -12,15 +12,12 @@ export default function FotoMoldeCard(props) {
     <React.Fragment>
         {props.imagenes.map((item) => (
             <Grid item xs={12} md={6} lg={4}>
-                <Card sx={{ maxWidth: "100%" }} onClick={(event) => {
-                console.log("Hola");
-                }}>
+                <Card sx={{ maxWidth: "100%" }}>
                     <CardActionArea component={RouterLink} to="/DetalleFotoMolde">
                         <CardMedia
                             component="img"
                             height="180"
                             image={item.img}
-                            alt="green iguana"
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div">
