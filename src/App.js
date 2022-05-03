@@ -2,6 +2,8 @@ import './App.css';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
+import DetalleMoldes from './components/moldes/DetalleMoldes'
+import FotosMoldes from './components/moldes/FotosMoldes'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,6 +21,8 @@ function App() {
       <Routes>
         <Route path="/reportes" element={<Reportes/>} />
         <Route path="/moldes" element={<Moldes/>} />
+        <Route path="/detallemoldes" element={<DetalleMoldes/>} />
+        <Route path="/fotosmoldes" element={<FotosMoldes/>} />
       </Routes>
       </Router>
     </Box>
