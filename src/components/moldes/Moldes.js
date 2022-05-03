@@ -1,12 +1,33 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Content from '../Content';
+import Title from '../utils/Title'
+import DetailCard  from './DetailCard';
+
+const mockProp = {
+    moldes: [
+        {nombre: "molde1", id: "abc"},
+        {nombre: "molde2", id: "def"},
+        {nombre: "molde3", id: "ghi"},
+    ]
+}
 
 export default function Moldes() {
-  return (
+    const [moldes, setMoldes] = useState([]);
+
+    useEffect(() => {
+      axios.get('http://localhost:8080/moldes').then(res => {
+        setMoldes(res.data);
+    }).catch(error => {
+        // TODO - Display error message
+        console.error('There was an error!', error);
+        });
+    }, []);
+    
+    return (
     <Box
         component="main"
         sx={{
@@ -21,20 +42,14 @@ export default function Moldes() {
     >
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Content title="Molde"/>
-                </Paper>
-              </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Title>Moldes </Title>
+                </Grid>
+                {moldes.map(({ id}, index) => (
+                    <DetailCard idMolde={id} cardNumber={index + 1}/>
+                ))}
             </Grid>
         </Container>
-  </Box>
+    </Box>
 );
 }
