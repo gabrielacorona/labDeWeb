@@ -22,7 +22,9 @@ const mockProp = {
 function SpecsMolde(props) {
     return (
     <div style={{marginLeft: 4, marginBottom: 15}}>
-        <Title>{props.title}</Title>
+        <Typography component="h6" variant="h6" gutterBottom>
+            {props.title}
+        </Typography>
         <Typography color="text.secondary" sx={{ flex: 1 }}>
             {props.descripcion}
         </Typography>
@@ -43,7 +45,9 @@ function SpecsWrapper(props){
 function DescrMolde(props) {
     return (
       <React.Fragment>
-        <Title>{props.title}</Title>
+        <Typography component="h5" variant="h5" gutterBottom>
+            {props.title}
+        </Typography>
         <Typography color="text.secondary">
             {props.descripcion}
         </Typography>
@@ -91,7 +95,7 @@ export default function DetallesMoldes() {
                                 flexDirection: 'column',
                             }}
                             >
-                                <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
+                                <DescrMolde title="Descripción" descripcion={mockProp.descripcion}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={12} lg={12}>
