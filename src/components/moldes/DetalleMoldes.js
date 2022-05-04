@@ -40,6 +40,17 @@ function SpecsWrapper(props){
     )
 }
 
+function DescrMolde(props) {
+    return (
+      <React.Fragment>
+        <Title>{props.title}</Title>
+        <Typography color="text.secondary">
+            {props.descripcion}
+        </Typography>
+      </React.Fragment>
+    );
+}
+
 export default function DetallesMoldes() {
   return (
     <Box
@@ -71,16 +82,22 @@ export default function DetallesMoldes() {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={9} lg={9}>
-                    <Paper
-                    sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 300,
-                    }}
-                    >
-                        <Content title="Descripcion"/>
-                    </Paper>
+                    <Grid container spacing ={4}>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Paper
+                            sx={{
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                            >
+                                <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <SpecsWrapper />
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12} md={3} lg={3}>
                     <Grid container spacing={4}>
@@ -90,14 +107,11 @@ export default function DetallesMoldes() {
                         <Grid item xs={12} md={12} lg={12}>
                             <ButtonDetalleMolde title="Reportes"/>
                         </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
+                        </Grid> 
                     </Grid>
-                </Grid>
-                <Grid item xs={12} md={9} lg={9}>
-                    <SpecsWrapper />
-                </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <Button variant="contained" style={{width: "100%", height:"25%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
-                </Grid>        
+                </Grid>       
             </Grid>
         </Container>
     </Box>
