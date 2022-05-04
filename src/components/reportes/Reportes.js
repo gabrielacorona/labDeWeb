@@ -18,14 +18,14 @@ const mockProp = {
 export default function Reportes() {
     const [reportes, setReportes] = useState([]);
 
-    // useEffect(() => {
-    //   axios.get('http://localhost:8080/reportes').then(res => {
-    //     setReportes(res.data);
-    // }).catch(error => {
-    //     // TODO - Display error message
-    //     console.error('There was an error!', error);
-    //     });
-    // }, []);
+    useEffect(() => {
+      axios.get('http://localhost:8080/reportes').then(res => {
+        setReportes(res.data);
+    }).catch(error => {
+        // TODO - Display error message
+        console.error('There was an error!', error);
+        });
+    }, []);
     
     return (
       <Box
@@ -45,8 +45,8 @@ export default function Reportes() {
                   <Grid item xs={12} md={12} lg={12}>
                       <Title>Reportes - </Title>
                   </Grid>
-                  {mockProp.reportes.map(({nombreMolde}, index) => (
-                      <ReportesCard nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                  {reportes.map((arrayItem, index) => (
+                    console.log(arrayItem, index)
                   ))}
               </Grid>
           </Container>
