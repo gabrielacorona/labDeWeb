@@ -18,12 +18,37 @@ const mockProp = {
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
+    // Using Fetch
+
+    // useEffect(() => {
+    //     const requestOptions = {
+    //         method: "GET",
+    //         mode: "cors",
+    //       };
+        
+    //       fetch("http://localhost:8080/moldes", requestOptions).then(res => res.json()).
+    //       then((result)=> {
+    //           console.log(result, "resultado")
+    //       })
+
+    //     console.log(res.json(), " en json")
+    // }, [])
+
+    // Using Axios
     useEffect(() => {
-      axios.get('http://localhost:8080/moldes').then(res => {
-        setMoldes(res.data);
-    }).catch(error => {
-        // TODO - Display error message
-        console.error('There was an error!', error);
+        var config = {
+            method: 'get',
+            url: 'http://localhost:8080/moldes',
+            headers: { 
+            'Content-Type': 'application/json'
+            }
+        };
+        axios(config)
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
         });
     }, []);
     
