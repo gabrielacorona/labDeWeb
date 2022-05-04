@@ -8,6 +8,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 const { Users } = require('./../models/users-model');
+const {Reportes} = require('./../models/reportes-model');
+const {Moldes} = require('./../models/moldes-model');
+const {Pagos} = require('./../models/pagos-model');
 const { JWT_KEY } = require('../../config');
 
 const checkUserAuth = require('../middleware/check-user-auth');
@@ -54,7 +57,7 @@ router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
 //get users by user
 router.get('/byUser', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their user");
-    let id = req.body.user;
+    let id = req.body.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -62,6 +65,7 @@ router.get('/byUser', checkAdminAuth, jsonParser, (req, res, next) => {
     Users
         .getUsersByUser(id)
         .then(users => {
+            console.log(users);
             if (users === null || users.length == 0 ) {
                 res.statusMessage = `no users with the provided userId`;
                 return res.status(404).end();
@@ -187,6 +191,138 @@ router.post('/signIn', jsonParser, (req, res, next) => {
             res.statusMessage = "Something went wrong with the DB. Try again later.";
             return res.status(500).end();
         });
+});
+
+router.patch('/addOperador', jsonParser, (req, res, next) => {
+    const {
+        userId,
+        operadorId
+    } = req.body;
+    if(!userId || !operadorId){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+    Users
+       .getUserById(operadorId)
+       .then(operador => {
+        if (operador.length === 0) {
+            res.statusMessage = "operadorId not found";
+            return res.status(404).end();
+        } else {
+            Users
+                .addOperador(userId, operador._id)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+        }
+       })
+       .catch(err =>{
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+       });
+});
+
+router.patch('/addReporte', jsonParser, (req, res, next) => {
+    const {
+        userId,
+        reporteId
+    } = req.body;
+    if(!userId || !reporteId){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+    Reportes
+       .getReporteById(reporteId)
+       .then(reporte => {
+        if (reporte.length === 0) {
+            res.statusMessage = "reporteId not found";
+            return res.status(404).end();
+        } else {
+            Users
+                .addReporte(userId, reporte._id)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+        }
+       })
+       .catch(err =>{
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+       });
+});
+
+router.patch('/addMolde', jsonParser, (req, res, next) => {
+    const {
+        userId,
+        moldeId
+    } = req.body;
+    if(!userId || !moldeId){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+    Moldes
+       .getMoldeById(moldeId)
+       .then(molde => {
+        if (molde.length === 0) {
+            res.statusMessage = "moldeId not found";
+            return res.status(404).end();
+        } else {
+            Users
+                .addMolde(userId, molde._id)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+        }
+       })
+       .catch(err =>{
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+       });
+});
+
+router.patch('/addPago', jsonParser, (req, res, next) => {
+    const {
+        userId,
+        pagoId
+    } = req.body;
+    if(!userId || !pagoId){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+    Pagos
+       .getPagoById(pagoId)
+       .then(pago => {
+        if (pago.length === 0) {
+            res.statusMessage = "pagoId not found";
+            return res.status(404).end();
+        } else {
+            Users
+                .addPago(userId, pago._id)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+        }
+       })
+       .catch(err =>{
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+       });
 });
 
 //TODO: hacer config para que solo cliente de misma compañía puedan crear users
