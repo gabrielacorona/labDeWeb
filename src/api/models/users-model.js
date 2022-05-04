@@ -114,6 +114,22 @@ const Users = {
                 throw new Error(err);
             });
     },
+    getUsersByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.operadores
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
     getUserById: function (idUser) {
         return usersCollection
             .findOne({

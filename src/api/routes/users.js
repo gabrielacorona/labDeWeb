@@ -51,6 +51,30 @@ router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
+//get users by user
+router.get('/byUser', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting user by their user");
+    let id = req.body.user;
+    if(!id){
+        res.statusMessage = "please send 'user' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getUsersByUser(id)
+        .then(users => {
+            if (users === null || users.length == 0 ) {
+                res.statusMessage = `no users with the provided userId`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(users);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
 //get users by id
 router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
@@ -107,6 +131,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(email)
         .then(user => {
+            console.log(user);
             if (user.length === 0) {
                 res.statusMessage = "Auth failed.";
                 return res.status(401).end();
@@ -117,6 +142,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
                     return res.status(401).end();
                 }
                 if (result) {
+                    console.log(result);
                     const token = jwt.sign({
                         id: user.id,
                         firstName: user.firstName,
