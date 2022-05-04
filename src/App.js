@@ -19,10 +19,10 @@ function App() {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path="/reportes" element={<Reportes/>} />
         <Route path="/moldes" element={<Moldes/>} />
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
+        <Route path="/reportes" element={<Reportes/>} />
       </Routes>
       </Router>
     </Box>
