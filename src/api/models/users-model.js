@@ -210,6 +210,54 @@ const Users = {
             throw new Error(err);
         })
     },
+    getReportesByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.reportes
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    getMoldesByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.moldes
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    getPagosByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.pagos
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
     getUserById: function (idUser) {
         return usersCollection
             .findOne({

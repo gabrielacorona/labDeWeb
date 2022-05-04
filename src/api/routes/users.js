@@ -55,7 +55,7 @@ router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by user
-router.get('/byUser', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their user");
     let id = req.body.userId;
     if(!id){
@@ -71,6 +71,75 @@ router.get('/byUser', checkAdminAuth, jsonParser, (req, res, next) => {
                 return res.status(404).end();
             } else {
                 return res.status(200).json(users);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
+router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting reportes by their user");
+    let id = req.body.userId;
+    if(!id){
+        res.statusMessage = "please send 'user' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getReportesByUser(id)
+        .then(reportes => {
+            if (reportes === null || reportes.length == 0 ) {
+                res.statusMessage = `no reportes with the provided userId`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(reportes);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
+router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting moldes by their user");
+    let id = req.body.userId;
+    if(!id){
+        res.statusMessage = "please send 'user' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getMoldesByUser(id)
+        .then(moldes => {
+            if (moldes === null || moldes.length == 0 ) {
+                res.statusMessage = `no moldes with the provided userId`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(moldes);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
+router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting pagos by their user");
+    let id = req.body.userId;
+    if(!id){
+        res.statusMessage = "please send 'user' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getPagosByUser(id)
+        .then(pagos => {
+            if (pagos === null || pagos.length == 0 ) {
+                res.statusMessage = `no pagos with the provided userId`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(pagos);
             }
         })
         .catch(err => {
