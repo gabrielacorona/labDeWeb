@@ -22,12 +22,13 @@ export default function FotoMoldeCard(props) {
                                         component="img"
                                         height="180"
                                         image={item.img}
+                                        alt={item.descripcion}
                                     />
                                     <CardContent>
-                                        <Typography gutterBottom variant="h6" component="div">
+                                        <Typography gutterBottom variant="h6" component="div" justifyContent="center" textAlign="center">
                                             Fecha de publicación
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
+                                        <Typography variant="body2" color="text.secondary" justifyContent="center" textAlign="center">
                                             {item.fechaPublicacion}
                                         </Typography>
                                     </CardContent>
