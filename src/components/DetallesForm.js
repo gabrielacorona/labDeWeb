@@ -4,8 +4,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Descripcion from './Descripcion';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
 export default function DetallesForm() {
   return (
@@ -17,7 +15,6 @@ export default function DetallesForm() {
             id="titulo"
             name="titulo"
             label="Titulo"
-            fullWidth
             autoComplete="given-name"
             variant="standard"
           />
@@ -28,7 +25,6 @@ export default function DetallesForm() {
             id="fecha"
             name="fecha"
             label="Fecha"
-            fullWidth
             // autoComplete="family-name"
             variant="standard"
           />
@@ -39,7 +35,6 @@ export default function DetallesForm() {
             id="autor"
             name="autor"
             label="Autor"
-            fullWidth
             // autoComplete="shipping address-line1"
             variant="standard"
           />
@@ -50,7 +45,6 @@ export default function DetallesForm() {
             id="diagnostico"
             name="diagnostico"
             label="Diagnostico"
-            fullWidth
             // autoComplete="shipping address-line2"
             variant="standard"
           />
@@ -61,12 +55,11 @@ export default function DetallesForm() {
             id="costo-estimado"
             name="costo-estimado"
             label="Costo Estimado"
-            fullWidth
             // autoComplete="shipping address-level2"
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} md={8} lg={20}
+        <Grid item xs={12} md={8} lg={8}
           sx={{
             p: 2,
             display: 'flex',

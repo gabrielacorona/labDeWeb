@@ -1,11 +1,5 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
-
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 export default function Content(props) {
   return (
@@ -16,6 +10,7 @@ export default function Content(props) {
           label="Diagnostico"
           multiline
           rows={8}
+          style={{backgroundColor:"#ffffff"}}
         />
     </React.Fragment>
   );
