@@ -94,7 +94,9 @@ export default function FotosMoldes() {
                 <Grid item xs={12} md={2} lg={2}>
                     <Typography>ID: {mockProp.id}</Typography>
                 </Grid>
-                <FotoMoldeCard imagenes={mockProp.mockImages}/>
+                <Grid item xs={12} md={12} lg={12}>
+                  <FotoMoldeCard imagenes={mockProp.mockImages}/>
+                </Grid>
             </Grid>
         </Container>
     </Box>
