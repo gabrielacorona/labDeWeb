@@ -33,24 +33,27 @@ const theme = createTheme();
 export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    var axios = require('axios');
+    var data = JSON.stringify({"email":"ricky@gmail.com","password":"hola"});
     
-    const user = {
-        email: data.get('email'),
-        password: data.get('password')
-    }
+    var config = {
+      method: 'post',
+      url: 'http://localhost:8080/users/signIn',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
     
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json')
-    console.log(headers[0], user)
-    axios({
-        method: 'post',
-        url: 'http://localhost:8080/users/signIn',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
     });
+    
+
   };
 
   return (
