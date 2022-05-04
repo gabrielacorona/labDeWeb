@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import ReportesCard  from './ReportesCard';
+import NewItemCard from './NewItemCard';
 
 const mockProp = {
     reportes: [
@@ -45,9 +46,10 @@ export default function Reportes() {
                   <Grid item xs={12} md={12} lg={12}>
                       <Title>Reportes - </Title>
                   </Grid>
-                  {reportes.map((arrayItem, index) => (
-                    console.log(arrayItem, index)
+                  {reportes.map((data, index) => (
+                    <ReportesCard data={data} cardNumber={index + 1}/>
                   ))}
+                  <NewItemCard />
               </Grid>
           </Container>
       </Box>

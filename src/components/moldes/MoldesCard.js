@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid'
 
-function DetailCard(props) {
+function MoldesCard(props) {
   return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
         <CardMedia
@@ -54,8 +54,8 @@ function DetailCard(props) {
   );
 }
 
-DetailCard.propTypes = {
+MoldesCard.propTypes = {
   children: PropTypes.node,
 };
 
-export default DetailCard;
+export default MoldesCard;

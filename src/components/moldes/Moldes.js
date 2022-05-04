@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
-import DetailCard  from './DetailCard';
+import MoldesCard  from './MoldesCard';
 
 const mockProp = {
     moldes: [
@@ -45,8 +45,8 @@ export default function Moldes() {
                 <Grid item xs={12} md={12} lg={12}>
                     <Title>Moldes </Title>
                 </Grid>
-                {moldes.map(({ id}, index) => (
-                    <DetailCard idMolde={id} cardNumber={index + 1}/>
+                {moldes.map(( moldeInfo, index) => (
+                    <MoldesCard moldeInfo={moldeInfo} cardNumber={index + 1}/>
                 ))}
             </Grid>
         </Container>
