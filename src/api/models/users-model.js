@@ -88,6 +88,86 @@ const Users = {
                 throw new Error(err);
             });
     },
+    addOperador: function (idUser, idOperador) {
+        return usersCollection
+        .findOne({
+            id: idUser
+        })
+        .then(user => {
+            if (!user) {
+                throw new Error('User not found');
+            }
+            if (!user.operadores.includes(idOperador)){
+                user.operadores.push(idOperador);
+                user.save();
+            }
+            return user;
+        })
+        .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
+    addReporte: function (idUser, idReporte) {
+        return usersCollection
+        .findOne({
+            id: idUser
+        })
+        .then(user => {
+            if (!user) {
+                throw new Error('User not found');
+            }
+            if (!user.reportes.includes(idReporte)){
+                user.reportes.push(idReporte);
+                user.save();
+            }
+            return user;
+        })
+        .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
+    addMolde: function (idUser, idMolde) {
+        return usersCollection
+        .findOne({
+            id: idUser
+        })
+        .then(user => {
+            if (!user) {
+                throw new Error('User not found');
+            }
+            if (!user.moldes.includes(idMolde)){
+                user.moldes.push(idMolde);
+                user.save();
+            }
+            return user;
+        })
+        .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
+    addPago: function (idUser, idPago) {
+        return usersCollection
+        .findOne({
+            id: idUser
+        })
+        .then(user => {
+            if (!user) {
+                throw new Error('User not found');
+            }
+            if (!user.pagos.includes(idPago)){
+                user.pagos.push(idPago);
+                user.save();
+            }
+            return user;
+        })
+        .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
     //get all users
     getUsers: function () {
         return usersCollection
@@ -113,6 +193,70 @@ const Users = {
                 console.log(err)
                 throw new Error(err);
             });
+    },
+    getUsersByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.operadores
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    getReportesByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.reportes
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    getMoldesByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.moldes
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    getPagosByUser: function (user) {
+        return usersCollection
+        .findOne({
+            id: user
+        })
+        .then(user =>{
+            if(!user){
+                throw new Error('User not found');
+            }
+            return user.pagos
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
     },
     getUserById: function (idUser) {
         return usersCollection
