@@ -65,7 +65,6 @@ router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
     Users
         .getUsersByUser(id)
         .then(users => {
-            console.log(users);
             if (users === null || users.length == 0 ) {
                 res.statusMessage = `no users with the provided userId`;
                 return res.status(404).end();
@@ -204,7 +203,6 @@ router.post('/signIn', jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(email)
         .then(user => {
-            console.log(user);
             if (user.length === 0) {
                 res.statusMessage = "Auth failed.";
                 return res.status(401).end();
@@ -215,7 +213,6 @@ router.post('/signIn', jsonParser, (req, res, next) => {
                     return res.status(401).end();
                 }
                 if (result) {
-                    console.log(result);
                     const token = jwt.sign({
                         id: user.id,
                         firstName: user.firstName,
