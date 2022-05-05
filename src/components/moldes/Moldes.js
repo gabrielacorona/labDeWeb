@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
-import DetailCard  from '../utils/DetailCard';
+import DetailCard  from './DetailCard';
 
 const mockProp = {
     moldes: [
@@ -18,23 +18,6 @@ const mockProp = {
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
-    // Using Fetch
-
-    // useEffect(() => {
-    //     const requestOptions = {
-    //         method: "GET",
-    //         mode: "cors",
-    //       };
-        
-    //       fetch("http://localhost:8080/moldes", requestOptions).then(res => res.json()).
-    //       then((result)=> {
-    //           console.log(result, "resultado")
-    //       })
-
-    //     console.log(res.json(), " en json")
-    // }, [])
-
-    // Using Axios
     const makeAPICall = async () => {
         var config = {
             method: 'get',
@@ -51,6 +34,7 @@ export default function Moldes() {
             console.log(error);
         });
     }
+    
     useEffect(() => {
         makeAPICall();
     }, []);
