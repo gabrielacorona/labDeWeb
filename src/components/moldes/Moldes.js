@@ -51,7 +51,6 @@ export default function Moldes() {
             console.log(error);
         });
     }
-
     useEffect(() => {
         makeAPICall();
     }, []);

@@ -38,7 +38,7 @@ export default function SignIn() {
     
     var config = {
       method: 'post',
-      url: 'http://localhost:8080/users/signIn',
+      url: '/users/signIn',
       headers: { 
         'Content-Type': 'application/json'
       },
