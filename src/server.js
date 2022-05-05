@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const multer = require('multer');
-const cors = require('./api/middleware/cors');
+var cors = require('../src/api/middleware/cors');
 const bodyParser = require("body-parser");
 
 const http = require('http');
@@ -82,9 +82,11 @@ app.use('/reportes', reportesRoutes);
 app.use('/users', userRoutes);
 
 
+
 app.use(cors);
 app.use(express.static("public"));
 app.use(morgan('dev'));
+app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

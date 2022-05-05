@@ -18,13 +18,25 @@ const mockProp = {
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
-    useEffect(() => {
-      axios.get('http://localhost:8080/moldes').then(res => {
-        setMoldes(res.data);
-    }).catch(error => {
-        // TODO - Display error message
-        console.error('There was an error!', error);
+    const makeAPICall = async () => {
+        var config = {
+            method: 'get',
+            url: '/moldes',
+            headers: { 
+            'Content-Type': 'application/json'
+            }
+        };
+        axios(config)
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
         });
+    }
+    
+    useEffect(() => {
+        makeAPICall();
     }, []);
     
     return (

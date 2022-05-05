@@ -13,6 +13,7 @@ const { JWT_KEY } = require('../../config');
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
+
 //get all users
 router.get('/', checkAdminAuth, (req, res, next) => {
     console.log("getting all users")
@@ -103,7 +104,7 @@ router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
 router.post('/signIn', jsonParser, (req, res, next) => {
     let email = req.body.email
     let password = req.body.password
-
+    console.log(req)
     Users
         .getUserByEmail(email)
         .then(user => {

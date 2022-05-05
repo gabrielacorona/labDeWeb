@@ -2,6 +2,7 @@ import './App.css';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
+import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/reportes" element={<Reportes/>} />
         <Route path="/moldes" element={<Moldes/>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
       </Routes>
