@@ -35,10 +35,10 @@ export default function Moldes() {
     // }, [])
 
     // Using Axios
-    useEffect(() => {
+    const makeAPICall = async () => {
         var config = {
             method: 'get',
-            url: 'http://localhost:8080/moldes',
+            url: '/moldes',
             headers: { 
             'Content-Type': 'application/json'
             }
@@ -50,6 +50,10 @@ export default function Moldes() {
         .catch(function (error) {
             console.log(error);
         });
+    }
+
+    useEffect(() => {
+        makeAPICall();
     }, []);
     
     return (

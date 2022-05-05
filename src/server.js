@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const multer = require('multer');
-var cors = require('cors');
+var cors = require('../src/api/middleware/cors');
 const bodyParser = require("body-parser");
 
 const http = require('http');
@@ -81,13 +81,9 @@ app.use('/pagos', pagosRoutes);
 app.use('/reportes', reportesRoutes);
 app.use('/users', userRoutes);
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
 
-app.use(cors(corsOptions));
+
+app.use(cors);
 app.use(express.static("public"));
 app.use(morgan('dev'));
 app.use(express.json());
