@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import Avatar from '@mui/material/Avatar';
@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
 function Copyright(props) {
   return (
@@ -27,34 +28,33 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+ 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    var axios = require('axios');
-    var data = JSON.stringify({"email":"ricky@gmail.com","password":"hola"});
-    
-    var config = {
-      method: 'post',
-      url: '/users/signIn',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
+async function loginUser(credentials) {
+  return fetch('/users/signIn', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json()) 
+}
 
-  };
+export default function Login({ setToken }) {
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    let user = {
+      email: data.get('email'),
+      password: data.get('password')
+    }
+    const userData = await loginUser(user)
+    setToken({"token": userData.token})
+    console.log(userData.token)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -125,4 +125,8 @@ export default function SignIn() {
       </Container>
     </ThemeProvider>
   );
+}
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
 }

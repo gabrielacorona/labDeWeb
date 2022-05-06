@@ -1,10 +1,12 @@
 import './App.css';
+import React, { useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
 import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
+import useToken from './useToken';
 import InfoReportes from './components/reportes/InfoReportes'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -15,6 +17,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 const mdTheme = createTheme();
 
 function App() {
+  const { token, setToken } = useToken();
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
   <ThemeProvider theme={mdTheme}>
     <Box sx={{ display: 'flex' }}>
