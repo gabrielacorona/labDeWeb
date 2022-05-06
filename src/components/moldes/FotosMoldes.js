@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

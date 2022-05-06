@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Content from '../Content';
 import ButtonDetalleMolde from '../utils/ButtonDetalleMolde';
 import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
@@ -35,7 +34,7 @@ function SpecsMolde(props) {
 function SpecsWrapper(props){
     return (
         <div style={{paddingLeft: 10}}>
-            <SpecsMolde title="Fecha de adquisición" descripcion={mockProp.fechaAdquisicion}/>    
+            <SpecsMolde title="Fecha de adquisicion" descripcion={mockProp.fechaAdquisicion}/>    
             <SpecsMolde title="Encargado" descripcion={mockProp.encargado} />
             <SpecsMolde title="Tipo de Colada" descripcion={mockProp.tipoColada}/>
         </div>
@@ -95,7 +94,7 @@ export default function DetallesMoldes() {
                                 flexDirection: 'column',
                             }}
                             >
-                                <DescrMolde title="Descripción" descripcion={mockProp.descripcion}/>
+                                <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={12} lg={12}>

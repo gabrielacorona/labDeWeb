@@ -5,7 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
 import SimpleReactLightbox from 'simple-react-lightbox'
 import { SRLWrapper } from "simple-react-lightbox";
 
@@ -26,7 +25,7 @@ export default function FotoMoldeCard(props) {
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h6" component="div" justifyContent="center" textAlign="center">
-                                            Fecha de publicación
+                                            Fecha de publicacion
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary" justifyContent="center" textAlign="center">
                                             {item.fechaPublicacion}
