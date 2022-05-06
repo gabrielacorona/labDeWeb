@@ -19,9 +19,9 @@ const mdTheme = createTheme();
 function App() {
   const [token, setToken] = useState();
 
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
 
   return (
   <ThemeProvider theme={mdTheme}>
@@ -31,7 +31,6 @@ function App() {
       <Routes>
         <Route path="/reportes" element={<Reportes/>} />
         <Route path="/moldes" element={<Moldes/>} />
-        <Route path="/login" element={<Login/>} />
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
         <Route path="/inforeportes" element={<InfoReportes/>} />

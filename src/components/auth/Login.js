@@ -31,9 +31,18 @@ function Copyright(props) {
  
 const theme = createTheme();
 
+async function loginUser(credentials) {
+  return fetch('/users/signIn', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json()) 
+}
+
 export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -42,26 +51,9 @@ export default function Login({ setToken }) {
       email: data.get('email'),
       password: data.get('password')
     }
-
-    var axios = require('axios');
-    var config = {
-      method: 'post',
-      url: '/users/signIn',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : JSON.stringify(user)
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  
-    setToken(token);
+    const userData = await loginUser(user)
+    setToken(userData.token)
+    console.log(userData.token)
   }
 
   return (
