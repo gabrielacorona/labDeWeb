@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
@@ -16,6 +17,12 @@ import InfoReportes from './components/reportes/InfoReportes';
 const mdTheme = createTheme();
 
 function App() {
+  const [token, setToken] = useState();
+
+  // if(!token) {
+  //   return <Login setToken={setToken} />
+  // }
+
   return (
   <ThemeProvider theme={mdTheme}>
     <Box sx={{ display: 'flex' }}>
