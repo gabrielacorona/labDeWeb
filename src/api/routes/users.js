@@ -165,7 +165,7 @@ router.post('/signIn', jsonParser, (req, res, next) => {
 });
 
 //TODO: hacer config para que solo cliente de misma compañía puedan crear users
-router.post('/', checkClienteAuth,  jsonParser, (req, res, next) => {
+router.post('/',  jsonParser, (req, res, next) => {
     Users
         .getUserByEmail(req.body.email)
         .then(person => {
