@@ -15,30 +15,44 @@ const mockProp = {
     ]
 }
 
+const makeAPICall = async () => {
+    var config = {
+        method: 'get',
+        url: '/moldes',
+        headers: { 
+            'Content-Type': 'application/json'
+        }
+    };
+    axios(config)
+    .then(function (response) {
+        return response.data;
+    })
+    .catch(function (error) {
+        return error
+    });
+}
+
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
-    const makeAPICall = async () => {
+    useEffect(() => {
         var config = {
             method: 'get',
             url: '/moldes',
             headers: { 
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         };
         axios(config)
         .then(function (response) {
-            console.log(response.data);
+            setMoldes(response.data);
         })
         .catch(function (error) {
-            console.log(error);
+            // TODO - error handling
+            return error
         });
-    }
-    
-    useEffect(() => {
-        makeAPICall();
     }, []);
-    
+
     return (
     <Box
         component="main"
@@ -57,7 +71,7 @@ export default function Moldes() {
                 <Grid item xs={12} md={12} lg={12}>
                     <Title>Moldes </Title>
                 </Grid>
-                {moldes.map(({ id}, index) => (
+                {moldes && moldes.map(({ id}, index) => (
                     <DetailCard idMolde={id} cardNumber={index + 1}/>
                 ))}
             </Grid>
