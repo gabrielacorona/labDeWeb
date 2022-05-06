@@ -5,11 +5,13 @@ import Moldes from './components/moldes/Moldes'
 import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
+import InfroReportes from './components/reportes/InfoReportes'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import InfoReportes from './components/reportes/InfoReportes';
 
 const mdTheme = createTheme();
 
@@ -25,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
+        <Route path="/inforeportes" element={<InfoReportes/>} />
       </Routes>
       </Router>
     </Box>
