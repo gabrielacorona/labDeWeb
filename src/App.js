@@ -6,14 +6,13 @@ import Moldes from './components/moldes/Moldes'
 import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
-import InfroReportes from './components/reportes/InfoReportes'
 import useToken from './useToken';
+import InfoReportes from './components/reportes/InfoReportes'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import InfoReportes from './components/reportes/InfoReportes';
 
 const mdTheme = createTheme();
 

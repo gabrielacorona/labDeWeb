@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Descripcion from './Descripcion';
 
@@ -25,7 +23,6 @@ export default function DetallesForm() {
             id="fecha"
             name="fecha"
             label="Fecha"
-            // autoComplete="family-name"
             variant="standard"
           />
         </Grid>
@@ -35,7 +32,6 @@ export default function DetallesForm() {
             id="autor"
             name="autor"
             label="Autor"
-            // autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>
@@ -45,7 +41,6 @@ export default function DetallesForm() {
             id="diagnostico"
             name="diagnostico"
             label="Diagnostico"
-            // autoComplete="shipping address-line2"
             variant="standard"
           />
         </Grid>
@@ -55,7 +50,6 @@ export default function DetallesForm() {
             id="costo-estimado"
             name="costo-estimado"
             label="Costo Estimado"
-            // autoComplete="shipping address-level2"
             variant="standard"
           />
         </Grid>
