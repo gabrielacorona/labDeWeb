@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 
 const useStyles = makeStyles({
     root: {
-        background: 'rgba(250, 250, 250)',
+        background: 'rgb(238, 238, 238)',
         border: 0,
         borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: '0 3px 5px 2px rgb(221, 221, 221)',
         color: 'white',
         height: 150,
         width: '100%',
