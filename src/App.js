@@ -7,6 +7,7 @@ import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import InfroReportes from './components/reportes/InfoReportes'
+import useToken from './useToken';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -17,7 +18,7 @@ import InfoReportes from './components/reportes/InfoReportes';
 const mdTheme = createTheme();
 
 function App() {
-  const [token, setToken] = useState();
+  const { token, setToken } = useToken();
 
   if(!token) {
     return <Login setToken={setToken} />
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/reportes" element={<Reportes/>} />
         <Route path="/moldes" element={<Moldes/>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
         <Route path="/inforeportes" element={<InfoReportes/>} />

@@ -52,7 +52,7 @@ export default function Login({ setToken }) {
       password: data.get('password')
     }
     const userData = await loginUser(user)
-    setToken(userData.token)
+    setToken({"token": userData.token})
     console.log(userData.token)
   }
 
