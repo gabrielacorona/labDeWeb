@@ -6,7 +6,7 @@ import Moldes from './components/moldes/Moldes'
 import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
-import useToken from './useToken';
+import {useToken} from './services/token';
 import InfoReportes from './components/reportes/InfoReportes'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,8 +18,7 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
-  console.log("mitoken", token)
-  
+
   if(!token) {
     return <Login setToken={setToken} />
   }
