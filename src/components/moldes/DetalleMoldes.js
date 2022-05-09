@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -8,6 +8,8 @@ import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { getMoldeById } from '../../services/moldes';
+import { useParams } from "react-router";
 
 const mockProp = {
     nombreMolde : "MOLDE SUPREME",
@@ -31,12 +33,15 @@ function SpecsMolde(props) {
     );
 }
 
-function SpecsWrapper(props){
+function SpecsWrapper({fechaAdquisicion, encargado, tipoColada}){
+    // TODO - get encargado name
     return (
-        <Grid item xs={12} md={12} lg={12} style={{paddingLeft: 10}}>
-            <SpecsMolde title="Fecha de adquisicion" descripcion={mockProp.fechaAdquisicion}/>    
-            <SpecsMolde title="Encargado" descripcion={mockProp.encargado} />
-            <SpecsMolde title="Tipo de Colada" descripcion={mockProp.tipoColada}/>
+        <Grid item xs={12} md={12} lg={12}>
+            <div style={{paddingLeft: 10}}>
+                <SpecsMolde title="Fecha de adquisicion" descripcion={fechaAdquisicion}/>    
+                <SpecsMolde title="Encargado" descripcion={encargado} />
+                <SpecsMolde title="Tipo de Colada" descripcion={tipoColada}/>
+            </div>
         </Grid>
     )
 }
@@ -60,8 +65,56 @@ function DescrMolde(props) {
     );
 }
 
+function TopHeader({id}){
+    return(
+        <Grid item xs={12} md={3} lg={3}>
+            <Grid container spacing={1}>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Typography>ID: {id}</Typography>
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    )
+}
+
+function RightSidebar(props){
+    return(
+        <Grid item xs={12} md={3} lg={3}>
+            <Grid container spacing={4}>
+                <Grid item xs={12} md={12} lg={12}>
+                    <ButtonDetalleMolde title="Fotos"/>
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <ButtonDetalleMolde title="Reportes"/>
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
+                </Grid> 
+            </Grid>
+        </Grid>       
+    )
+}
+
 export default function DetallesMoldes() {
+    const [data, setData] = useState({});
+    let { id } = useParams();
+
+    const fetchMoldeData = useCallback(async () => {
+        const moldeData = await getMoldeById(id)
+
+        setData(moldeData);
+    }, [])
+
+    useEffect(() => {
+        fetchMoldeData()
+        .catch(console.error);
+    }, []);
+
   return (
+      data &&
     <Box
         component="main"
         sx={{
@@ -72,45 +125,21 @@ export default function DetallesMoldes() {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
-        }}
-    >
+        }} >
         {/* CONTAINER WITH DESCRIPCION AND FOTOS AND REPORTES BUTTONS */}
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={9} lg={9}>
-                    <Title>{mockProp.nombreMolde}</Title>
+                    <Title>{data.nombreMolde}</Title>
                 </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Typography>ID: {mockProp.id}</Typography>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <TopHeader id={data.id} />
                 <Grid item xs={12} md={9} lg={9}>
                     <Grid container spacing ={4}>
-                        <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <SpecsWrapper />
-                        </Grid>
+                        <DescrMolde title="Descripcion" descripcion={data.descripcion}/>
+                        <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={mockProp.encargado} tipoColada={data.tipoColada} />
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <ButtonDetalleMolde title="Fotos"/>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <ButtonDetalleMolde title="Reportes"/>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
-                        </Grid> 
-                    </Grid>
-                </Grid>       
+                <RightSidebar/>
             </Grid>
         </Container>
     </Box>

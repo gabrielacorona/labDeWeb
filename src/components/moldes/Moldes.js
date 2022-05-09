@@ -26,7 +26,7 @@ export default function Moldes() {
 
     useEffect(() => {
         fetchMoldeData()
-        .catch(console.error);;    
+        .catch(console.error);
     }, []);
 
     return (

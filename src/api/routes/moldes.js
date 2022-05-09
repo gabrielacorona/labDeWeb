@@ -77,6 +77,19 @@ router.get('/byId', checkUserAuth, jsonParser,  (req, res, next) => {
     })
 });
 
+router.get('/byId/:id', checkUserAuth, jsonParser,  (req, res, next) => {
+    let id = req.params.id;
+    Moldes
+    .getMoldeById(id)
+    .then(result => {
+        return res.status(201).json(result)
+    })
+    .catch(err => {
+        res.statusMessage = "Could not find Molde with that Id";
+        return res.status(500).end()
+    })
+});
+
 router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
     const encargado = req.body.encargado;
     Moldes

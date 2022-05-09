@@ -7,6 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid'
+import {Link } from "react-router-dom";
 
 function DetailCard(props) {
   return (
@@ -32,9 +33,11 @@ function DetailCard(props) {
             style={{paddingTop:10}}
             >
                 <Grid item lg={6}>
-                    <Button variant="outlined" color="primary">
-                        Informacion
-                    </Button>
+                    <Link to={'/detallemolde/'+ props.idMolde}>
+                        <Button variant="outlined" color="primary">
+                            Informacion
+                        </Button>
+                    </Link>
                 </Grid>
                 <Grid item lg={6}>
                     <Button variant="outlined" color="secondary">
