@@ -18,7 +18,8 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
-
+  console.log("mitoken", token)
+  
   if(!token) {
     return <Login setToken={setToken} />
   }

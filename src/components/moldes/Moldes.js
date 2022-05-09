@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -15,42 +15,37 @@ const mockProp = {
     ]
 }
 
-const makeAPICall = async () => {
-    var config = {
-        method: 'get',
-        url: '/moldes',
-        headers: { 
-            'Content-Type': 'application/json'
-        }
-    };
-    axios(config)
-    .then(function (response) {
-        return response.data;
+async function getMoldes() {
+    return fetch('/moldes', {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJiNTgzMTBhLWU1ZjUtNGY4MS05ZmIwLWZlOTYxZjEyZmM2NSIsImZpcnN0TmFtZSI6InJpY2FyZG8iLCJsYXN0TmFtZSI6ImNvcm9uYSIsImVtYWlsIjoicmlja3lAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMDUkWldNc0NwZEsvbVNrajJJN1BVd1lBLk84YUpoNExla1UxTXFpandBZ0ZvdTBUZHU2SkI5VVciLCJjb21wYW55IjoiZ2FiYWNvIiwidGVsZXBob25lIjoiODE4MjY2MjIwMyIsInVzZXJQaWN0dXJlIjoicGVuZGllbnRlIiwiY29tcGFueVBpY3R1cmUiOiJwZW5kaWVudGUiLCJsYXN0UmVwb3J0RGF0ZSI6IiBheWVyICIsIm1lbWJlclNpbmNlIjoiYXllciAiLCJ1c2VyVHlwZSI6ImEiLCJpYXQiOjE2NTIxMTYzNjUsImV4cCI6MTY1MjExOTk2NX0.bDs5NobltWHg_mtGRnc-daOkN4eQoK8_BAu76QVImsY'
+      }
     })
-    .catch(function (error) {
-        return error
+    .then((response) => { 
+        return response.json().then((data) => {
+            console.log(data);
+            return data;
+        }).catch((err) => {
+            console.log(err);
+        }) 
     });
 }
-
+  
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
+    const fetchData = useCallback(async () => {
+        const data = await getMoldes()
+      
+        setMoldes(data);
+      }, [])
+
     useEffect(() => {
-        var config = {
-            method: 'get',
-            url: '/moldes',
-            headers: { 
-                'Content-Type': 'application/json'
-            }
-        };
-        axios(config)
-        .then(function (response) {
-            setMoldes(response.data);
-        })
-        .catch(function (error) {
-            // TODO - error handling
-            return error
-        });
+        fetchData()
+        // make sure to catch any error
+        .catch(console.error);;    
     }, []);
 
     return (

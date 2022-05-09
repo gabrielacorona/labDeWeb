@@ -126,7 +126,3 @@ export default function Login({ setToken }) {
     </ThemeProvider>
   );
 }
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
