@@ -7,12 +7,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DetallesForm from '../DetallesForm';
-import Descripcion from '../Descripcion';
-
-function getStepContent(step) {
-    return <DetallesForm />;
-}
+import DetallesForm from './DetallesForm';
+import Descripcion from './Descripcion';
+import { postReporte } from '../../services/reportes';
 
 const theme = createTheme();
   
@@ -24,9 +21,13 @@ export default function InfoReportes() {
     const data = new FormData(e.currentTarget);
     let reporte = {
       titulo: data.get('titulo'),
-      fecha: data.get('fecha')
+      fecha: data.get('fecha'),
+      autor: data.get('autor'),
+      diagnostico: data.get('diagnostico'),
+      costoEstimado: data.get('costo-estimado')
     }
-    console.log(reporte)
+    const res = await postReporte(reporte)
+    console.log(res)
   }
 
   return (
