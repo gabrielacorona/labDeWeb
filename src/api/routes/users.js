@@ -216,16 +216,8 @@ router.post('/signIn', jsonParser, (req, res, next) => {
                 if (result) {
                     const token = jwt.sign({
                         id: user.id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
                         email: user.email,
-                        password: user.password,
                         company: user.company,
-                        telephone: user.telephone, 
-                        userPicture: user.userPicture,
-                        companyPicture: user.companyPicture,
-                        lastReportDate: user.lastReportDate,
-                        memberSince: user.memberSince,
                         userType: user.userType
                     }, JWT_KEY, {
                         expiresIn: "1h"
