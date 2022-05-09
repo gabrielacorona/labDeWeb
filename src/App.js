@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
+import Photos from './components/Photos'
 import Login from './components/auth/Login'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
@@ -35,6 +36,7 @@ function App() {
         <Route path="/detallemoldes" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
         <Route path="/inforeportes" element={<InfoReportes/>} />
+        <Route path="/photos" element={<Photos/>} />
       </Routes>
       </Router>
     </Box>
