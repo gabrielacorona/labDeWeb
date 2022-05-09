@@ -33,24 +33,30 @@ function SpecsMolde(props) {
 
 function SpecsWrapper(props){
     return (
-        <div style={{paddingLeft: 10}}>
+        <Grid item xs={12} md={12} lg={12} style={{paddingLeft: 10}}>
             <SpecsMolde title="Fecha de adquisicion" descripcion={mockProp.fechaAdquisicion}/>    
             <SpecsMolde title="Encargado" descripcion={mockProp.encargado} />
             <SpecsMolde title="Tipo de Colada" descripcion={mockProp.tipoColada}/>
-        </div>
+        </Grid>
     )
 }
 
 function DescrMolde(props) {
     return (
-      <React.Fragment>
-        <Typography component="h5" variant="h5" gutterBottom>
-            {props.title}
-        </Typography>
-        <Typography color="text.secondary">
-            {props.descripcion}
-        </Typography>
-      </React.Fragment>
+        <Grid item xs={12} md={12} lg={12}>
+            <Paper sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+            }} >
+                <Typography component="h5" variant="h5" gutterBottom>
+                    {props.title}
+                </Typography>
+                <Typography color="text.secondary">
+                    {props.descripcion}
+                </Typography>
+            </Paper>
+        </Grid>
     );
 }
 
@@ -86,17 +92,7 @@ export default function DetallesMoldes() {
                 </Grid>
                 <Grid item xs={12} md={9} lg={9}>
                     <Grid container spacing ={4}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                            >
-                                <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
-                            </Paper>
-                        </Grid>
+                        <DescrMolde title="Descripcion" descripcion={mockProp.descripcion}/>
                         <Grid item xs={12} md={12} lg={12}>
                             <SpecsWrapper />
                         </Grid>
