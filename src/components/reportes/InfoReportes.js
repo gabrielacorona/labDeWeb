@@ -24,7 +24,8 @@ export default function InfoReportes() {
       fecha: data.get('fecha'),
       autor: data.get('autor'),
       diagnostico: data.get('diagnostico'),
-      costoEstimado: data.get('costo-estimado')
+      costoEstimado: data.get('costo-estimado'),
+      descripcion: data.get('descripcion')
     }
     const res = await postReporte(reporte)
     console.log(res)
