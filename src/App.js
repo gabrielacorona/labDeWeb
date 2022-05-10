@@ -3,6 +3,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
+import Photos from './components/Photos'
 import Login from './components/auth/Login'
 import Home from './components/Home'
 import Protected from './components/auth/Protected'
