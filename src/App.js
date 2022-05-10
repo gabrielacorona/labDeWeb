@@ -12,6 +12,9 @@ import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
 import InfoReportes from './components/reportes/InfoReportes'
+import OperadoresAdmin from './components/operadores/OperadoresAdmin'
+import AgregarMolde from './components/moldes/AgregarMolde'
+import EditarMolde from './components/moldes/EditarMolde'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -68,6 +71,24 @@ function App() {
           <Route path="/inforeportes" element={
             <Protected token={token}>
               <InfoReportes/>
+            </Protected>
+            }
+          />
+          <Route path="/operadores" element={
+            <Protected token={token}>
+              <OperadoresAdmin/>
+            </Protected>
+            }
+          />
+          <Route path="/agregarmolde" element={
+            <Protected token={token}>
+              <AgregarMolde/>
+            </Protected>
+            }
+          />
+          <Route path="/editarmolde" element={
+            <Protected token={token}>
+              <EditarMolde/>
             </Protected>
             }
           />
