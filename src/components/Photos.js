@@ -1,43 +1,71 @@
 import React, { useState } from "react";
+import axios from 'axios'
 
 
-async function addPhoto(photo) {
-    return fetch('/photo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      body: photo
-    }).catch(error => error.json())
+
+async function postImage(image, description) {
+  const formData = new FormData();
+  formData.append("image", image)
+  formData.append("description", description)
+  const result=""
+  try{
+    result = await axios.post('/fotos', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    
+  }catch(err){
+    console.log(err.message)
+  }
+  return result.data
 }
+
   
 const Photos = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [file, setFile] = useState()
+  const [description, setDescription] = useState("")
+  const [images, setImages] = useState([])
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    setSelectedImage(e.target.files[0]);
-    let resp = await addPhoto(selectedImage)
-}
+      e.preventDefault()
+      const picture = document.getElementById("addImage")
+      let file = picture.files[0]
+      const imgDescription = document.getElementById("imageDesc")
+      postImage(file, imgDescription.value)
+  }
+
+  const fileSelected = event => {
+    const file = event.target.files[0]
+    console.log(file)
+		setFile(file)
+	}
 
   return (
     <div>
       <h1>Upload and Display Image usign React Hook's</h1>
-      {selectedImage && (
-        <div>
-        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
-        <br />
-        <button onClick={()=>setSelectedImage(null)}>Remove</button>
-        </div>
-      )}
       <br />
-     
       <br /> 
-      <input
+      <form onSubmit={handleSubmit}>
+        <input
+        id="addImage"
         type="file"
-        name="myImage"
-        onChange={handleSubmit}
-      />
+        accept="image/*"
+        />
+        <input
+        id="imageDesc"
+        value={description}
+        onChange={e => setDescription(e.target.value)} 
+        type="text"/>
+        <button type="submit">Submit</button>
+      </form>
+
+      { images.map( image => (
+        <div key={image}>
+          <img src={image}></img>
+        </div>
+      ))}
+      <img src="/images/9fa06d3c5da7aec7f932beb5b3e60f1d"></img>
+
+        
+
     </div>
   );
 };
