@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
+import { loginUser } from '../../services/users';
 
 function Copyright(props) {
   return (
@@ -30,17 +31,6 @@ function Copyright(props) {
 }
  
 const theme = createTheme();
-
-async function loginUser(credentials) {
-  return fetch('/users/signIn', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json()) 
-}
 
 export default function Login({ setToken }) {
 
@@ -125,8 +115,4 @@ export default function Login({ setToken }) {
       </Container>
     </ThemeProvider>
   );
-}
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
 }

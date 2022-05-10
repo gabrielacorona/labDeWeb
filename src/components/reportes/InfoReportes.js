@@ -3,18 +3,33 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DetallesForm from '../DetallesForm';
-  
-function getStepContent(step) {
-    return <DetallesForm />;
-}
+import DetallesForm from './DetallesForm';
+import Descripcion from './Descripcion';
+import { postReporte } from '../../services/reportes';
 
 const theme = createTheme();
   
 export default function InfoReportes() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [reporteData, setReporteData] = React.useState({});
+  
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    let reporte = {
+      titulo: data.get('titulo'),
+      fecha: data.get('fecha'),
+      autor: data.get('autor'),
+      diagnostico: data.get('diagnostico'),
+      costoEstimado: data.get('costo-estimado'),
+      descripcion: data.get('descripcion')
+    }
+    const res = await postReporte(reporte)
+    console.log(res)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,16 +51,19 @@ export default function InfoReportes() {
                 Reporte
             </Typography>
                 <React.Fragment>
-                    {getStepContent(activeStep)}
-                    <Box sx={{ display: 'flex', justifyContent: 'normal' }}>
-                    <Button
-                        variant="contained" 
-                        // onClick={HAY QUE METER UNA ACCION PARA GUARDAR EN LA BD}
-                        sx={{ mt: 3 }}
-                    >
-                        {'Guardar'}
-                    </Button>
-                    </Box>
+                <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                        <DetallesForm />
+                        <Grid item lg={12}>
+                            <Button
+                                variant="contained"
+                                type="submit"
+                            >
+                            Guardar
+                        </Button>
+                        </Grid>
+                    </Grid>
+                </Box>
                 </React.Fragment>
         </Container>
     </Box>

@@ -5,9 +5,9 @@ export default function Content(props) {
   return (
     <React.Fragment>
       <TextField
-          id="diagnostico"
-          name="diagnostico"
-          label="Diagnostico"
+          id="descripcion"
+          name="descripcion"
+          label="Descripcion"
           multiline
           rows={8}
           style={{backgroundColor:"#ffffff"}}
