@@ -203,7 +203,16 @@ const Users = {
             if(!user){
                 throw new Error('User not found');
             }
-            return user.operadores
+            return usersCollection
+                .find({
+                    '_id': { $in: user.operadores}
+                })
+                .then(operadores => {
+                    return operadores;
+                })
+                .catch(err => {
+                    throw new Error(err);
+                })
         })
         .catch(err =>{
             console.log(err);

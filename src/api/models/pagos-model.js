@@ -126,6 +126,18 @@ const Pagos = {
             throw new Error(err);
         });
     },
+    populatePagos: function(pagoIds){
+        return pagosCollection
+            .find({
+                '_id': { $in: pagoIds}
+            })
+            .then(pagos =>{
+                return pagos;
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+    },
     deletePagoById: function (query) {
         return pagosCollection
             .deleteOne({
