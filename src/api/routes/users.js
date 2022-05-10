@@ -32,9 +32,9 @@ router.get('/', checkAdminAuth, (req, res, next) => {
 });
 
 //get users by company
-router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/company/:company', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their company");
-    let id = req.body.company;
+    let id = req.params.company;
     if(!id){
         res.statusMessage = "please send 'company' as body";
         return res.status(406).end();
@@ -56,9 +56,9 @@ router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by user
-router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getOperadores/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -79,21 +79,29 @@ router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getReportes/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting reportes by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
     }
     Users
         .getReportesByUser(id)
-        .then(reportes => {
-            if (reportes === null || reportes.length == 0 ) {
+        .then(reporteIds => {
+            if (reporteIds === null || reporteIds.length == 0 ) {
                 res.statusMessage = `no reportes with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(reportes);
+                Reportes
+                .populateReportes(reporteIds)
+                .then(reportes => {
+                    return res.status(200).json(reportes);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {
@@ -102,21 +110,29 @@ router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getMoldes/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting moldes by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
     }
     Users
         .getMoldesByUser(id)
-        .then(moldes => {
-            if (moldes === null || moldes.length == 0 ) {
+        .then(moldeIds => {
+            if (moldeIds === null || moldeIds.length == 0 ) {
                 res.statusMessage = `no moldes with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(moldes);
+                Moldes
+                .populateMoldes(moldeIds)
+                .then(moldes => {
+                    return res.status(200).json(moldes);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {
@@ -125,21 +141,29 @@ router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getPagos/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting pagos by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
     }
     Users
         .getPagosByUser(id)
-        .then(pagos => {
-            if (pagos === null || pagos.length == 0 ) {
+        .then(pagoIds => {
+            if (pagoIds === null || pagoIds.length == 0 ) {
                 res.statusMessage = `no pagos with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(pagos);
+                Pagos
+                .populatePagos(pagoIds)
+                .then(pagos => {
+                    return res.status(200).json(pagos);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {
@@ -149,9 +173,9 @@ router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by id
-router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
-    let id = req.body.id;
+    let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";
         return res.status(406).end();
@@ -173,9 +197,9 @@ router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by email
-router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/email/:email',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")
-    let email = req.body.email;
+    let email = req.params.email;
     if (!email) {
         res.statusMessage = "please send 'Email' as  body";
         return res.status(406).end(); //not accept status

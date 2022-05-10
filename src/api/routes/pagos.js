@@ -53,8 +53,8 @@ router.post('/', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
-    const id = req.body.id;
+router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
+    const id = req.params.id;
     Pagos
         .getPagoById(id)
         .then(result => {
@@ -66,8 +66,9 @@ router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
         })
 });
 
-router.get('/byUserId', checkClienteAuth, jsonParser,(req, res, next) => {
-    const cliente = req.body.cliente;
+// param cliente: id del usuario que es el cliente
+router.get('/cliente/:cliente', checkClienteAuth, jsonParser,(req, res, next) => {
+    const cliente = req.params.cliente;
     Pagos
         .getPagosByUserId(cliente)
         .then(result => {
@@ -80,8 +81,8 @@ router.get('/byUserId', checkClienteAuth, jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byCompany', checkClienteAuth, jsonParser, (req, res, next) => {
-    const company = req.body.company;
+router.get('/company/:company', checkClienteAuth, jsonParser, (req, res, next) => {
+    const company = req.params.company;
     if (company == ""){
         res.status(404).json({
             message: "No hay compañía"

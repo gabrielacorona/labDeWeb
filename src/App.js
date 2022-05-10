@@ -1,9 +1,13 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
+import Photos from './components/Photos'
 import Login from './components/auth/Login'
+import Home from './components/Home'
+import Protected from './components/auth/Protected'
+import SignUp from './components/auth/SignUp'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
@@ -22,77 +26,73 @@ const mdTheme = createTheme();
 function App() {
   const { token, setToken } = useToken();
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
-        <Router>
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={
-                token ? <Home /> : <Login setToken={setToken}/>
-              }
-              />
-            <Route path="/login" element={
-              <Login setToken={setToken}/>
-              }
+      <Router>
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={
+              token ? <Home /> : <Login setToken={setToken}/>
+            }
             />
-            <Route path="/signup" element={
-              <SignUp />
-              }
-            />
-            <Route path="/moldes" element={
-              <Protected token={token}>
-                <Moldes />
-              </Protected>
-              }
-            />
-            <Route path="/reportes" element={
-              <Protected token={token}>
-                <Reportes />
-              </Protected>
-              }
-            />
-            <Route path="/detallemolde/:id" element={
-              <Protected token={token}>
-                <DetalleMoldes />
-              </Protected>
-              }
-            />
-            <Route path="/fotosmoldes" element={
-              <Protected token={token}>
-                <FotosMoldes/>
-              </Protected>
-              }
-            />
-            <Route path="/inforeportes" element={
-              <Protected token={token}>
-                <InfoReportes/>
-              </Protected>
-              }
-            />
-            <Route path="/operadores" element={
-              <Protected token={token}>
-                <OperadoresAdmin/>
-              </Protected>
-              }
-            />
-            <Route path="/agregarmolde" element={
-              <Protected token={token}>
-                <AgregarMolde/>
-              </Protected>
-              }
-            />
-            <Route path="/editarmolde" element={
-              <Protected token={token}>
-                <EditarMolde/>
-              </Protected>
-              }
-            />
-          </Routes>
+          <Route path="/login" element={
+            <Login setToken={setToken}/>
+            }
+          />
+          <Route path="/signup" element={
+            <SignUp />
+            }
+          />
+          <Route path="/moldes" element={
+            <Protected token={token}>
+              <Moldes />
+            </Protected>
+            }
+          />
+          <Route path="/reportes" element={
+            <Protected token={token}>
+              <Reportes />
+            </Protected>
+            }
+          />
+          <Route path="/detallemolde/:id" element={
+            <Protected token={token}>
+              <DetalleMoldes />
+            </Protected>
+            }
+          />
+          <Route path="/fotosmoldes" element={
+            <Protected token={token}>
+              <FotosMoldes/>
+            </Protected>
+            }
+          />
+          <Route path="/inforeportes" element={
+            <Protected token={token}>
+              <InfoReportes/>
+            </Protected>
+            }
+          />
+          <Route path="/operadores" element={
+            <Protected token={token}>
+              <OperadoresAdmin/>
+            </Protected>
+            }
+          />
+          <Route path="/agregarmolde" element={
+            <Protected token={token}>
+              <AgregarMolde/>
+            </Protected>
+            }
+          />
+          <Route path="/editarmolde" element={
+            <Protected token={token}>
+              <EditarMolde/>
+            </Protected>
+            }
+          />
+        </Routes>
         </Router>
       </Box>
     </ThemeProvider>
