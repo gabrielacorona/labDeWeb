@@ -137,6 +137,18 @@ const Moldes = {
             throw new Error(err);
         });
     },
+    populateMoldes: function(moldeIds){
+        return MoldesCollection
+            .find({
+                '_id': { $in: moldeIds}
+            })
+            .then(moldes =>{
+                return moldes;
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+    },
     deleteMoldeById: function (query) {
         return MoldesCollection
             .deleteOne({
