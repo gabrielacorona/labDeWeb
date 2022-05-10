@@ -118,6 +118,18 @@ const Reportes = {
             throw new Error(err);
         });
     },
+    populateReportes: function(reporteIds){
+        return ReportesCollection
+            .find({
+                '_id': { $in: reporteIds}
+            })
+            .then(reportes =>{
+                return reportes;
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+    },
     deleteReporteById: function (query) {
         return ReportesCollection
             .deleteOne({

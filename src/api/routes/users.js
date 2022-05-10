@@ -88,12 +88,20 @@ router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
     }
     Users
         .getReportesByUser(id)
-        .then(reportes => {
-            if (reportes === null || reportes.length == 0 ) {
+        .then(reporteIds => {
+            if (reporteIds === null || reporteIds.length == 0 ) {
                 res.statusMessage = `no reportes with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(reportes);
+                Reportes
+                .populateReportes(reporteIds)
+                .then(reportes => {
+                    return res.status(200).json(reportes);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {
@@ -111,12 +119,20 @@ router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
     }
     Users
         .getMoldesByUser(id)
-        .then(moldes => {
-            if (moldes === null || moldes.length == 0 ) {
+        .then(moldeIds => {
+            if (moldeIds === null || moldeIds.length == 0 ) {
                 res.statusMessage = `no moldes with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(moldes);
+                Moldes
+                .populateMoldes(moldeIds)
+                .then(moldes => {
+                    return res.status(200).json(moldes);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {
@@ -134,12 +150,20 @@ router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
     }
     Users
         .getPagosByUser(id)
-        .then(pagos => {
-            if (pagos === null || pagos.length == 0 ) {
+        .then(pagoIds => {
+            if (pagoIds === null || pagoIds.length == 0 ) {
                 res.statusMessage = `no pagos with the provided userId`;
                 return res.status(404).end();
             } else {
-                return res.status(200).json(pagos);
+                Pagos
+                .populatePagos(pagoIds)
+                .then(pagos => {
+                    return res.status(200).json(pagos);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
             }
         })
         .catch(err => {

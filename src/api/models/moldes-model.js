@@ -137,6 +137,54 @@ const Moldes = {
             throw new Error(err);
         });
     },
+    getReportesByMolde: function (molde) {
+        return MoldesCollection
+        .findOne({
+            id: molde
+        })
+        .then(molde =>{
+            if(!molde){
+                throw new Error('User not found');
+            }
+            return molde.reportes
+        })
+        .catch(err =>{
+            console.log(err);
+            throw new Error(err);
+        })
+    },
+    addReporte: function (idMolde, idReporte) {
+        return MoldesCollection
+        .findOne({
+            id: idMolde
+        })
+        .then(molde => {
+            if (!molde) {
+                throw new Error('User not found');
+            }
+            if (!molde.reportes.includes(idReporte)){
+                molde.reportes.push(idReporte);
+                molde.save();
+            }
+            return molde;
+        })
+        .catch(err => {
+            console.log(err)
+            throw new Error(err);
+        });
+    },
+    populateMoldes: function(moldeIds){
+        return MoldesCollection
+            .find({
+                '_id': { $in: moldeIds}
+            })
+            .then(moldes =>{
+                return moldes;
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+    },
     deleteMoldeById: function (query) {
         return MoldesCollection
             .deleteOne({
