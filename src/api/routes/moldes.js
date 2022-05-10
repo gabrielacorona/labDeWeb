@@ -65,20 +65,7 @@ router.post('/', checkClienteAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/byId', checkUserAuth, jsonParser,  (req, res, next) => {
-    const id = req.body.id;
-    Moldes
-    .getMoldeById(id)
-    .then(result => {
-        return res.status(201).json(result)
-    })
-    .catch(err => {
-        res.statusMessage = "Could not find Molde with that Id";
-        return res.status(500).end()
-    })
-});
-
-router.get('/byId/:id', checkUserAuth, jsonParser,  (req, res, next) => {
+router.get('/id/:id', checkUserAuth, jsonParser,  (req, res, next) => {
     let id = req.params.id;
     Moldes
     .getMoldeById(id)
@@ -91,8 +78,8 @@ router.get('/byId/:id', checkUserAuth, jsonParser,  (req, res, next) => {
     })
 });
 
-router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
-    const encargado = req.body.encargado;
+router.get('/encargado/:encargado', checkUserAuth, jsonParser,(req, res, next) => {
+    const encargado = req.params.encargado;
     Moldes
         .getMoldesByUserId(encargado)
         .then(result => {
@@ -105,8 +92,8 @@ router.get('/byUserId', checkUserAuth, jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
-    const company = req.body.company;
+router.get('/company/:company', checkUserAuth, jsonParser, (req, res, next) => {
+    const company = req.params.company;
     if (company == ""){
         res.status(404).json({
             message: "No hay compañía"
@@ -126,9 +113,9 @@ router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
     }
 });
 
-router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getReportes/:moldeId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting reportes by their molde");
-    let id = req.body.moldeId;
+    let id = req.params.moldeId;
     if(!id){
         res.statusMessage = "please send 'molde' as body";
         return res.status(406).end();

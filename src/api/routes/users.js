@@ -32,9 +32,9 @@ router.get('/', checkAdminAuth, (req, res, next) => {
 });
 
 //get users by company
-router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/company/:company', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their company");
-    let id = req.body.company;
+    let id = req.params.company;
     if(!id){
         res.statusMessage = "please send 'company' as body";
         return res.status(406).end();
@@ -56,9 +56,9 @@ router.get('/byCompany', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by user
-router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getOperadores/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -79,9 +79,9 @@ router.get('/getOperadores', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getReportes/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting reportes by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -110,9 +110,9 @@ router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getMoldes/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting moldes by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -141,9 +141,9 @@ router.get('/getMoldes', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getPagos/:userId', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting pagos by their user");
-    let id = req.body.userId;
+    let id = req.params.userId;
     if(!id){
         res.statusMessage = "please send 'user' as body";
         return res.status(406).end();
@@ -173,9 +173,9 @@ router.get('/getPagos', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by id
-router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
-    let id = req.body.id;
+    let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";
         return res.status(406).end();
@@ -197,9 +197,9 @@ router.get('/byId', checkAdminAuth, jsonParser, (req, res, next) => {
 });
 
 //get users by email
-router.get('/byEmail',  checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/email/:email',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")
-    let email = req.body.email;
+    let email = req.params.email;
     if (!email) {
         res.statusMessage = "please send 'Email' as  body";
         return res.status(406).end(); //not accept status

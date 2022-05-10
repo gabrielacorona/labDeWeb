@@ -58,8 +58,8 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
 
 });
 
-router.get('/byId', checkUserAuth,  jsonParser,(req, res, next) => {
-    const id = req.body.id;
+router.get('/id/:id', checkUserAuth,  jsonParser,(req, res, next) => {
+    const id = req.params.id;
     Reportes
         .getReporteById(id)
         .then(result => {
@@ -72,8 +72,8 @@ router.get('/byId', checkUserAuth,  jsonParser,(req, res, next) => {
     
 });
 
-router.get('/byUserId', checkUserAuth,  jsonParser,(req, res, next) => {
-    const autor = req.body.autor;
+router.get('/autor/:autor', checkUserAuth,  jsonParser,(req, res, next) => {
+    const autor = req.params.autor;
     Reportes
         .getReportesByUserId(autor)
         .then(result => {
@@ -85,8 +85,8 @@ router.get('/byUserId', checkUserAuth,  jsonParser,(req, res, next) => {
         });
 });
 
-router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
-    const company = req.body.company;
+router.get('/company/:company', checkUserAuth, jsonParser, (req, res, next) => {
+    const company = req.params.company;
     if (company == ""){
         res.status(404).json({
             message: "No hay compañía"
