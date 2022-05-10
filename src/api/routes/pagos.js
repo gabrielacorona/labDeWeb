@@ -66,6 +66,7 @@ router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
         })
 });
 
+// param cliente: id del usuario que es el cliente
 router.get('/cliente/:cliente', checkClienteAuth, jsonParser,(req, res, next) => {
     const cliente = req.params.cliente;
     Pagos

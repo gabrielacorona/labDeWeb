@@ -72,6 +72,7 @@ router.get('/id/:id', checkUserAuth,  jsonParser,(req, res, next) => {
     
 });
 
+// param autor: id del usuario que es el autor
 router.get('/autor/:autor', checkUserAuth,  jsonParser,(req, res, next) => {
     const autor = req.params.autor;
     Reportes

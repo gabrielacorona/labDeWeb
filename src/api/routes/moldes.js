@@ -78,6 +78,7 @@ router.get('/id/:id', checkUserAuth, jsonParser,  (req, res, next) => {
     })
 });
 
+// param encargado: id del usuario que es el encargado
 router.get('/encargado/:encargado', checkUserAuth, jsonParser,(req, res, next) => {
     const encargado = req.params.encargado;
     Moldes
