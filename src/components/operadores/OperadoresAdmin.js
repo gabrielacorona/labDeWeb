@@ -93,7 +93,7 @@ export default function OperadoresAdmin() {
         height: '100vh',
         overflow: 'auto',
         }} >
-        {/* CONTAINER WITH DESCRIPCION AND FOTOS AND REPORTES BUTTONS */}
+        {/* CONTAINER WITH TITLE AND LIST OF OPERATORS */}
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={12} lg={12}>
