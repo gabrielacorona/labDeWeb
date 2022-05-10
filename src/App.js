@@ -1,9 +1,12 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Sidebar from './components/sidebar/Sidebar'
 import Reportes from './components/reportes/Reportes'
 import Moldes from './components/moldes/Moldes'
 import Login from './components/auth/Login'
+import Home from './components/Home'
+import Protected from './components/auth/Protected'
+import SignUp from './components/auth/SignUp'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
@@ -19,26 +22,58 @@ const mdTheme = createTheme();
 function App() {
   const { token, setToken } = useToken();
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-
   return (
-  <ThemeProvider theme={mdTheme}>
-    <Box sx={{ display: 'flex' }}>
-    <Router>
-      <Sidebar />
-      <Routes>
-        <Route path="/reportes" element={<Reportes/>} />
-        <Route path="/moldes" element={<Moldes/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/detallemolde/:id" element={<DetalleMoldes/>} />
-        <Route path="/fotosmoldes" element={<FotosMoldes/>} />
-        <Route path="/inforeportes" element={<InfoReportes/>} />
-      </Routes>
-      </Router>
-    </Box>
-  </ThemeProvider>
+    <ThemeProvider theme={mdTheme}>
+      <Box sx={{ display: 'flex' }}>
+      <Router>
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={
+              token ? <Home /> : <Login setToken={setToken}/>
+            }
+            />
+          <Route path="/login" element={
+            <Login setToken={setToken}/>
+            }
+          />
+          <Route path="/signup" element={
+            <SignUp />
+            }
+          />
+          <Route path="/moldes" element={
+            <Protected token={token}>
+              <Moldes />
+            </Protected>
+            }
+          />
+          <Route path="/reportes" element={
+            <Protected token={token}>
+              <Reportes />
+            </Protected>
+            }
+          />
+          <Route path="/detallemolde/:id" element={
+            <Protected token={token}>
+              <DetalleMoldes />
+            </Protected>
+            }
+          />
+          <Route path="/fotosmoldes" element={
+            <Protected token={token}>
+              <FotosMoldes/>
+            </Protected>
+            }
+          />
+          <Route path="/inforeportes" element={
+            <Protected token={token}>
+              <InfoReportes/>
+            </Protected>
+            }
+          />
+        </Routes>
+        </Router>
+      </Box>
+    </ThemeProvider>
   );
 }
 
