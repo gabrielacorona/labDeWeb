@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const jsonParser = bodyParser.json();
 
 const {Moldes} = require('./../models/moldes-model');
+const {Reportes} = require('./../models/reportes-model');
 
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
@@ -123,6 +124,70 @@ router.get('/byCompany', checkUserAuth, jsonParser, (req, res, next) => {
             return res.status(500).end()
         })
     }
+});
+
+router.get('/getReportes', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting reportes by their molde");
+    let id = req.body.moldeId;
+    if(!id){
+        res.statusMessage = "please send 'molde' as body";
+        return res.status(406).end();
+    }
+    Moldes
+        .getReportesByMolde(id)
+        .then(reporteIds => {
+            if (reporteIds === null || reporteIds.length == 0 ) {
+                res.statusMessage = `no reportes with the provided userId`;
+                return res.status(404).end();
+            } else {
+                Reportes
+                .populateReportes(reporteIds)
+                .then(reportes => {
+                    return res.status(200).json(reportes);
+                })
+                .catch(err =>{
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                })
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
+router.patch('/addReporte', jsonParser, (req, res, next) => {
+    const {
+        moldeId,
+        reporteId
+    } = req.body;
+    if(!moldeId || !reporteId){
+        res.statusMessage = "missing id, verify  query"
+        return res.status(406).end();
+    }
+    Reportes
+       .getReporteById(reporteId)
+       .then(reporte => {
+        if (reporte.length === 0) {
+            res.statusMessage = "reporteId not found";
+            return res.status(404).end();
+        } else {
+            Moldes
+                .addReporte(moldeId, reporte._id)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end();
+                });
+        }
+       })
+       .catch(err =>{
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+       });
 });
 
 router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
