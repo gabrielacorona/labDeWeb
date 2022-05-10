@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
-
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import DetailCard  from './DetailCard';
+import { getMoldes } from '../../services/moldes';
 
 const mockProp = {
     moldes: [
@@ -14,43 +14,19 @@ const mockProp = {
         {nombre: "molde3", id: "ghi"},
     ]
 }
-
-const makeAPICall = async () => {
-    var config = {
-        method: 'get',
-        url: '/moldes',
-        headers: { 
-            'Content-Type': 'application/json'
-        }
-    };
-    axios(config)
-    .then(function (response) {
-        return response.data;
-    })
-    .catch(function (error) {
-        return error
-    });
-}
-
+  
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
 
+    const fetchMoldeData = useCallback(async () => {
+        const data = await getMoldes()
+      
+        setMoldes(data);
+      }, [])
+
     useEffect(() => {
-        var config = {
-            method: 'get',
-            url: '/moldes',
-            headers: { 
-                'Content-Type': 'application/json'
-            }
-        };
-        axios(config)
-        .then(function (response) {
-            setMoldes(response.data);
-        })
-        .catch(function (error) {
-            // TODO - error handling
-            return error
-        });
+        fetchMoldeData()
+        .catch(console.error);
     }, []);
 
     return (

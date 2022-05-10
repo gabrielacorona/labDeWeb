@@ -3,10 +3,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Descripcion from './Descripcion';
 
-export default function DetallesForm() {
+export default function DetallesForm(props) {
   return (
     <React.Fragment>  
-      <Grid container spacing={3}>
         <Grid item xs={12} >
           <TextField
             required
@@ -63,7 +62,6 @@ export default function DetallesForm() {
         >
           <Descripcion />
         </Grid>
-      </Grid>
     </React.Fragment>
   );
 }
