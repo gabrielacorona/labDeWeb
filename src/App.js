@@ -8,6 +8,7 @@ import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
 import InfoReportes from './components/reportes/InfoReportes'
+import OperadoresAdmin from './components/operadores/OperadoresAdmin'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,9 +20,9 @@ const mdTheme = createTheme();
 function App() {
   const { token, setToken } = useToken();
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
+  // if(!token) {
+  //   return <Login setToken={setToken} />
+  // }
 
   return (
   <ThemeProvider theme={mdTheme}>
@@ -35,6 +36,7 @@ function App() {
         <Route path="/detallemolde/:id" element={<DetalleMoldes/>} />
         <Route path="/fotosmoldes" element={<FotosMoldes/>} />
         <Route path="/inforeportes" element={<InfoReportes/>} />
+        <Route path="/operadores" element={<OperadoresAdmin/>} />
       </Routes>
       </Router>
     </Box>
