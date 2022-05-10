@@ -41,6 +41,7 @@ function SpecsWrapper({fechaAdquisicion, encargado, tipoColada}){
                 <SpecsMolde title="Fecha de adquisicion" descripcion={fechaAdquisicion}/>    
                 <SpecsMolde title="Encargado" descripcion={encargado} />
                 <SpecsMolde title="Tipo de Colada" descripcion={tipoColada}/>
+                <SpecsMolde title="ID de Molde" descripcion={tipoColada}/>
             </div>
         </Grid>
     )
@@ -70,7 +71,7 @@ function TopHeader({id}){
         <Grid item xs={12} md={3} lg={3}>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={12} lg={12}>
-                    <Typography>ID: {id}</Typography>
+                    <Typography >ID: {id}</Typography>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <Button variant="outlined" style={{width: "100%"}}>Editar</Button>

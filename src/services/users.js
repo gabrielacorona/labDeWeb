@@ -1,4 +1,10 @@
-export function getList() {
-    return fetch('http://localhost:3333/users')
-      .then(data => data.json())
+export function loginUser(credentials) {
+    return fetch('/users/signIn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      })
+        .then(data => data.json()) 
 }
