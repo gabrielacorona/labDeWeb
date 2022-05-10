@@ -5,7 +5,7 @@ const multer = require('multer');
 var cors = require('../src/api/middleware/cors');
 const bodyParser = require("body-parser");
 const app = express();
-require('dotenv').config()
+require('dotenv').config({path: '../.env'})
 
 const {
     DATABASE_URL,

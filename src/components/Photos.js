@@ -62,7 +62,7 @@ const Photos = () => {
           <img src={image}></img>
         </div>
       ))}
-      <img src="/images/9fa06d3c5da7aec7f932beb5b3e60f1d"></img>
+      <img src="https://control-de-moldes.s3.amazonaws.com/2022-5-10%2013%3A13%3A52%20dibujo2.png"></img>
 
         
 

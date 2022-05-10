@@ -5,7 +5,11 @@ const { Fotos } = require('./../models/fotos-model');
 const checkUserAuth = require('../middleware/check-user-auth');
 const multer = require('multer');
 const uuid = require('uuid');
-const fs = require('fs')
+const fs = require('fs');
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+
+const { uploadFile } = require('../aws/s3');
 
 let today = new Date();
 let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -77,14 +81,19 @@ router.get('/:fotoId', (req, res, next) => {
         });
 });
 
-router.post('/', upload.single('image'), (req, res, next) => {
+router.post('/', upload.single('image'), async (req, res, next) => {
     console.log("adding a new picture B^)");
     //even though the file is sent in form data the server recieves it in the files tag
-    let image = req.file.path
+    let image = req.file
     //all other stuff sent through the request that is not a file is sent as a body
     let description = req.body.description;
-    
-
+    try{
+        result = await uploadFile(image)
+        await unlinkFile(image.path)
+    }catch(e){
+        console.log(e)
+    }
+    image = result["Location"]
     if (!description || !image) {
         res.statusMessage = "missing param";
         return res.status(406).end(); //not accept status
