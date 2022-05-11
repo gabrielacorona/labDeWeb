@@ -11,20 +11,6 @@ import {Link } from "react-router-dom";
 import { getMoldeById } from '../../services/moldes';
 
 function DetailCard(props) {
-    // var molde;
-    // const fetchMoldeData = useCallback(async () => {
-    //     console.log("props", props.idMolde)
-    //     let moldeData = await getMoldeById(props.idMolde)
-    //     console.log(moldeData, "mimolde")
-    //     molde = moldeData
-    //     console.log(molde, "moolde")
-    // }, [])
-
-    // useEffect(() => {
-    //     fetchMoldeData()
-    //     .catch(console.error);
-    // }, []);
-
   return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
         <CardMedia
