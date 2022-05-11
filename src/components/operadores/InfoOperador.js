@@ -43,7 +43,6 @@ const mockProp = {
 // Reemplazar esta función con la llamada de backend
 function fetchData(id, setOperatorData){
   const operador = mockProp.operadores.filter(operador => operador.id === id)[0];
-  console.log(operador);
   setOperatorData(operador);
 }
 
