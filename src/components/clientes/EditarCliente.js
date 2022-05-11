@@ -5,28 +5,22 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DetallesCliente from "./DetallesCliente";
+import FormCliente from "./FormCliente";
 // import { postCliente } from "../../services/clientes";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#000000",
-    },
-    secondary: {
-      // This is green.A700 as hex.
-      main: "#11cb5f",
-    },
-  },
-});
+const theme = createTheme();
 
-const themeMain = createTheme();
-
-export default function InfoClientes() {
+export default function EditarCliente() {
   const [clientData, setClientData] = React.useState({});
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // const res = await postCliente(cliente);
+    console.log(clientData);
+  };
+
   return (
-    <ThemeProvider theme={themeMain}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
         component="main"
@@ -40,16 +34,7 @@ export default function InfoClientes() {
           overflow: "auto",
         }}
       >
-        <Container
-          maxWidth="lg"
-          sx={{
-            pt: 4,
-            pb: 4,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
           <Typography component="h1" variant="h4" align="left">
             Información Cliente
           </Typography>
@@ -57,23 +42,20 @@ export default function InfoClientes() {
             <Box
               component="form"
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
+              onSubmit={handleSubmit}
             >
-              <DetallesCliente
-                clientData={clientData}
-              />
+              <FormCliente clientData={clientData} setClientData={setClientData} />
+              
 
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button
                     color="primary"
-                    variant="outlined"
+                    variant="contained"
                     type="submit"
                     sx={{ mb: 2 }}
                   >
-                    Editar
-                  </Button>
-                  <Button color="error" variant="outlined" type="submit">
-                    Eliminar
+                    Guardar
                   </Button>
                 </Box>
               </ThemeProvider>
