@@ -11,6 +11,7 @@ import SignUp from './components/auth/SignUp'
 import DetalleMoldes from './components/moldes/DetalleMoldes'
 import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
+import { useUserId } from './services/users';
 import InfoReportes from './components/reportes/InfoReportes'
 import OperadoresAdmin from './components/operadores/OperadoresAdmin'
 import AgregarMolde from './components/moldes/AgregarMolde'
@@ -25,6 +26,7 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
+  const { userId, setUserId }= useUserId()
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -33,7 +35,7 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={
-              token ? <Home /> : <Login setToken={setToken}/>
+              token ? <Home /> : <Login setToken={setToken} setUserId={setUserId}/>
             }
             />
           <Route path="/login" element={

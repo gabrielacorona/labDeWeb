@@ -8,17 +8,6 @@ export default function AddMoldesForm(props) {
     <React.Fragment>  
         <Grid item xs={12} >
           <TextField
-            disabled={isEditing}
-            required={!isEditing}
-            id="id"
-            name="id"
-            label="ID del molde"
-            variant="standard"
-            defaultValue={isEditing ? props.mock.id : ""}
-          />
-        </Grid>
-        <Grid item xs={12} >
-          <TextField
             required
             id="nombreMolde"
             name="nombreMolde"
@@ -40,16 +29,6 @@ export default function AddMoldesForm(props) {
         <Grid item xs={12}>
           <TextField
             required
-            id="encargado"
-            name="encargado"
-            label="Encargado"
-            variant="standard"
-            defaultValue={isEditing ? props.mock.encargado : ""}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
             id="tipoColada"
             name="tipoColada"
             label="Tipo de colada"
@@ -57,6 +36,29 @@ export default function AddMoldesForm(props) {
             defaultValue={isEditing ? props.mock.tipoColada : ""}
           />
         </Grid>
+        <Grid item xs={12} md={12} lg={12}
+        >
+          <TextField
+            required
+            id="costo"
+            name="costo"
+            label="Costo"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={12}
+        >
+          <TextField
+            required
+            id="reparacion"
+            name="reparacion"
+            label="Ultima Reparacion"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+          />
+        </Grid>
+
         <Grid item xs={12} md={12} lg={12}
           sx={{
             p: 2,
@@ -75,6 +77,7 @@ export default function AddMoldesForm(props) {
             defaultValue={isEditing ? props.mock.descripcion : ""}
           />
         </Grid>
+
     </React.Fragment>
   );
 }

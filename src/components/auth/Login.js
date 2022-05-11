@@ -33,7 +33,7 @@ function Copyright(props) {
  
 const theme = createTheme();
 
-export default function Login({ setToken }) {
+export default function Login({ setToken, setUserId }) {
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -45,6 +45,7 @@ export default function Login({ setToken }) {
     }
     const userData = await loginUser(user)
     setToken({"token": userData.token})
+    setUserId({"userId": userData.id})
     console.log(userData.token)
     navigate('/');
   }

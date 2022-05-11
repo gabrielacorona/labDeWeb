@@ -6,6 +6,9 @@ import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import DetailCard  from './DetailCard';
 import { getMoldes } from '../../services/moldes';
+import { getUserById, useUserId, getUserMoldes } from '../../services/users';
+import NewMoldeCard from './NewMoldeCard';
+import { Link } from 'react-router-dom';
 
 const mockProp = {
     moldes: [
@@ -17,11 +20,12 @@ const mockProp = {
   
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
-
+    let {userId} = useUserId()
+    console.log("myuser",userId)
     const fetchMoldeData = useCallback(async () => {
-        const data = await getMoldes()
-      
-        setMoldes(data);
+        const userMoldes = await getUserMoldes(userId)
+        console.log(userMoldes)
+        setMoldes(userMoldes);
       }, [])
 
     useEffect(() => {
@@ -30,28 +34,29 @@ export default function Moldes() {
     }, []);
 
     return (
-    <Box
-        component="main"
-        sx={{
-        backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[900],
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-        }}
-    >
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={12} lg={12}>
-                    <Title>Moldes </Title>
+        <Box
+            component="main"
+            sx={{
+            backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+            }}
+        >
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Title>Moldes </Title>
+                    </Grid>
+                    {moldes && moldes.map(({ id, nombreMolde}, index) => (
+                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                    ))}
+                    <NewMoldeCard/>
                 </Grid>
-                {moldes && moldes.map(({ id}, index) => (
-                    <DetailCard idMolde={id} cardNumber={index + 1}/>
-                ))}
-            </Grid>
-        </Container>
-    </Box>
-);
+            </Container>
+        </Box>
+    );
 }
