@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesCliente from "./DetallesCliente";
+import { useParams } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -17,9 +18,54 @@ const theme = createTheme({
 
 const themeMain = createTheme();
 
+const mockProp = {
+  clientes: [
+      {
+          id: "1",
+          nombre: "Andres",
+          apellido: "Genda",
+          email: "Agenda@gmail.com",
+          password: "abc123",
+          compania: "ITESM",
+          celular: 7821707449,
+          numOperadores: 3,
+          numReportes: 3,
+          ultimoPago: "20/03/2022",
+          deuda: "11000"
+
+      },
+      {
+          id: "2",
+          nombre: "jc",
+          apellido: "del castillo",
+          email: "jc123@gmail.com",
+          password: "123abc",
+          compania: "Tec",
+          celular: 7821707448,
+          numOperadores: 2,
+          numReportes: 2,
+          ultimoPago: "20/04/2022",
+          deuda: "13000"
+
+      },
+  ]    
+}
+
+// Reemplazar esta función con la llamada de backend
+function fetchData(id, setClientData){
+  const cliente = mockProp.clientes.filter(cliente => cliente.id === id)[0];
+  console.log(cliente);
+  setClientData(cliente);
+}
+
 export default function InfoClientes() {
   const [clientData, setClientData] = React.useState({});
+  
+  const clientID = useParams().id;
 
+  React.useEffect(() => {
+    fetchData(clientID, setClientData);
+  }, []);
   return (
     <ThemeProvider theme={themeMain}>
       <CssBaseline />
