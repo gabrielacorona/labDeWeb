@@ -13,6 +13,7 @@ import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
 import InfoReportes from './components/reportes/InfoReportes'
 import OperadoresAdmin from './components/operadores/OperadoresAdmin'
+import InfoOperador from './components/operadores/InfoOperador'
 import InfoClientes from './components/clientes/InfoClientes'
 import EditarCliente from './components/clientes/EditarCliente'
 import AgregarMolde from './components/moldes/AgregarMolde'
@@ -79,6 +80,12 @@ function App() {
           <Route path="/operadores" element={
             <Protected token={token}>
               <OperadoresAdmin/>
+            </Protected>
+            }
+          />
+          <Route path="/infooperador" element={
+            <Protected token={token}>
+              <InfoOperador/>
             </Protected>
             }
           />
