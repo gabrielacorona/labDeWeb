@@ -7,92 +7,55 @@ export default function AddMoldesForm(props) {
   return (
     <React.Fragment>  
         <Grid item xs={12} >
-          {isEditing ? <TextField
-            disabled
+          <TextField
+            disabled={isEditing}
+            required={!isEditing}
             id="id"
             name="id"
             label="ID del molde"
             variant="standard"
-            defaultValue={props.mock.id}
-          /> : <TextField
-            required
-            id="id"
-            name="id"
-            label="ID del molde"
-            variant="standard"
-          />}
+            defaultValue={isEditing ? props.mock.id : ""}
+          />
         </Grid>
         <Grid item xs={12} >
-          {isEditing ? 
-            <TextField
-              required
-              id="nombreMolde"
-              name="nombreMolde"
-              label="Nombre del molde"
-              variant="standard"
-              defaultValue={props.mock.nombreMolde}
-            /> : <TextField
-              required
-              id="nombreMolde"
-              name="nombreMolde"
-              label="Nombre del molde"
-              variant="standard"
-            />
-          }
+          <TextField
+            required
+            id="nombreMolde"
+            name="nombreMolde"
+            label="Nombre del molde"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+          />
         </Grid>
         <Grid item xs={12}>
-          {isEditing ?
-            <TextField
-              required
-              id="fechaAdquisicion"
-              name="fechaAdquisicion"
-              label="Fecha"
-              variant="standard"
-              defaultValue={props.mock.fechaAdquisicion}
-            /> : <TextField
-              required
-              id="fechaAdquisicion"
-              name="fechaAdquisicion"
-              label="Fecha"
-              variant="standard"
-            />
-          }
+          <TextField
+            required
+            id="fechaAdquisicion"
+            name="fechaAdquisicion"
+            label="Fecha"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.fechaAdquisicion : ""}
+          />
         </Grid>
         <Grid item xs={12}>
-          {isEditing ?
-            <TextField
-              required
-              id="encargado"
-              name="encargado"
-              label="Encargado"
-              variant="standard"
-              defaultValue={props.mock.encargado}
-            /> : <TextField
-              required
-              id="encargado"
-              name="encargado"
-              label="Encargado"
-              variant="standard"
-            />
-          }
+          <TextField
+            required
+            id="encargado"
+            name="encargado"
+            label="Encargado"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.encargado : ""}
+          />
         </Grid>
         <Grid item xs={12}>
-          {isEditing ?
-            <TextField
-              required
-              id="tipoColada"
-              name="tipoColada"
-              label="Tipo de colada"
-              variant="standard"
-              defaultValue={props.mock.tipoColada}
-            /> : <TextField
-              required
-              id="tipoColada"
-              name="tipoColada"
-              label="Tipo de colada"
-              variant="standard"
-            />
-          }
+          <TextField
+            required
+            id="tipoColada"
+            name="tipoColada"
+            label="Tipo de colada"
+            variant="standard"
+            defaultValue={isEditing ? props.mock.tipoColada : ""}
+          />
         </Grid>
         <Grid item xs={12} md={12} lg={12}
           sx={{
@@ -102,24 +65,15 @@ export default function AddMoldesForm(props) {
             height: 240,
           }}
         >
-          {isEditing ?
-            <TextField
-              id="descripcion"
-              name="descripcion"
-              label="Descripcion"
-              multiline
-              rows={8}
-              style={{backgroundColor:"#ffffff"}}
-              defaultValue={props.mock.descripcion}
-            /> : <TextField
-              id="descripcion"
-              name="descripcion"
-              label="Descripcion"
-              multiline
-              rows={8}
-              style={{backgroundColor:"#ffffff"}}
-            />
-          }
+          <TextField
+            id="descripcion"
+            name="descripcion"
+            label="Descripcion"
+            multiline
+            rows={8}
+            style={{backgroundColor:"#ffffff"}}
+            defaultValue={isEditing ? props.mock.descripcion : ""}
+          />
         </Grid>
     </React.Fragment>
   );

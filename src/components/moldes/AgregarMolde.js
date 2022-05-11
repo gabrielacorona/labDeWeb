@@ -43,7 +43,7 @@ export default function AgregarMolde() {
       tipoColada: data.get('tipoColada'),
       descripcion: data.get('descripcion')
     }
-    const res = await postReporte(reporte)
+    // const res = await postReporte(reporte)
     console.log(res)
   }
 
