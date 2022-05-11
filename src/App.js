@@ -14,6 +14,10 @@ import {useToken} from './services/token';
 import { useUserId } from './services/users';
 import InfoReportes from './components/reportes/InfoReportes'
 import OperadoresAdmin from './components/operadores/OperadoresAdmin'
+import InfoOperador from './components/operadores/InfoOperador'
+import EditarOperador from './components/operadores/EditarOperador'
+import InfoClientes from './components/clientes/InfoClientes'
+import EditarCliente from './components/clientes/EditarCliente'
 import AgregarMolde from './components/moldes/AgregarMolde'
 import EditarMolde from './components/moldes/EditarMolde'
 
@@ -79,6 +83,30 @@ function App() {
           <Route path="/operadores" element={
             <Protected token={token}>
               <OperadoresAdmin/>
+            </Protected>
+            }
+          />
+          <Route path="/infooperador/:id" element={
+            <Protected token={token}>
+              <InfoOperador/>
+            </Protected>
+            }
+          />
+          <Route path="/editaroperador" element={
+            <Protected token={token}>
+              <EditarOperador/>
+            </Protected>
+            }
+          />
+          <Route path="/infoclientes/:id" element={
+            <Protected token={token}>
+              <InfoClientes/>
+            </Protected>
+            }
+          />
+          <Route path="/editarcliente" element={
+            <Protected token={token}>
+              <EditarCliente/>
             </Protected>
             }
           />
