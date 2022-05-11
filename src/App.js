@@ -84,7 +84,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/infooperador" element={
+          <Route path="/infooperador/:id" element={
             <Protected token={token}>
               <InfoOperador/>
             </Protected>

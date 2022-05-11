@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesOperador from "./DetallesOperador";
+import { useParams } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -18,8 +19,43 @@ const theme = createTheme({
 
 const themeMain = createTheme();
 
+const mockProp = {
+  operadores: [
+      {
+          id: "idUnicoEIrrepetible",
+          nombre: "Andres",
+          contacto: "7821707448",
+          miembroDesde: "2020",
+          numReportes: "20",
+          ultimoReporte: "10/03/2022"
+      },
+      {
+        id: "idUnicoEIrrepetible2",
+        nombre: "jc",
+        contacto: "7821707449",
+        miembroDesde: "2021",
+        numReportes: "15",
+        ultimoReporte: "21/04/2022"
+      },
+  ]    
+}
+
+// Reemplazar esta función con la llamada de backend
+function fetchData(id, setOperatorData){
+  const operador = mockProp.operadores.filter(operador => operador.id === id)[0];
+  console.log(operador);
+  setOperatorData(operador);
+}
+
 export default function InfoOperador() {
   const [operatorData, setOperatorData] = React.useState({});
+
+  const operatorID = useParams().id;
+
+
+  React.useEffect(() => {
+    fetchData(operatorID, setOperatorData);
+  }, []);
 
   return (
     <ThemeProvider theme={themeMain}>
