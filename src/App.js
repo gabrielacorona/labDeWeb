@@ -14,6 +14,7 @@ import {useToken} from './services/token';
 import InfoReportes from './components/reportes/InfoReportes'
 import OperadoresAdmin from './components/operadores/OperadoresAdmin'
 import InfoOperador from './components/operadores/InfoOperador'
+import EditarOperador from './components/operadores/EditarOperador'
 import InfoClientes from './components/clientes/InfoClientes'
 import EditarCliente from './components/clientes/EditarCliente'
 import AgregarMolde from './components/moldes/AgregarMolde'
@@ -86,6 +87,12 @@ function App() {
           <Route path="/infooperador" element={
             <Protected token={token}>
               <InfoOperador/>
+            </Protected>
+            }
+          />
+          <Route path="/editaroperador" element={
+            <Protected token={token}>
+              <EditarOperador/>
             </Protected>
             }
           />

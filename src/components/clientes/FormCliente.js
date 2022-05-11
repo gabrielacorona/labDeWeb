@@ -9,7 +9,7 @@ function actualizarClientData(e, clientData, setClientData, varName) {
   setClientData(auxClientData);
 }
 
-export default function DetallesCliente({ clientData, setClientData }) {
+export default function FormCliente({ clientData, setClientData }) {
   return (
     <React.Fragment>
       <Box sx={{ height: "100%", flexDirection: "column", display: "flex" }}>
