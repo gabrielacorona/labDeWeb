@@ -36,7 +36,6 @@ export default function AgregarMolde() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     let molde = {
-      id: data.get('id'),
       nombreMolde: data.get('nombreMolde'),
       fechaAdquisicion: data.get('fechaAdquisicion'),
       encargado: data.get('encargado'),

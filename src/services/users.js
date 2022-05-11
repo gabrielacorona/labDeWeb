@@ -1,3 +1,6 @@
+
+import { getToken } from './token';
+
 export function loginUser(credentials) {
     return fetch('/users/signIn', {
         method: 'POST',
@@ -7,6 +10,23 @@ export function loginUser(credentials) {
         body: JSON.stringify(credentials)
       })
         .then(data => data.json()) 
+}
+
+export function getUserById(id){
+  return fetch('/users/id/'+id, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+      }) 
+  });
 }
 
 export function registerMockAdmin(credentials) {
