@@ -23,13 +23,6 @@ export default function Moldes() {
     let {userId} = useUserId()
     console.log("myuser",userId)
     const fetchMoldeData = useCallback(async () => {
-        // const userData = await getUserById("df481276-fe22-4374-9abe-fbc88a175aed")
-        // let userMoldes = userData.moldes
-        // console.log(userMoldes, "mismoldes");
-        // userMoldes.map(molde => {
-        //     console.log(molde)
-        // })
-
         const userMoldes = await getUserMoldes(userId)
         console.log(userMoldes)
         setMoldes(userMoldes);
@@ -58,8 +51,8 @@ export default function Moldes() {
                     <Grid item xs={12} md={12} lg={12}>
                         <Title>Moldes </Title>
                     </Grid>
-                    {moldes && moldes.map(({ id}, index) => (
-                    <DetailCard idMolde={id} cardNumber={index + 1}/>
+                    {moldes && moldes.map(({ id, nombreMolde}, index) => (
+                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
                     ))}
                     <NewMoldeCard/>
                 </Grid>
