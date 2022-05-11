@@ -1,6 +1,28 @@
 
 import { getToken } from './token';
 
+import { useState } from 'react';
+
+export function getUserId() {
+    const userString = localStorage.getItem('userId');
+    const currUser = JSON.parse(userString);
+    return currUser?.userID
+}
+
+export function useUserId() {    
+    const [userId, setUserId] = useState(getUserId());
+
+    const saveUserId = userId => {
+        localStorage.setItem('userId', JSON.stringify(userId));
+        setUserId(userId.userID);
+    };
+
+    return {
+        setUserId: saveUserId,
+        userId
+    }
+    
+}
 export function loginUser(credentials) {
     return fetch('/users/signIn', {
         method: 'POST',
