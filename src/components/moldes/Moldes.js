@@ -6,9 +6,10 @@ import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import DetailCard  from './DetailCard';
 import { getMoldes } from '../../services/moldes';
-import { getUserById } from '../../services/users';
+import { getUserById, useUserId, getUserMoldes } from '../../services/users';
 import NewMoldeCard from './NewMoldeCard';
 import { Link } from 'react-router-dom';
+
 const mockProp = {
     moldes: [
         {nombre: "molde1", id: "abc"},
@@ -19,13 +20,19 @@ const mockProp = {
   
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
-
+    let {userId} = useUserId()
+    console.log("myuser",userId)
     const fetchMoldeData = useCallback(async () => {
-        const userData = await getUserById("df481276-fe22-4374-9abe-fbc88a175aed")
-        let company = userData.company
-        const data = await getMoldes()
-      
-        setMoldes(data);
+        // const userData = await getUserById("df481276-fe22-4374-9abe-fbc88a175aed")
+        // let userMoldes = userData.moldes
+        // console.log(userMoldes, "mismoldes");
+        // userMoldes.map(molde => {
+        //     console.log(molde)
+        // })
+
+        const userMoldes = await getUserMoldes(userId)
+        console.log(userMoldes)
+        setMoldes(userMoldes);
       }, [])
 
     useEffect(() => {
@@ -52,7 +59,7 @@ export default function Moldes() {
                         <Title>Moldes </Title>
                     </Grid>
                     {moldes && moldes.map(({ id}, index) => (
-                        <DetailCard idMolde={id} cardNumber={index + 1}/>
+                    <DetailCard idMolde={id} cardNumber={index + 1}/>
                     ))}
                     <NewMoldeCard/>
                 </Grid>

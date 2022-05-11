@@ -11,6 +11,8 @@ import AddMoldesForm from './AddMoldesForm';
 import Descripcion from '../reportes/Descripcion';
 import { postReporte } from '../../services/reportes';
 import ButtonAddImage from '../utils/ButtonAddImage';
+import { getUserById, getUserId } from '../../services/users';
+import { addMoldeToUser, postMolde } from '../../services/moldes';
 
 const theme = createTheme();
 
@@ -35,15 +37,24 @@ export default function AgregarMolde() {
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const userId = getUserId()
+    const objID = await getUserById(getUserId())
     let molde = {
       nombreMolde: data.get('nombreMolde'),
       fechaAdquisicion: data.get('fechaAdquisicion'),
       encargado: data.get('encargado'),
       tipoColada: data.get('tipoColada'),
-      descripcion: data.get('descripcion')
+      descripcion: data.get('descripcion'),
+      costo: data.get('costo'),
+      ultimaReparacion: data.get('reparacion'),
+      ultimoReporte: "NA",
+      encargado: objID._id
     }
-    // const res = await postReporte(reporte)
-    console.log(res)
+    const res = await postMolde(molde)
+    console.log(res);
+    const resmolde = await addMoldeToUser({userId: userId, moldeId: res.id})
+    console.log(res.id)
+    console.log(resmolde)
   }
 
   return (
