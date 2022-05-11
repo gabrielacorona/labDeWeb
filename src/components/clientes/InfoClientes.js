@@ -6,16 +6,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesCliente from "./DetallesCliente";
-// import { postCliente } from "../../services/clientes";
 
 const theme = createTheme({
   palette: {
     primary: {
       main: "#000000",
-    },
-    secondary: {
-      // This is green.A700 as hex.
-      main: "#11cb5f",
     },
   },
 });
