@@ -15,6 +15,7 @@ import Title from '../utils/Title';
 import { useParams } from "react-router";
 import { getMoldeById, editMolde } from '../../services/moldes';
 import { getUserById, getUserId } from '../../services/users';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -46,7 +47,8 @@ export default function EditarMolde() {
 
   const [mockProp, setMockProp] = useState();
   let { id } = useParams();
-  
+  const navigate = useNavigate();
+
   const fetchMoldeData = useCallback(async () => {
       const moldeData = await getMoldeById(id)
 
@@ -75,7 +77,7 @@ export default function EditarMolde() {
       encargado: objID._id
     }
     let res = await editMolde(molde)
-    console.log(res)
+    navigate('/detallemolde/' + id);
   }
 
   return (

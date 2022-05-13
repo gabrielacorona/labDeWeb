@@ -7,7 +7,6 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid'
-import {Link } from "react-router-dom";
 import { getMoldeById } from '../../services/moldes';
 
 function DetailCard(props) {
