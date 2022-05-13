@@ -20,6 +20,7 @@ import InfoClientes from './components/clientes/InfoClientes'
 import EditarCliente from './components/clientes/EditarCliente'
 import AgregarMolde from './components/moldes/AgregarMolde'
 import EditarMolde from './components/moldes/EditarMolde'
+import AddReporte from './components/reportes/AddReporte';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -76,6 +77,12 @@ function App() {
           <Route path="/inforeportes" element={
             <Protected token={token}>
               <InfoReportes/>
+            </Protected>
+            }
+          />
+          <Route path="/addreporte/:moldeId" element={
+            <Protected token={token}>
+              <AddReporte />
             </Protected>
             }
           />

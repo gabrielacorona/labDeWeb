@@ -47,9 +47,11 @@ function DetailCard(props) {
                 </Grid>
                 <Grid item lg={2} />
                 <Grid item lg={8}>
-                    <Button variant="outlined" color="warning">
-                        Generar Reporte
-                    </Button>
+                    <Link to={'/addreporte/'+ props.idMolde}>
+                        <Button variant="outlined" color="warning">
+                            Generar Reporte
+                        </Button>
+                    </Link>
                 </Grid>
                 <Grid item lg={2} />
             </Grid>
