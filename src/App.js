@@ -30,7 +30,6 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
-  const { userId, setUserId }= useUserId()
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -39,7 +38,7 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={
-              token ? <Home /> : <Login setToken={setToken} setUserId={setUserId}/>
+              token ? <Home /> : <Login setToken={setToken}/>
             }
             />
           <Route path="/login" element={
