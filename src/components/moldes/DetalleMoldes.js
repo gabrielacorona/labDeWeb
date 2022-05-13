@@ -34,7 +34,7 @@ function SpecsMolde(props) {
     );
 }
 
-function SpecsWrapper({fechaAdquisicion, encargado, tipoColada}){
+function SpecsWrapper({fechaAdquisicion, encargado, tipoColada, idMolde}){
     // TODO - get encargado name
     return (
         <Grid item xs={12} md={12} lg={12}>
@@ -42,7 +42,7 @@ function SpecsWrapper({fechaAdquisicion, encargado, tipoColada}){
                 <SpecsMolde title="Fecha de adquisicion" descripcion={fechaAdquisicion}/>    
                 <SpecsMolde title="Encargado" descripcion={encargado} />
                 <SpecsMolde title="Tipo de Colada" descripcion={tipoColada}/>
-                <SpecsMolde title="ID de Molde" descripcion={tipoColada}/>
+                <SpecsMolde title="ID de Molde" descripcion={idMolde}/>
             </div>
         </Grid>
     )
@@ -71,9 +71,6 @@ function TopHeader({id}){
     return(
         <Grid item xs={12} md={3} lg={3}>
             <Grid container spacing={1}>
-                <Grid item xs={12} md={12} lg={12}>
-                    <Typography >ID: {id}</Typography>
-                </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <Link to={'/editarmolde/'+ id}>
                         <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
@@ -141,7 +138,7 @@ export default function DetallesMoldes() {
                 <Grid item xs={12} md={9} lg={9}>
                     <Grid container spacing ={4}>
                         <DescrMolde title="Descripcion" descripcion={data.descripcion}/>
-                        <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={mockProp.encargado} tipoColada={data.tipoColada} />
+                        <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={mockProp.encargado} tipoColada={data.tipoColada} idMolde={data.id} />
                     </Grid>
                 </Grid>
                 <RightSidebar/>
