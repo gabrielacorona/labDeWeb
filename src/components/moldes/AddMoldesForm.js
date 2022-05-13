@@ -13,7 +13,7 @@ export default function AddMoldesForm(props) {
             name="nombreMolde"
             label="Nombre del molde"
             variant="standard"
-            defaultValue={props.mock.nombreMolde}
+            defaultValue={isEditing ? props.mock.nombreMolde : ""}
           />
         </Grid>
         <Grid item xs={12}>
