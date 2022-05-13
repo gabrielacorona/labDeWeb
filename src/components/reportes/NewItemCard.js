@@ -7,6 +7,7 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { Link } from "react-router-dom";
 
 function NewItemCard(props) {
     return (
@@ -16,10 +17,13 @@ function NewItemCard(props) {
                     Nuevo Reporte
                 </Typography>
                 <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button variant="outlined" color="primary">
-                        Agregar Nuevo Reporte
-                    </Button>
+                    <Link to={'/inforeportes/'}>
+                        <Button variant="outlined" color="primary">
+                                Agregar Nuevo Reporte
+                            </Button>
+                    </Link>
                 </CardActions>
+
             </CardContent>
         </Card>
     );
@@ -30,3 +34,4 @@ NewItemCard.propTypes = {
 };
 
 export default NewItemCard;
+

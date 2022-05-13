@@ -11,3 +11,14 @@ export function postReporte(data) {
       })
         .then(data => data.json()) 
 }
+
+export function getReporte(data) {
+  return fetch('/reportes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      }
+    })
+      .then(data => data.json()) 
+}
