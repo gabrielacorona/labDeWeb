@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import ReportesCard  from './ReportesCard';
 import NewItemCard from './NewItemCard';
+import { getReportesByMolde } from '../../services/reportes';
+import { useParams } from "react-router";
 
 const mockProp = {
     reportes: [
@@ -18,16 +20,18 @@ const mockProp = {
 
 export default function Reportes() {
     const [reportes, setReportes] = useState([]);
+    let { moldeid } = useParams();
+
+    const fetchReporteData = useCallback(async () => {
+        const moldeReportes = await getReportesByMolde(moldeid)
+        setReportes(moldeReportes);
+      }, [])
 
     useEffect(() => {
-      axios.get('http://localhost:8080/reportes').then(res => {
-        setReportes(res.data);
-    }).catch(error => {
-        // TODO - Display error message
-        console.error('There was an error!', error);
-        });
+        fetchReporteData()
+        .catch(console.error);
     }, []);
-    
+
     return (
       <Box
           component="main"
@@ -46,7 +50,7 @@ export default function Reportes() {
                   <Grid item xs={12} md={12} lg={12}>
                       <Title>Reportes - </Title>
                   </Grid>
-                  {mockProp.reportes.map((data, index) => (
+                  {reportes.map((data, index) => (
                     <ReportesCard data={data} cardNumber={index + 1}/>
                   ))}
                   <NewItemCard />

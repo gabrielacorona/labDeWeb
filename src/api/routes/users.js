@@ -196,6 +196,29 @@ router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
         });
 });
 
+router.get('/mongoId/:id', checkAdminAuth, jsonParser, (req, res, next) => {
+    console.log("getting user by their id");
+    let id = req.params.id;
+    if(!id){
+        res.statusMessage = "please send 'ID' as body";
+        return res.status(406).end();
+    }
+    Users
+        .getUserByMongoId(id)
+        .then(user => {
+            if (user === null) {
+                res.statusMessage = `no user with the provided id ${id}"`;
+                return res.status(404).end();
+            } else {
+                return res.status(200).json(user);
+            }
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status(500).end();
+        });
+});
+
 //get users by email
 router.get('/email/:email',  checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by email")

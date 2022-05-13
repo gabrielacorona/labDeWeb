@@ -41,7 +41,6 @@ export default function SignUp() {
         password: data.get('password')
         }
         const userData = await registerMockAdmin(user)
-        console.log(userData)
         navigate('/login');
     }
 

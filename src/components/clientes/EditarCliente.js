@@ -16,7 +16,6 @@ export default function EditarCliente() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const res = await postCliente(cliente);
-    console.log(clientData);
   };
 
   return (

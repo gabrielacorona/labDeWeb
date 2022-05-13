@@ -46,7 +46,6 @@ export default function Login({ setToken }) {
     const userData = await loginUser(user)
     setToken({"token": userData.token})
     localStorage.setItem('userId', JSON.stringify({"userId": userData.id}));
-    console.log(userData.token)
     navigate('/');
   }
 

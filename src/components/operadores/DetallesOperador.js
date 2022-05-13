@@ -10,7 +10,6 @@ function actualizarOperator(e, operatorData, setOperatorData, varName){
 }
 
 export default function DetallesOperador({operatorData}) {
-    console.log(operatorData)
     return (
     <React.Fragment>
       <Box sx={{ height: "100%", flexDirection: "column", display: "flex" }}>

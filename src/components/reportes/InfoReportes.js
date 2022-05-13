@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -9,29 +9,29 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DetallesForm from './DetallesForm';
 import Descripcion from './Descripcion';
-import { postReporte } from '../../services/reportes';
+import { postReporte, getReportesByID } from '../../services/reportes';
+import { getUserId } from '../../services/users';
+import { useParams } from "react-router";
 
 const theme = createTheme();
   
 export default function InfoReportes() {
-  const [reporteData, setReporteData] = React.useState({});
+  const [reporteData, setReporteData] = React.useState();
+  let { reporteId } = useParams();
   
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    let reporte = {
-      titulo: data.get('titulo'),
-      fecha: data.get('fecha'),
-      autor: data.get('autor'),
-      diagnostico: data.get('diagnostico'),
-      costoEstimado: data.get('costo-estimado'),
-      descripcion: data.get('descripcion')
-    }
-    const res = await postReporte(reporte)
-    console.log(res)
-  }
+  const fetchReporteData = useCallback(async () => {
+      const reporteData = await getReportesByID(reporteId)
+
+      setReporteData(reporteData);
+  }, [])
+
+  useEffect(() => {
+    fetchReporteData()
+      .catch(console.error);
+  }, []);
 
   return (
+      reporteData &&
     <ThemeProvider theme={theme}>
     <CssBaseline />
     <Box
@@ -51,17 +51,9 @@ export default function InfoReportes() {
                 Reporte
             </Typography>
                 <React.Fragment>
-                <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
+                <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }}>
                 <Grid container spacing={3}>
-                        <DetallesForm />
-                        <Grid item lg={12}>
-                            <Button
-                                variant="contained"
-                                type="submit"
-                            >
-                            Guardar
-                        </Button>
-                        </Grid>
+                        <DetallesForm isStatic={true} data={reporteData}/>
                     </Grid>
                 </Box>
                 </React.Fragment>
