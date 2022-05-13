@@ -20,15 +20,6 @@ const theme = createTheme();
 
 const editingStatus = true;
 
-const mockProp2 = {
-    nombreMolde : "MOLDE SUPREME",
-    id : "12345675992",
-    fechaAdquisicion : "12-03-2022",
-    descripcion : 'Este es un molde para hacer botellas',
-    tipoColada : 'Muy',
-    encargado : "Andres"
-}
-
 function RightSidebar(){
     return (
         <Grid container spacing={6}>

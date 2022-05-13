@@ -11,26 +11,36 @@ import DetallesForm from './DetallesForm';
 import Descripcion from './Descripcion';
 import { postReporte, addReporteToMolde} from '../../services/reportes';
 import { useParams } from "react-router";
+import { getUserId, getUserById} from '../../services/users';
 
 const theme = createTheme();
   
 export default function AddReporte(props) {
     const [ submitted, setSumbitted ]= useState(false);
     let { moldeId } = useParams();
-    console.log(props.userId)
+
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const userId = getUserId()
+    const objID = await getUserById(getUserId())
     let reporteData = {
       titulo: data.get('titulo'),
       fecha: data.get('fecha'),
-      autor: props.userId,
+      autor: objID._id,
       diagnostico: data.get('diagnostico'),
       costoEstimado: data.get('costo-estimado'),
       descripcion: data.get('descripcion')
     }
     const reporteId = await postReporte(reporteData)
-    const res = await addReporteToMolde({reporteId: reporteId.id, moldeId: moldeId})
+    console.log(reporteId.id, "rrpote")
+    console.log(moldeId, "molde")
+    let obj = {
+        "reporteId": reporteId.id, "moldeId": moldeId   
+    }
+    console.log(obj)
+    const res = await addReporteToMolde(obj)
+    console.log(res)
     setSumbitted(true)
 }
     if(submitted){
@@ -59,7 +69,7 @@ export default function AddReporte(props) {
                 <React.Fragment>
                 <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                        <DetallesForm />
+                        <DetallesForm editing={false}/>
                         <Grid item lg={12}>
                             <Button
                                 variant="contained"
