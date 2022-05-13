@@ -146,6 +146,7 @@ router.get('/getReportes/:moldeId', checkAdminAuth, jsonParser, (req, res, next)
 });
 
 router.patch('/addReporte', jsonParser, (req, res, next) => {
+    console.log(req.body, req)
     const {
         moldeId,
         reporteId

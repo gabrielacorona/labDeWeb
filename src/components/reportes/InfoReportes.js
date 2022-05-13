@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DetallesForm from './DetallesForm';
 import Descripcion from './Descripcion';
 import { postReporte } from '../../services/reportes';
+import { getUserId } from '../../services/users';
 
 const theme = createTheme();
   
@@ -22,7 +23,7 @@ export default function InfoReportes() {
     let reporte = {
       titulo: data.get('titulo'),
       fecha: data.get('fecha'),
-      autor: data.get('autor'),
+      autor: userId,
       diagnostico: data.get('diagnostico'),
       costoEstimado: data.get('costo-estimado'),
       descripcion: data.get('descripcion')

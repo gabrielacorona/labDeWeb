@@ -28,15 +28,6 @@ export default function DetallesForm(props) {
         <Grid item xs={12}>
           <TextField
             required
-            id="autor"
-            name="autor"
-            label="Autor"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
             id="diagnostico"
             name="diagnostico"
             label="Diagnostico"
