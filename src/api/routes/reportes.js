@@ -60,6 +60,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
 
 router.get('/id/:id', checkUserAuth,  jsonParser,(req, res, next) => {
     const id = req.params.id;
+    console.log(id)
     Reportes
         .getReporteById(id)
         .then(result => {

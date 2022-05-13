@@ -45,3 +45,14 @@ export function getReportesByMolde(moldeId){
   })
   .then(data => data.json())
 }
+
+export function getReportesByID(reporteId){
+  return fetch('/reportes/id/'+ reporteId, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': ',Bearer ' + getToken()
+    }
+  })
+  .then(data => data.json())
+}

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { Link } from "react-router-dom";
 
 function ReportesCard(props) {
     return (
@@ -21,9 +22,11 @@ function ReportesCard(props) {
                     {props.data.fecha}
                 </Typography>
                 <Box textAlign='center' style={{margin:10}}>
-                    <Button variant="outlined" color="primary">
-                        Ver Reporte
-                    </Button>
+                    <Link to={'/inforeportes/'+ props.data.id}>
+                        <Button variant="outlined" color="primary">
+                            Ver Reporte
+                        </Button>
+                    </Link>
                 </Box>
             </CardContent>
         </Card>

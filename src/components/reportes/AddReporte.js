@@ -69,7 +69,7 @@ export default function AddReporte(props) {
                 <React.Fragment>
                 <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                        <DetallesForm />
+                        <DetallesForm editing={false}/>
                         <Grid item lg={12}>
                             <Button
                                 variant="contained"
