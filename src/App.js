@@ -56,7 +56,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/reportes" element={
+          <Route path="/reportes/:moldeid" element={
             <Protected token={token}>
               <Reportes />
             </Protected>

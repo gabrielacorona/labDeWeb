@@ -14,7 +14,7 @@ export function postReporte(data) {
 
 export function getReporte(data) {
   return fetch('/reportes', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + getToken()
@@ -31,6 +31,17 @@ export function addReporteToMolde(data){
       'Authorization': ',Bearer ' + getToken()
     },
       body: JSON.stringify(data)
+  })
+  .then(data => data.json())
+}
+
+export function getReportesByMolde(moldeId){
+  return fetch('/moldes/getReportes/'+ moldeId, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': ',Bearer ' + getToken()
+    }
   })
   .then(data => data.json())
 }

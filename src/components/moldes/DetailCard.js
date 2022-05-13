@@ -41,9 +41,11 @@ function DetailCard(props) {
                     </Link>
                 </Grid>
                 <Grid item lg={6}>
-                    <Button variant="outlined" color="secondary">
-                        Historial
-                    </Button>
+                    <Link to={'/reportes/'+ props.idMolde}>
+                        <Button variant="outlined" color="secondary">
+                            Historial
+                        </Button>
+                    </Link>
                 </Grid>
                 <Grid item lg={2} />
                 <Grid item lg={8}>
