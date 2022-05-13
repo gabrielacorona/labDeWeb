@@ -33,12 +33,9 @@ export default function AddReporte(props) {
       descripcion: data.get('descripcion')
     }
     const reporteId = await postReporte(reporteData)
-    console.log(reporteId.id, "rrpote")
-    console.log(moldeId, "molde")
     let obj = {
         "reporteId": reporteId.id, "moldeId": moldeId   
     }
-    console.log(obj)
     const res = await addReporteToMolde(obj)
     console.log(res)
     setSumbitted(true)

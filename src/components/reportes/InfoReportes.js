@@ -18,7 +18,6 @@ const theme = createTheme();
 export default function InfoReportes() {
   const [reporteData, setReporteData] = React.useState();
   let { reporteId } = useParams();
-  console.log(reporteId)
   
   const fetchReporteData = useCallback(async () => {
       const reporteData = await getReportesByID(reporteId)

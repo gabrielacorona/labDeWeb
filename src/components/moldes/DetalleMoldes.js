@@ -102,7 +102,6 @@ function RightSidebar(props){
 export default function DetallesMoldes() {
     const [data, setData] = useState({});
     let { id } = useParams();
-    console.log(id)
     
     const fetchMoldeData = useCallback(async () => {
         const moldeData = await getMoldeById(id)

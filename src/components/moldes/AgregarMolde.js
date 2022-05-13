@@ -53,10 +53,7 @@ export default function AgregarMolde() {
       encargado: objID._id
     }
     const res = await postMolde(molde)
-    console.log(res);
     const resmolde = await addMoldeToUser({userId: userId, moldeId: res.id})
-    console.log(res.id)
-    console.log(resmolde)
     navigate('/moldes');
   }
 
