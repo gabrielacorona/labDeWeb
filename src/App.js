@@ -115,7 +115,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/editarmolde" element={
+          <Route path="/editarmolde/:id" element={
             <Protected token={token}>
               <EditarMolde/>
             </Protected>

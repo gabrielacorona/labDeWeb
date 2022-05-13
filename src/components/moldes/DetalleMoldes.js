@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { getMoldeById } from '../../services/moldes';
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 const mockProp = {
     nombreMolde : "MOLDE SUPREME",
@@ -74,7 +75,9 @@ function TopHeader({id}){
                     <Typography >ID: {id}</Typography>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
-                    <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
+                    <Link to={'/editarmolde/'+ id}>
+                        <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
+                    </Link>
                 </Grid>
             </Grid>
         </Grid>
@@ -85,15 +88,15 @@ function RightSidebar(props){
     return(
         <Grid item xs={12} md={3} lg={3}>
             <Grid container spacing={4}>
+            <Grid item xs={12} md={12} lg={12}>
+                    <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Reporte</Button>
+                </Grid> 
                 <Grid item xs={12} md={12} lg={12}>
                     <ButtonDetalleMolde title="Fotos"/>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <ButtonDetalleMolde title="Reportes"/>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12}>
-                    <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Molde</Button>
-                </Grid> 
             </Grid>
         </Grid>       
     )

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -12,12 +12,15 @@ import Descripcion from '../reportes/Descripcion';
 import { postReporte } from '../../services/reportes';
 import ButtonAddImage from '../utils/ButtonAddImage';
 import Title from '../utils/Title';
+import { useParams } from "react-router";
+import { getMoldeById, editMolde } from '../../services/moldes';
+import { getUserById, getUserId } from '../../services/users';
 
 const theme = createTheme();
 
 const editingStatus = true;
 
-const mockProp = {
+const mockProp2 = {
     nombreMolde : "MOLDE SUPREME",
     id : "12345675992",
     fechaAdquisicion : "12-03-2022",
@@ -40,64 +43,83 @@ function RightSidebar(){
 }
   
 export default function EditarMolde() {
-  const [moldeData, setMoldeData] = React.useState({});
+
+  const [mockProp, setMockProp] = useState();
+  let { id } = useParams();
   
+  const fetchMoldeData = useCallback(async () => {
+      const moldeData = await getMoldeById(id)
+
+      setMockProp(moldeData);
+  }, [])
+
+  useEffect(() => {
+      fetchMoldeData()
+      .catch(console.error);
+  }, []);
+
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const objID = await getUserById(getUserId())
+
     let molde = {
-      id: data.get('id'),
+      id: id,
       nombreMolde: data.get('nombreMolde'),
       fechaAdquisicion: data.get('fechaAdquisicion'),
       encargado: data.get('encargado'),
       tipoColada: data.get('tipoColada'),
-      descripcion: data.get('descripcion')
+      descripcion: data.get('descripcion'),
+      costo: data.get('costo'),
+      ultimaReparacion: data.get('reparacion'),
+      encargado: objID._id
     }
-    // const res = await postReporte(reporte)
+    let res = await editMolde(molde)
     console.log(res)
   }
 
   return (
+      mockProp &&
     <ThemeProvider theme={theme}>
     <CssBaseline />
-    <Box
-        component="main"
-        sx={{
-        backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[900],
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-        }}
-    >
-        <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={12} lg={12}>
-                    <Title>{mockProp.nombreMolde}</Title>
-                </Grid>
-                <Grid item xs={12} md={9} lg={9}>
-                    <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
-                        <Grid container spacing={3}>
-                            <AddMoldesForm mock={mockProp} editing={editingStatus} />
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    Guardar Molde
-                                </Button>
+        <Box
+            component="main"
+            sx={{
+            backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+            }}
+        >
+            <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Title>Editar molde</Title>
+                    </Grid>
+                    <Grid item xs={12} md={9} lg={9}>
+                        <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
+                            <Grid container spacing={3}>
+                                <AddMoldesForm mock={mockProp} editing={editingStatus} />
+                                <Grid item xs={12} md={12} lg={12}>
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Guardar Molde
+                                    </Button>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={3} lg={3}>
+                        <RightSidebar/>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <RightSidebar/>
-                </Grid>
-            </Grid>
-        </Container>
-    </Box>
+            </Container>
+        </Box>
     </ThemeProvider>
 );
 }

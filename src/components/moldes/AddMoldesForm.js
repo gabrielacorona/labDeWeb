@@ -13,7 +13,7 @@ export default function AddMoldesForm(props) {
             name="nombreMolde"
             label="Nombre del molde"
             variant="standard"
-            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+            defaultValue={props.mock.nombreMolde}
           />
         </Grid>
         <Grid item xs={12}>
@@ -44,7 +44,7 @@ export default function AddMoldesForm(props) {
             name="costo"
             label="Costo"
             variant="standard"
-            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+            defaultValue={isEditing ? props.mock.costo : ""}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={12}
@@ -55,7 +55,7 @@ export default function AddMoldesForm(props) {
             name="reparacion"
             label="Ultima Reparacion"
             variant="standard"
-            defaultValue={isEditing ? props.mock.nombreMolde : ""}
+            defaultValue={isEditing ? props.mock.ultimaReparacion : ""}
           />
         </Grid>
 

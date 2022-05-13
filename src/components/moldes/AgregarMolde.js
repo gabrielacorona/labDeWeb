@@ -13,6 +13,7 @@ import { postReporte } from '../../services/reportes';
 import ButtonAddImage from '../utils/ButtonAddImage';
 import { getUserById, getUserId } from '../../services/users';
 import { addMoldeToUser, postMolde } from '../../services/moldes';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -33,7 +34,8 @@ function RightSidebar(){
   
 export default function AgregarMolde() {
   const [moldeData, setMoldeData] = React.useState({});
-  
+  const navigate = useNavigate();
+
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -55,6 +57,7 @@ export default function AgregarMolde() {
     const resmolde = await addMoldeToUser({userId: userId, moldeId: res.id})
     console.log(res.id)
     console.log(resmolde)
+    navigate('/moldes');
   }
 
   return (
