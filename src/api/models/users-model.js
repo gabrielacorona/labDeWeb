@@ -283,6 +283,22 @@ const Users = {
                 throw new Error(err);
             });
     },
+    getUserByMongoId: function (idUser) {
+        return usersCollection
+            .findOne({
+                _id: idUser
+            })
+            .then(user => {
+                if (!user) {
+                    throw new Error('User not found');
+                }
+                return user
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            });
+    },
     getUserByEmail: function (query) {
         return usersCollection
             .findOne({
