@@ -6,7 +6,6 @@ import Descripcion from './Descripcion';
 export default function DetallesForm(props) {
   let isEditing = props.editing;
   let isStatic = props.isStatic
-  console.log(props)
   return (
     <React.Fragment>  
         <Grid item xs={12} >
