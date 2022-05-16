@@ -9,8 +9,17 @@ export default function DetallesForm(props) {
   let isStatic = props.isStatic;
   return (
     <React.Fragment>
-      <Box sx={{ height: "100%", flexDirection: "column", display: "flex", width: "80%", pt: 2 }}>
-      <Box sx={{ mr: 8 }}>
+      <Box
+        sx={{
+          height: "100%",
+          flexDirection: "column",
+          display: "flex",
+          width: "80%",
+          pt: 2,
+          mb: 2
+        }}
+      >
+        <Box sx={{ mr: 8 }}>
           <Grid item xs={12}>
             <TextField
               required
@@ -23,7 +32,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12} sx={{pt: 3}}>
+          <Grid item xs={12} sx={{ pt: 3 }}>
             <TextField
               required
               id="fecha"
@@ -34,7 +43,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12} sx={{pt: 3}}>
+          <Grid item xs={12} sx={{ pt: 3 }}>
             <TextField
               required
               id="diagnostico"
@@ -45,7 +54,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12} sx={{pt: 3}}>
+          <Grid item xs={12} sx={{ pt: 3 }}>
             <TextField
               required
               id="costo-estimado"
@@ -67,10 +76,11 @@ export default function DetallesForm(props) {
               p: 2,
               pl: 0,
               pt: 5,
+              mb: 4,
               display: "flex",
               flexDirection: "column",
               height: 240,
-              width: "70%"
+              width: "70%",
             }}
           >
             <TextField
@@ -85,7 +95,6 @@ export default function DetallesForm(props) {
             />
           </Grid>
         </Box>
-
       </Box>
     </React.Fragment>
   );

@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesForm from "./DetallesForm";
 import Descripcion from "./Descripcion";
+import ButtonAddImage from '../utils/ButtonAddImage';
 import { postReporte, getReportesByID } from "../../services/reportes";
 import { getUserId } from "../../services/users";
 import { useParams } from "react-router";
@@ -67,6 +68,7 @@ export default function InfoReportes() {
               Reporte
             </Typography>
             <React.Fragment>
+              <Box>
               <Box
                 component="form"
                 sx={{ display: "flex", justifyContent: "normal", flexGrow: 1, width: '100%'   }}
@@ -87,6 +89,10 @@ export default function InfoReportes() {
                     </Button>
                   </Box>
                 </ThemeProvider>
+              </Box>
+              <Grid sx={{width: "20%"}}>
+                <ButtonAddImage title="AGREGAR IMAGEN"/>
+              </Grid>
               </Box>
             </React.Fragment>
           </Container>
