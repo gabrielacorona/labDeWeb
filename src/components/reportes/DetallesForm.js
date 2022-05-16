@@ -9,7 +9,7 @@ export default function DetallesForm(props) {
   let isStatic = props.isStatic;
   return (
     <React.Fragment>
-      <Box sx={{ height: "100%", flexDirection: "column", display: "flex", width: "80%" }}>
+      <Box sx={{ height: "100%", flexDirection: "column", display: "flex", width: "80%", pt: 2 }}>
       <Box sx={{ mr: 8 }}>
           <Grid item xs={12}>
             <TextField

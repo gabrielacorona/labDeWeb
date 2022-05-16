@@ -80,11 +80,11 @@ export default function AddReporte(props) {
               onSubmit={handleSubmit}
             >
               <DetallesForm editing={false} />
-              <Grid item lg={12}>
+              <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                 <Button variant="contained" type="submit">
                   Guardar
                 </Button>
-              </Grid>
+              </Box>
             </Box>
           </React.Fragment>
         </Container>
