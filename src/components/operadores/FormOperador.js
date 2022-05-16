@@ -3,13 +3,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-function actualizarOperatorData(e, operatorData, setOperatorData, varName) {
-  const auxoperatorData = { ...operatorData };
-  auxoperatorData[varName] = e.target.value;
-  setOperatorData(auxoperatorData);
-}
+export default function FormOperador({ isEditing, isStatic, operatorData }) {
+  console.log(operatorData)
+  let showingData = isEditing || isStatic
+  console.log(operatorData, showingData)
 
-export default function FormOperador({ operatorData, setOperatorData }) {
   return (
     <React.Fragment>
       <Box sx={{ height: "100%", flexDirection: "column", display: "flex" }}>
@@ -22,7 +20,8 @@ export default function FormOperador({ operatorData, setOperatorData }) {
                 name="firstName"
                 label="Nombre"
                 variant="standard"
-                // value={operatorData.nombre}
+                defaultValue={ showingData ? operatorData.firstName : ""}
+                disabled={isStatic}
               />
             </Grid>
             <Grid item xs={12}>
@@ -32,7 +31,8 @@ export default function FormOperador({ operatorData, setOperatorData }) {
                 name="lastName"
                 label="Apellido"
                 variant="standard"
-                // value={operatorData.contacto}
+                defaultValue={showingData ? operatorData.lastName : ""}
+                disabled={isStatic}
               />
             </Grid>
             <Grid item xs={12}>
@@ -42,19 +42,45 @@ export default function FormOperador({ operatorData, setOperatorData }) {
                 name="email"
                 label="Email"
                 variant="standard"
-                // value={operatorData.miembroDesde}
+                defaultValue={showingData ? operatorData.email : "" }
+                disabled={isStatic}
               />
             </Grid>
-            {/* <Grid item xs={12}>
+            {showingData && <>
+            <Grid item xs={12}>
               <TextField
                 required
                 id="company"
                 name="company"
                 label="Compañia"
                 variant="standard"
-                // value={operatorData.numReportes}
+                defaultValue={operatorData.company}
+                disabled
                 />
-            </Grid> */}
+            </Grid> 
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="lastReportDate"
+                name="lastReportDate"
+                label="Fecha de ultimo reporte"
+                variant="standard"
+                defaultValue={operatorData.lastReportDate}
+                disabled
+                />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="memberSince"
+                name="memberSince"
+                label="Miembro desde"
+                variant="standard"
+                defaultValue={operatorData.memberSince}
+                disabled
+                />
+            </Grid>
+            </>}
             <Grid item xs={12}>
               <TextField
                 required
@@ -62,7 +88,8 @@ export default function FormOperador({ operatorData, setOperatorData }) {
                 name="telephone"
                 label="Telefono"
                 variant="standard"
-                // value={operatorData.ultimoReporte}
+                defaultValue={showingData ? operatorData.telephone : ""}
+                disabled={isStatic}
               />
             </Grid>
           </Box>

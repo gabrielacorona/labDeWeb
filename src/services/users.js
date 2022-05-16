@@ -35,6 +35,18 @@ export function loginUser(credentials) {
         .then(data => data.json()) 
 }
 
+export function editUser(data) {
+  return fetch('/users/', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
+}
+
+
 export function getUserById(id){
   return fetch('/users/id/'+id, {
     method: 'get',
@@ -68,7 +80,6 @@ export function getUserMoldes(id){
       }) 
   });
 }
-
 
 export function registerMockAdmin(credentials) {
     let mockAdmin = {

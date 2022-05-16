@@ -22,6 +22,7 @@ import AgregarMolde from './components/moldes/AgregarMolde'
 import EditarMolde from './components/moldes/EditarMolde'
 import AddReporte from './components/reportes/AddReporte';
 import AddOperador from './components/operadores/AddOperador';
+import DetallesOperador from './components/operadores/DetallesOperador';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -99,7 +100,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/editaroperador" element={
+          <Route path="/editaroperador/:id" element={
             <Protected token={token}>
               <EditarOperador/>
             </Protected>
@@ -135,6 +136,13 @@ function App() {
             </Protected>
             }
           />
+        <Route path="/detallesoperador/" element={
+            <Protected token={token}>
+              <AddOperador/>
+            </Protected>
+            }
+          />
+
 
         </Routes>
         </Router>

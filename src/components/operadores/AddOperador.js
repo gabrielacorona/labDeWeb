@@ -37,6 +37,7 @@ export default function AddOperador() {
       const resRegister = await registerOperador(operador)
       const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
       console.log(resAddOp)
+      navigate('/');
     }
   
   return (
