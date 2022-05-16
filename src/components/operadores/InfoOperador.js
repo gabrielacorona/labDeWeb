@@ -50,8 +50,7 @@ export default function InfoOperador() {
   const handleDelete = async (e) => {
     e.preventDefault();
     let res = await deleteUser({id: operatorID})
-    console.log(res)
-    navigate('/');
+    navigate('/operadores');
   };
   
   return (
