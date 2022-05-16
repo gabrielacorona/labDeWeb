@@ -6,19 +6,39 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormOperador from "./FormOperador";
-// import { postOperador } from "../../services/operador";
+import { registerOperador, addOperador, getUserId, getUserById} from "../../services/users";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function EditarOperador() {
-  const [operatorData, setOperatorData] = React.useState({});
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // const res = await postOperador(operador);
-    console.log(operatorData);
-  };
+export default function AddOperador() {
+    const [operador, setOperador] = React.useState({});
+    const navigate = useNavigate();
+    const userId = getUserId()
+    
+    const handleSubmit = async e => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      const userData = await getUserById(getUserId())
 
+      let operador = {
+        firstName: data.get('firstName'),
+        lastName: data.get('lastName'),
+        email: data.get('email'),
+        company: userData.company,
+        telephone: data.get('telephone'),
+        password: data.get('firstName')+data.get('company'),
+        userPicture: "NA",
+        companyPicture: "NA",
+        lastReportDate: "NA",
+        memberSince: "12-01-2022",
+        userType: "o"
+      }
+      const resRegister = await registerOperador(operador)
+      const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
+      console.log(resAddOp)
+    }
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -36,7 +56,7 @@ export default function EditarOperador() {
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
           <Typography component="h1" variant="h4" align="left">
-            Información Operador
+            Agregar nuevo operador
           </Typography>
           <React.Fragment>
             <Box
@@ -44,7 +64,7 @@ export default function EditarOperador() {
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
               onSubmit={handleSubmit}
             >
-              <FormOperador operatorData={operatorData} setOperatorData={setOperatorData} />
+              <FormOperador />
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button

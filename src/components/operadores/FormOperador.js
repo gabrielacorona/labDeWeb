@@ -18,69 +18,51 @@ export default function FormOperador({ operatorData, setOperatorData }) {
             <Grid item xs={12}>
               <TextField
                 required
-                id="nombre"
-                name="nombre"
+                id="firstName"
+                name="firstName"
                 label="Nombre"
                 variant="standard"
-                value={operatorData.nombre}
-                onChange={(e) =>
-                  actualizarOperatorData(e, operatorData, setOperatorData, "nombre")
-                }
+                // value={operatorData.nombre}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
-                id="contacto"
-                name="contacto"
-                label="Contacto"
+                id="lastName"
+                name="lastName"
+                label="Apellido"
                 variant="standard"
-                value={operatorData.contacto}
-                onChange={(e) =>
-                  actualizarOperatorData(e, operatorData, setOperatorData, "contacto")
-                }
+                // value={operatorData.contacto}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
-                id="miembro-desde"
-                name="miembro-desde"
-                label="Miembro desde"
+                id="email"
+                name="email"
+                label="Email"
                 variant="standard"
-                value={operatorData.miembroDesde}
-                
-                onChange={(e) =>
-                  actualizarOperatorData(e, operatorData, setOperatorData, "miembroDesde")
-                }
+                // value={operatorData.miembroDesde}
               />
             </Grid>
+            {/* <Grid item xs={12}>
+              <TextField
+                required
+                id="company"
+                name="company"
+                label="Compañia"
+                variant="standard"
+                // value={operatorData.numReportes}
+                />
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 required
-                id="num-reportes"
-                name="num-reportes"
-                label="# Reportes"
+                id="telephone"
+                name="telephone"
+                label="Telefono"
                 variant="standard"
-                value={operatorData.numReportes}
-                
-                onChange={(e) =>
-                  actualizarOperatorData(e, operatorData, setOperatorData, "numReportes")
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="ultimo-reporte"
-                name="utimo-reporte"
-                label="Ultimo reporte"
-                variant="standard"
-                value={operatorData.ultimoReporte}
-                
-                onChange={(e) =>
-                  actualizarOperatorData(e, operatorData, setOperatorData, "ultimoReporte")
-                }
+                // value={operatorData.ultimoReporte}
               />
             </Grid>
           </Box>

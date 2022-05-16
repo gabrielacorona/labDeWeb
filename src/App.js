@@ -21,6 +21,7 @@ import EditarCliente from './components/clientes/EditarCliente'
 import AgregarMolde from './components/moldes/AgregarMolde'
 import EditarMolde from './components/moldes/EditarMolde'
 import AddReporte from './components/reportes/AddReporte';
+import AddOperador from './components/operadores/AddOperador';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -128,6 +129,13 @@ function App() {
             </Protected>
             }
           />
+          <Route path="/addoperador/" element={
+            <Protected token={token}>
+              <AddOperador/>
+            </Protected>
+            }
+          />
+
         </Routes>
         </Router>
       </Box>

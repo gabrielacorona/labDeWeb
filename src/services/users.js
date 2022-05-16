@@ -95,3 +95,25 @@ export function registerMockAdmin(credentials) {
       })
         .then(data => data.json()) 
 }
+
+export function registerOperador(operadorData) {
+  return fetch('/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(operadorData)
+    })
+      .then(data => data.json()) 
+}
+
+export function addOperador(data) {
+  return fetch('/users/addOperador', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
+}
