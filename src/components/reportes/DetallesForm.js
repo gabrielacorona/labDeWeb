@@ -23,7 +23,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{pt: 3}}>
             <TextField
               required
               id="fecha"
@@ -34,7 +34,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{pt: 3}}>
             <TextField
               required
               id="diagnostico"
@@ -45,7 +45,7 @@ export default function DetallesForm(props) {
               disabled={isStatic}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{pt: 3}}>
             <TextField
               required
               id="costo-estimado"
@@ -66,6 +66,7 @@ export default function DetallesForm(props) {
             sx={{
               p: 2,
               pl: 0,
+              pt: 5,
               display: "flex",
               flexDirection: "column",
               height: 240,
