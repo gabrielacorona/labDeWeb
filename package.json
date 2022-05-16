@@ -37,7 +37,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "PORT=3000 react-scripts start --max-http-header-size=1024",
+    "start": "react-scripts start PORT=3000 --max-http-header-size=1024",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
