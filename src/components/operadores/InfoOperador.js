@@ -7,7 +7,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesOperador from "./DetallesOperador";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { deleteUser } from '../../services/users';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -39,23 +41,19 @@ const mockProp = {
       },
   ]    
 }
-
-// Reemplazar esta función con la llamada de backend
-function fetchData(id, setOperatorData){
-  const operador = mockProp.operadores.filter(operador => operador.id === id)[0];
-  setOperatorData(operador);
-}
-
 export default function InfoOperador() {
   const [operatorData, setOperatorData] = React.useState({});
 
+  const navigate = useNavigate();
   const operatorID = useParams().id;
 
-
-  React.useEffect(() => {
-    fetchData(operatorID, setOperatorData);
-  }, []);
-
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    let res = await deleteUser({id: operatorID})
+    console.log(res)
+    navigate('/');
+  };
+  
   return (
     <ThemeProvider theme={themeMain}>
       <CssBaseline />
@@ -86,7 +84,6 @@ export default function InfoOperador() {
           </Typography>
           <React.Fragment>
             <Box
-              component="form"
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
             >
               <div>
@@ -96,6 +93,7 @@ export default function InfoOperador() {
               </div>
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
+                <Link to={'/editaroperador/'+ operatorID}>
                   <Button
                     color="primary"
                     variant="outlined"
@@ -104,7 +102,8 @@ export default function InfoOperador() {
                   >
                     Editar
                   </Button>
-                  <Button color="error" variant="outlined" type="submit">
+                </Link>
+                  <Button color="error" variant="outlined" type="submit" onClick={handleDelete}>
                     Eliminar
                   </Button>
                 </Box>

@@ -35,6 +35,29 @@ export function loginUser(credentials) {
         .then(data => data.json()) 
 }
 
+export function editUser(data) {
+  return fetch('/users/', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
+}
+
+export function deleteUser(data){
+  return fetch('/users/', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(data => data.json()) 
+}
+
+
 export function getUserById(id){
   return fetch('/users/id/'+id, {
     method: 'get',
@@ -69,7 +92,6 @@ export function getUserMoldes(id){
   });
 }
 
-
 export function registerMockAdmin(credentials) {
     let mockAdmin = {
         id: "9f64452b-6b16-406e-b5a0-cf688bb00e0e",
@@ -94,4 +116,26 @@ export function registerMockAdmin(credentials) {
         body: JSON.stringify(mockAdmin)
       })
         .then(data => data.json()) 
+}
+
+export function registerOperador(operadorData) {
+  return fetch('/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(operadorData)
+    })
+      .then(data => data.json()) 
+}
+
+export function addOperador(data) {
+  return fetch('/users/addOperador', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
 }

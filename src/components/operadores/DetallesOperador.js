@@ -1,73 +1,60 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
+import React, {useEffect, useState, useCallback} from 'react';
+import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import FormOperador from "./FormOperador";
+import { useParams } from "react-router";
+import { getUserById, editUser } from "../../services/users";
+import { useNavigate } from 'react-router-dom';
 
-function actualizarOperator(e, operatorData, setOperatorData, varName){
-    const auxoperatorData = {...operatorData};
-    auxoperatorData[varName] = e.target.value;
-    setOperatorData(auxoperatorData);
-}
+const theme = createTheme();
 
-export default function DetallesOperador({operatorData}) {
-    return (
-    <React.Fragment>
-      <Box sx={{ height: "100%", flexDirection: "column", display: "flex" }}>
-        <Box sx={{ flexDirection: "row", display: "flex" }}>
-          <Box sx={{ mr: 8 }}>
-            <Grid item xs={12}>
-              <TextField
-                disabled
-                id="nombre"
-                name="nombre"
-                label="Nombre"
-                variant="standard"
-                value={operatorData.nombre}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled
-                id="contacto"
-                name="contacto"
-                label="Contacto"
-                variant="standard"
-                value={operatorData.contacto}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled
-                id="miembro-desde"
-                name="miembro-desde"
-                label="Miembro desde"
-                variant="standard"
-                value={operatorData.miembroDesde}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled
-                id="num-reportes"
-                name="num-reportes"
-                label="# Reportes"
-                variant="standard"
-                value={operatorData.numReportes}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled
-                id="ultimo-reporte"
-                name="utimo-reporte"
-                label="Ultimo reporte"
-                variant="standard"
-                value={operatorData.ultimoReporte}
-              />
-            </Grid>
-          </Box>
-        </Box>
+export default function DetallesOperador() {
+  const [operatorData, setOperatorData] = React.useState();
+  let { id } = useParams();
+  const navigate = useNavigate();
+
+  const fetchOperadorData = useCallback(async () => {
+    const op = await getUserById(id)
+    console.log(op)
+    setOperatorData(op);
+  }, [])
+
+  useEffect(() => {
+    fetchOperadorData()
+    .catch(console.error);
+  }, []);
+
+  return (
+    operatorData &&
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
+          <React.Fragment>
+            <Box
+              component="form"
+              sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
+            >
+              <FormOperador operatorData={operatorData} isStatic={true} />
+            </Box>
+          </React.Fragment>
+        </Container>
       </Box>
-    </React.Fragment>
+    </ThemeProvider>
   );
 }

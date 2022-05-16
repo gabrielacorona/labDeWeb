@@ -17,31 +17,31 @@ const mockProp = {
         {
             firstName: "Andres",
             lastName: "Genda",
-            userPicture: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+            userPicture: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
             company: "Chicago, IL"
         },
         {
             firstName: "Caro",
             lastName: "Obregon",
-            userPicture: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+            userPicture: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
             company: "New York, NY"
         },
         {
             firstName: "Gaby",
             lastName: "Corona",
-            userPicture: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+            userPicture: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
             company: "San Francisco, CA"
         },
         {
             firstName: "Corde",
             lastName: "Lopez",
-            userPicture: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+            userPicture: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
             company: "Los Angeles, CA"
         },
         {
             firstName: "JC",
             lastName: "del Castillo",
-            userPicture: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+            userPicture: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
             company: "Seattle, WA"
         },
     ]    

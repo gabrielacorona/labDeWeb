@@ -13,11 +13,6 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 const mockProp = {
-    nombreMolde : "MOLDE SUPREME",
-    id : "12345675992",
-    fechaAdquisicion : "12-03-2022",
-    descripcion : 'Este es un molde para hacer botellas',
-    tipoColada : 'Muy',
     encargado : "Andres"
 }
 

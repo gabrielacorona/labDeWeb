@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -6,47 +6,41 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormOperador from "./FormOperador";
-import { useParams } from "react-router";
-import { getUserById, editUser } from "../../services/users";
+import { registerOperador, addOperador, getUserId, getUserById} from "../../services/users";
 import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function EditarOperador() {
-  const [operatorData, setOperatorData] = React.useState();
-  let { id } = useParams();
-  const navigate = useNavigate();
+export default function AddOperador() {
+    const [operador, setOperador] = React.useState({});
+    const navigate = useNavigate();
+    const userId = getUserId()
+    
+    const handleSubmit = async e => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      const userData = await getUserById(getUserId())
 
-  const fetchOperadorData = useCallback(async () => {
-    const op = await getUserById(id)
-    console.log(op)
-    setOperatorData(op);
-  }, [])
-
-  useEffect(() => {
-    fetchOperadorData()
-    .catch(console.error);
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-
-    let operador = {
-      id: id,
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      telephone: data.get('telephone')
+      let operador = {
+        firstName: data.get('firstName'),
+        lastName: data.get('lastName'),
+        email: data.get('email'),
+        company: userData.company,
+        telephone: data.get('telephone'),
+        password: data.get('firstName')+data.get('company'),
+        userPicture: "NA",
+        companyPicture: "NA",
+        lastReportDate: "NA",
+        memberSince: "12-01-2022",
+        userType: "o"
+      }
+      const resRegister = await registerOperador(operador)
+      const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
+      console.log(resAddOp)
+      navigate('/');
     }
-
-    const resEdit = await editUser(operador)
-    console.log(resEdit)
-    navigate('/infooperador/'+id);
-  };
-
+  
   return (
-    operatorData &&
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -63,7 +57,7 @@ export default function EditarOperador() {
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
           <Typography component="h1" variant="h4" align="left">
-            Editar Operador
+            Agregar nuevo operador
           </Typography>
           <React.Fragment>
             <Box
@@ -71,7 +65,7 @@ export default function EditarOperador() {
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
               onSubmit={handleSubmit}
             >
-              <FormOperador operatorData={operatorData} isEditing={true} />
+              <FormOperador />
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button
