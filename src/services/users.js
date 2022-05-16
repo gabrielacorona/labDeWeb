@@ -46,6 +46,17 @@ export function editUser(data) {
       .then(data => data.json()) 
 }
 
+export function deleteUser(data){
+  return fetch('/users/', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(data => data.json()) 
+}
+
 
 export function getUserById(id){
   return fetch('/users/id/'+id, {

@@ -45,9 +45,6 @@ export default function DetallesOperador() {
         }}
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
-          <Typography component="h1" variant="h4" align="left">
-            Editar Operador
-          </Typography>
           <React.Fragment>
             <Box
               component="form"

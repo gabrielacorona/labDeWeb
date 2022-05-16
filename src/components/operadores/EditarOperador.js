@@ -42,9 +42,7 @@ export default function EditarOperador() {
 
     const resEdit = await editUser(operador)
     console.log(resEdit)
-    navigate('/');
-
-    // const res = await postOperador(operador);
+    navigate('/infooperador/'+id);
   };
 
   return (
