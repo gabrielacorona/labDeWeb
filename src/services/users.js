@@ -39,7 +39,8 @@ export function editUser(data) {
   return fetch('/users/', {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
       },
       body: JSON.stringify(data)
     })
@@ -50,13 +51,12 @@ export function deleteUser(data){
   return fetch('/users/', {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
     },
     body: JSON.stringify(data)
   })
-    .then(data => data.json()) 
 }
-
 
 export function getUserById(id){
   return fetch('/users/id/'+id, {
@@ -122,7 +122,8 @@ export function registerOperador(operadorData) {
   return fetch('/users', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
       },
       body: JSON.stringify(operadorData)
     })
@@ -133,9 +134,21 @@ export function addOperador(data) {
   return fetch('/users/addOperador', {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
       },
       body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
+}
+
+export function getOperadores(id) {
+  return fetch('/users/getOperadores/'+id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      }
     })
       .then(data => data.json()) 
 }

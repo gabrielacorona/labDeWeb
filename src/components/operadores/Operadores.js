@@ -11,6 +11,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useUserId, getOperadores } from '../../services/users';
+import { Link } from 'react-router-dom';
 
 const mockProp = {
     users: [
@@ -52,9 +54,11 @@ function OperatorList(props) {
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             {props.users.map((item) => (
                 <ListItem secondaryAction={
+                    <Link to={'/infooperador/'+ item.id}>
                         <IconButton edge="end" aria-label="view">
                             <VisibilityIcon />
                         </IconButton>
+                        </Link>
                     }>
                     <ListItemAvatar>
                         <Avatar alt="Image Unavailable" src={item.userPicture}/>
@@ -74,13 +78,27 @@ function MisOperadores(props) {
                 display: 'flex',
                 flexDirection: 'column',
             }} >
-                <OperatorList users={mockProp.users} />
+                <OperatorList users={props.operadores} />
             </Paper>
         </Grid>
     );
 }
 
-export default function OperadoresAdmin() {
+export default function Operadores() {
+    const [operadores, setOperadores] = useState([]);
+    let {userId} = useUserId()
+
+    const fetchOperadores = useCallback(async () => {
+        const res = await getOperadores(userId)
+        console.log(res)
+        setOperadores(res);
+    }, [])
+
+    useEffect(() => {
+        fetchOperadores()
+        .catch(console.error);
+    }, []);
+
   return (
     <Box
         component="main"
@@ -100,7 +118,7 @@ export default function OperadoresAdmin() {
                     <Title>Operadores</Title>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
-                    <MisOperadores title="Descripcion" descripcion={mockProp.descripcion}/>
+                    <MisOperadores title="Descripcion" operadores={operadores}/>
                 </Grid>
             </Grid>
         </Container>
