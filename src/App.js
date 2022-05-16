@@ -136,13 +136,12 @@ function App() {
             </Protected>
             }
           />
-        <Route path="/detallesoperador/" element={
+        <Route path="/detallesoperador/:id" element={
             <Protected token={token}>
-              <AddOperador/>
+              <DetallesOperador/>
             </Protected>
             }
-          />
-
+        />
 
         </Routes>
         </Router>

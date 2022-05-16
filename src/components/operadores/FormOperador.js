@@ -46,6 +46,17 @@ export default function FormOperador({ isEditing, isStatic, operatorData }) {
                 disabled={isStatic}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="telephone"
+                name="telephone"
+                label="Telefono"
+                variant="standard"
+                defaultValue={showingData ? operatorData.telephone : ""}
+                disabled={isStatic}
+              />
+            </Grid>
             {showingData && <>
             <Grid item xs={12}>
               <TextField
@@ -81,17 +92,6 @@ export default function FormOperador({ isEditing, isStatic, operatorData }) {
                 />
             </Grid>
             </>}
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="telephone"
-                name="telephone"
-                label="Telefono"
-                variant="standard"
-                defaultValue={showingData ? operatorData.telephone : ""}
-                disabled={isStatic}
-              />
-            </Grid>
           </Box>
         </Box>
       </Box>

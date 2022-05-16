@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect, useState, useCallback} from 'react';
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -6,20 +6,30 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormOperador from "./FormOperador";
-// import { postOperador } from "../../services/operador";
+import { useParams } from "react-router";
+import { getUserById, editUser } from "../../services/users";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function DetallesOperador() {
-  const [operatorData, setOperatorData] = React.useState({});
+  const [operatorData, setOperatorData] = React.useState();
+  let { id } = useParams();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // const res = await postOperador(operador);
-    console.log(operatorData);
-  };
+  const fetchOperadorData = useCallback(async () => {
+    const op = await getUserById(id)
+    console.log(op)
+    setOperatorData(op);
+  }, [])
+
+  useEffect(() => {
+    fetchOperadorData()
+    .catch(console.error);
+  }, []);
 
   return (
+    operatorData &&
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -36,13 +46,12 @@ export default function DetallesOperador() {
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
           <Typography component="h1" variant="h4" align="left">
-            Información Operador
+            Editar Operador
           </Typography>
           <React.Fragment>
             <Box
               component="form"
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
-              onSubmit={handleSubmit}
             >
               <FormOperador operatorData={operatorData} isStatic={true} />
             </Box>
