@@ -9,7 +9,7 @@ import FormCliente from "./FormCliente";
 import { editUser, getUserById } from "../../services/users";
 import { useParams } from "react-router";
 import { useNavigate } from 'react-router-dom';
-
+import Title from '../utils/Title'
 // import { postCliente } from "../../services/clientes";
 
 const theme = createTheme();

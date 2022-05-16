@@ -10,6 +10,7 @@ import { getUserById, deleteUser } from '../../services/users';
 import FormCliente from './FormCliente';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import Title from '../utils/Title'
 
 const theme = createTheme({
   palette: {
