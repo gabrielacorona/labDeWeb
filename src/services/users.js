@@ -118,7 +118,7 @@ export function registerMockAdmin(credentials) {
         .then(data => data.json()) 
 }
 
-export function registerOperador(operadorData) {
+export function registerUser(operadorData) {
   return fetch('/users', {
       method: 'POST',
       headers: {

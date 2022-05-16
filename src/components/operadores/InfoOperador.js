@@ -21,26 +21,6 @@ const theme = createTheme({
 
 const themeMain = createTheme();
 
-const mockProp = {
-  operadores: [
-      {
-          id: "idUnicoEIrrepetible",
-          nombre: "Andres",
-          contacto: "7821707448",
-          miembroDesde: "2020",
-          numReportes: "20",
-          ultimoReporte: "10/03/2022"
-      },
-      {
-        id: "idUnicoEIrrepetible2",
-        nombre: "jc",
-        contacto: "7821707449",
-        miembroDesde: "2021",
-        numReportes: "15",
-        ultimoReporte: "21/04/2022"
-      },
-  ]    
-}
 export default function InfoOperador() {
   const [operatorData, setOperatorData] = React.useState({});
 

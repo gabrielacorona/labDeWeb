@@ -5,14 +5,14 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import FormOperador from "./FormOperador";
-import { addOperador, getUserId, getUserById} from "../../services/users";
+import { registerUser, getUserId, getUserById} from "../../services/users";
 import { useNavigate } from 'react-router-dom';
+import FormCliente from './FormCliente';
 
 const theme = createTheme();
 
-export default function AddOperador() {
-    const [operador, setOperador] = React.useState({});
+export default function AddCliente() {
+    const [cliente, setCliente] = React.useState({});
     const navigate = useNavigate();
     const userId = getUserId()
     
@@ -21,7 +21,7 @@ export default function AddOperador() {
       const data = new FormData(e.currentTarget);
       const userData = await getUserById(getUserId())
 
-      let operador = {
+      let cliente = {
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
         email: data.get('email'),
@@ -32,12 +32,11 @@ export default function AddOperador() {
         companyPicture: "NA",
         lastReportDate: "NA",
         memberSince: "12-01-2022",
-        userType: "o"
+        userType: "c"
       }
-      const resRegister = await registerUser(operador)
-      const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
-      console.log(resAddOp)
-      navigate('/operadores');
+      const resRegister = await registerUser(cliente)
+      console.log(resRegister)
+      navigate('/');
     }
   
   return (
@@ -57,7 +56,7 @@ export default function AddOperador() {
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
           <Typography component="h1" variant="h4" align="left">
-            Agregar nuevo operador
+            Agregar nuevo Cliente
           </Typography>
           <React.Fragment>
             <Box
@@ -65,7 +64,7 @@ export default function AddOperador() {
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
               onSubmit={handleSubmit}
             >
-              <FormOperador />
+              <FormCliente />
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button
