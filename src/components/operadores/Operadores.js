@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useUserId, getOperadores } from '../../services/users';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button'
 
 const mockProp = {
     users: [
@@ -114,8 +115,20 @@ export default function Operadores() {
         {/* CONTAINER WITH TITLE AND LIST OF OPERATORS */}
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} lg={12}>
+                <Grid item xs={9} md={9} lg={9}>
                     <Title>Operadores</Title>
+                </Grid>
+                <Grid item xs={3} md={3} lg={3}>
+                    <Link to={'/addoperador'}>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            type="submit"
+                            sx={{ mb: 2 }}
+                        >
+                            Agregar Nuevo
+                        </Button>
+                    </Link>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <MisOperadores title="Descripcion" operadores={operadores}/>
