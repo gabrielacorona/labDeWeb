@@ -12,7 +12,6 @@ import { getUserByMongoId } from '../../services/users';
 function ReportesCard(props) {
     const [autor, setAutor] = useState();
 
-    console.log(autor)
     const fetchAutorData = useCallback(async () => {
         let res = await getUserByMongoId(props.data.autor)
         setAutor(res.firstName + " " + res.lastName)
