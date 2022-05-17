@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,6 +14,7 @@ import ButtonAddImage from '../utils/ButtonAddImage';
 import { getUserById, getUserId } from '../../services/users';
 import { addMoldeToUser, postMolde } from '../../services/moldes';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router";
 
 const theme = createTheme();
 
@@ -32,25 +33,26 @@ function RightSidebar(){
     );
 }
   
-export default function AgregarMolde() {
+export default function AgregarMolde(props) {
   const [moldeData, setMoldeData] = React.useState({});
+  const [age, setAge] = useState('');
+  let userId = useParams().id;
+  console.log("currage", age, userId)
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log(age, "edad")
     const data = new FormData(e.currentTarget);
-    const userId = getUserId()
-    const objID = await getUserById(getUserId())
     let molde = {
       nombreMolde: data.get('nombreMolde'),
       fechaAdquisicion: data.get('fechaAdquisicion'),
-      encargado: data.get('encargado'),
       tipoColada: data.get('tipoColada'),
       descripcion: data.get('descripcion'),
       costo: data.get('costo'),
       ultimaReparacion: data.get('reparacion'),
       ultimoReporte: "NA",
-      encargado: objID._id
+      encargado: age
     }
     const res = await postMolde(molde)
     const resmolde = await addMoldeToUser({userId: userId, moldeId: res.id})
@@ -80,7 +82,7 @@ export default function AgregarMolde() {
                 <Grid item xs={12} md={9} lg={9}>
                     <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
-                            <AddMoldesForm editing={editingStatus} />
+                            <AddMoldesForm editing={editingStatus} id={userId} age={age} setAge={setAge}/>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Button
                                     variant="contained"

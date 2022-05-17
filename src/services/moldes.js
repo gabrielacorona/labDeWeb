@@ -8,7 +8,7 @@ export function getMoldes() {
           'Authorization': 'Bearer ' + getToken()
         }
       })
-      .then((response) => { 
+      .then((response) => {
           return response.json().then((data) => {
               return data;
           }).catch((err) => {
@@ -72,8 +72,9 @@ export function addMoldeToUser(data) {
 }
 
 export function getMoldesByCompany(company) {
-    return fetch('/moldes/company', {
-        method: 'get',
+    console.log(company, "comp")
+    return fetch('/moldes/company/' + company, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()

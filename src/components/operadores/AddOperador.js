@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormOperador from "./FormOperador";
-import { addOperador, getUserId, getUserById} from "../../services/users";
+import { addOperador, getUserId, getUserById, registerUser} from "../../services/users";
 import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
@@ -20,14 +20,13 @@ export default function AddOperador() {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       const userData = await getUserById(getUserId())
-
       let operador = {
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
         email: data.get('email'),
         company: userData.company,
         telephone: data.get('telephone'),
-        password: data.get('firstName')+data.get('company'),
+        password: data.get('firstName')+userData.company,
         userPicture: "NA",
         companyPicture: "NA",
         lastReportDate: "NA",

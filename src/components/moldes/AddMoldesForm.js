@@ -1,9 +1,11 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import EncargadoSelect from './EncargadoSelect';
 
 export default function AddMoldesForm(props) {
   const isEditing = props.editing;
+
   return (
     <React.Fragment>  
         <Grid item xs={12} >
@@ -58,7 +60,6 @@ export default function AddMoldesForm(props) {
             defaultValue={isEditing ? props.mock.ultimaReparacion : ""}
           />
         </Grid>
-
         <Grid item xs={12} md={12} lg={12}
           sx={{
             p: 2,
@@ -76,6 +77,16 @@ export default function AddMoldesForm(props) {
             style={{backgroundColor:"#ffffff"}}
             defaultValue={isEditing ? props.mock.descripcion : ""}
           />
+        </Grid>
+        <Grid item xs={12} md={12} lg={12}
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            height: 240,
+          }}
+        >
+          <EncargadoSelect id={props.id} age={props.age} setAge={props.setAge}/>
         </Grid>
 
     </React.Fragment>

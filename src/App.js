@@ -24,6 +24,7 @@ import AddReporte from './components/reportes/AddReporte';
 import AddOperador from './components/operadores/AddOperador';
 import DetallesOperador from './components/operadores/DetallesOperador';
 import AddCliente from './components/clientes/AddCliente';
+import Clientes from './components/clientes/Clientes';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -54,6 +55,12 @@ function App() {
             }
           />
           <Route path="/moldes" element={
+            <Protected token={token}>
+              <Moldes />
+            </Protected>
+            }
+          />
+          <Route path="/moldes/:id" element={
             <Protected token={token}>
               <Moldes />
             </Protected>
@@ -119,7 +126,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/agregarmolde" element={
+          <Route path="/agregarmolde/:id" element={
             <Protected token={token}>
               <AgregarMolde/>
             </Protected>
@@ -137,15 +144,18 @@ function App() {
             </Protected>
             }
           />
-
           <Route path="/addcliente/" element={
             <Protected token={token}>
               <AddCliente/>
             </Protected>
             }
           />
-
-
+        <Route path="/clientes/" element={
+            <Protected token={token}>
+              <Clientes />
+            </Protected>
+            }
+          />
         </Routes>
         </Router>
       </Box>

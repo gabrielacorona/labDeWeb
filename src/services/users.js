@@ -75,8 +75,26 @@ export function getUserById(id){
   });
 }
 
+
 export function getUserMoldes(id){
   return fetch('/users/getMoldes/'+id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+      }) 
+  });
+}
+
+export function getClients(){
+  return fetch('/users/clientes/', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

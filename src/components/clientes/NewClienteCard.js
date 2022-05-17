@@ -9,17 +9,17 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { Link } from 'react-router-dom';
 
-function NewMoldeCard(props) {
+function NewClienteCard(props) {
     return (
         <Card sx={{ minWidth: 300, maxHeight: 200}} style={{margin: 30}}>
             <CardContent style={{padding: 20}} justifyContent="center">
                 <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>
-                    Nuevo molde
+                    Nuevo Cliente
                 </Typography>
                 <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to={'/agregarmolde/'+ props.id}>
+                    <Link to={'/addcliente'}>
                         <Button variant="outlined" color="primary">
-                                Agregar Nuevo Molde
+                                Agregar Nuevo Cliente
                         </Button>
                     </Link>
                 </CardActions>
@@ -28,8 +28,8 @@ function NewMoldeCard(props) {
     );
 }
 
-NewMoldeCard.propTypes = {
+NewClienteCard.propTypes = {
   children: PropTypes.node,
 };
 
-export default NewMoldeCard;
+export default NewClienteCard;

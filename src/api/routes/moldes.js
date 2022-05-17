@@ -95,6 +95,7 @@ router.get('/encargado/:encargado', checkUserAuth, jsonParser,(req, res, next) =
 
 router.get('/company/:company', checkUserAuth, jsonParser, (req, res, next) => {
     const company = req.params.company;
+    console.log("hola")
     if (company == ""){
         res.status(404).json({
             message: "No hay compañía"
