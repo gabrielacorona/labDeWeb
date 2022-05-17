@@ -36,6 +36,7 @@ function RightSidebar(){
 export default function AgregarMolde(props) {
   const [moldeData, setMoldeData] = React.useState({});
   const [age, setAge] = useState('');
+  const [company, setCompany] = useState('');
   let userId = useParams().id;
   console.log("currage", age, userId)
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export default function AgregarMolde(props) {
                 <Grid item xs={12} md={9} lg={9}>
                     <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
-                            <AddMoldesForm editing={editingStatus} id={userId} age={age} setAge={setAge}/>
+                            <AddMoldesForm editing={editingStatus} id={userId} age={age} setAge={setAge} company={company} setCompany={setCompany}/>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Button
                                     variant="contained"
