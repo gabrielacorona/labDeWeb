@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DetallesForm from "./DetallesForm";
+import FormReporte from "./FormReporte";
 import Descripcion from "./Descripcion";
 import { postReporte, addReporteToMolde } from "../../services/reportes";
 import { useParams } from "react-router";
@@ -79,7 +79,7 @@ export default function AddReporte(props) {
               sx={{ display: "flex", justifyContent: "normal" }}
               onSubmit={handleSubmit}
             >
-              <DetallesForm editing={false} />
+              <FormReporte isEditing={false} />
               <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                 <Button variant="contained" type="submit">
                   Guardar

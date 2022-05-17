@@ -95,6 +95,12 @@ function App() {
             </Protected>
             }
           />
+          <Route path="/editarreporte/:reporteId" element={
+            <Protected token={token}>
+              <EditarReporte/>
+            </Protected>
+            }
+          />
           <Route path="/operadores" element={
             <Protected token={token} noOperador={true}>
               <Operadores />

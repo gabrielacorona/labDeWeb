@@ -7,18 +7,18 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormReporte from "./FormReporte";
 import { useParams } from "react-router";
-import { getUserById, editUser } from "../../services/users";
+import { getReportesByID, editReporte } from "../../services/reportes";
 import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function DetallesReporte() {
+export default function EditarReporte() {
   const [reporteData, setReporteData] = React.useState();
-  let { id } = useParams();
+  let { reporteId } = useParams();
   const navigate = useNavigate();
 
   const fetchReporteData = useCallback(async () => {
-    const op = await getUserById(id)
+    const op = await getReportesByID(reporteId)
     console.log(op)
     setReporteData(op);
   }, [])
@@ -27,6 +27,23 @@ export default function DetallesReporte() {
     fetchReporteData()
     .catch(console.error);
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+
+    let operador = {
+      id: reporteId,
+      titulo: data.get('titulo'),
+      fecha: data.get('fecha'),
+      diagnostico: data.get('diagnostico'),
+      costo: data.get('costo')
+    }
+
+    const resEdit = await editReporte(operador)
+    console.log(resEdit)
+    navigate('/inforeportes/'+ reporteId);
+  };
 
   return (
     reporteData &&
@@ -49,8 +66,21 @@ export default function DetallesReporte() {
             <Box
               component="form"
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
+              onSubmit={handleSubmit}
             >
-              <FormReporte reporteData={reporteData} isStatic={true} />
+              <FormReporte reporteData={reporteData} isEditing={true} />
+              <ThemeProvider theme={theme}>
+                <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    sx={{ mb: 2 }}
+                  >
+                    Guardar
+                  </Button>
+                  </Box>
+                  </ThemeProvider>
             </Box>
           </React.Fragment>
         </Container>

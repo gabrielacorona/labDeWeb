@@ -1,101 +1,67 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Descripcion from "./Descripcion";
+import React, { useEffect, useState, useCallback } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import FormReporte from "./FormReporte";
+import { useParams } from "react-router";
+import { getReportesByID } from "../../services/reportes";
+import { useNavigate } from "react-router-dom";
 
-export default function DetallesForm(props) {
-  let isEditing = props.editing;
-  let isStatic = props.isStatic;
+const theme = createTheme();
+
+export default function DetallesForm() {
+  const [reporteData, setReporteData] = React.useState();
+  let { reporteId } = useParams();
+  const navigate = useNavigate();
+
+  const fetchReporteData = useCallback(async () => {
+    const op = await getReportesByID(reporteId);
+    setReporteData(op);
+  }, []);
+
+  useEffect(() => {
+    fetchReporteData().catch(console.error);
+  }, []);
+
   return (
-    <React.Fragment>
-      <Box
-        sx={{
-          height: "100%",
-          flexDirection: "column",
-          display: "flex",
-          width: "80%",
-          pt: 2,
-          mb: 2
-        }}
-      >
-        <Box sx={{ mr: 8 }}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="titulo"
-              name="titulo"
-              label="Titulo"
-              autoComplete="given-name"
-              variant="standard"
-              defaultValue={isEditing || isStatic ? props.data.titulo : ""}
-              disabled={isStatic}
-            />
-          </Grid>
-          <Grid item xs={12} sx={{ pt: 3 }}>
-            <TextField
-              required
-              id="fecha"
-              name="fecha"
-              label="Fecha"
-              variant="standard"
-              defaultValue={isEditing || isStatic ? props.data.fecha : ""}
-              disabled={isStatic}
-            />
-          </Grid>
-          <Grid item xs={12} sx={{ pt: 3 }}>
-            <TextField
-              required
-              id="diagnostico"
-              name="diagnostico"
-              label="Diagnostico"
-              variant="standard"
-              defaultValue={isEditing || isStatic ? props.data.diagnostico : ""}
-              disabled={isStatic}
-            />
-          </Grid>
-          <Grid item xs={12} sx={{ pt: 3 }}>
-            <TextField
-              required
-              id="costo-estimado"
-              name="costo-estimado"
-              label="Costo Estimado"
-              variant="standard"
-              defaultValue={
-                isEditing || isStatic ? props.data.costoEstimado : ""
-              }
-              disabled={isStatic}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            lg={12}
+    reporteData && (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Container
+            maxWidth="lg"
             sx={{
-              p: 2,
-              pl: 0,
-              pt: 5,
-              mb: 4,
+              pt: 4,
+              pb: 4,
+              height: "100%",
               display: "flex",
               flexDirection: "column",
-              height: 240,
-              width: "70%",
             }}
           >
-            <TextField
-              id="descripcion"
-              name="descripcion"
-              label="Descripcion"
-              multiline
-              rows={8}
-              style={{ backgroundColor: "#ffffff" }}
-              defaultValue={isEditing || isStatic ? props.data.descripcion : ""}
-              disabled={isStatic}
-            />
-          </Grid>
+            <React.Fragment>
+              <Box
+                sx={{ display: "flex", justify: "normal", flexGrow: 1 }}
+              >
+                <FormReporte reporteData={reporteData} isStatic={true} />
+              </Box>
+            </React.Fragment>
+          </Container>
         </Box>
-      </Box>
-    </React.Fragment>
+      </ThemeProvider>
+    )
   );
 }
