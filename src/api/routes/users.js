@@ -31,6 +31,20 @@ router.get('/', checkAdminAuth, (req, res, next) => {
         });
 });
 
+//get cliente
+router.get('/clientes', checkAdminAuth, (req, res, next) => {
+    console.log("getting all clientes")
+    Users
+        .getClientes()
+        .then(users => {
+            res.status(200).json(users);
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong while retrieving the users";
+            return res.status(500).end();
+        });
+});
+
 //get users by company
 router.get('/company/:company', checkAdminAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their company");
