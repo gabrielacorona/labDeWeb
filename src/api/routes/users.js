@@ -210,7 +210,7 @@ router.get('/id/:id', jsonParser, (req, res, next) => {
         });
 });
 
-router.get('/mongoId/:id', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/mongoId/:id', checkUserAuth, jsonParser, (req, res, next) => {
     console.log("getting user by their id");
     let id = req.params.id;
     if(!id){

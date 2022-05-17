@@ -115,7 +115,7 @@ router.get('/company/:company', checkUserAuth, jsonParser, (req, res, next) => {
     }
 });
 
-router.get('/getReportes/:moldeId', checkAdminAuth, jsonParser, (req, res, next) => {
+router.get('/getReportes/:moldeId', checkUserAuth, jsonParser, (req, res, next) => {
     console.log("getting reportes by their molde");
     let id = req.params.moldeId;
     if(!id){

@@ -17,7 +17,7 @@ function NewItemCard(props) {
                     Nuevo Reporte
                 </Typography>
                 <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to={'/inforeportes/'}>
+                    <Link to={'/addreporte/' + props.moldeId}>
                         <Button variant="outlined" color="primary">
                                 Agregar Nuevo Reporte
                             </Button>

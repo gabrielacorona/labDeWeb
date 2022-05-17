@@ -53,7 +53,7 @@ export default function Reportes() {
                   {reportes.map((data, index) => (
                     <ReportesCard data={data} cardNumber={index + 1}/>
                   ))}
-                  <NewItemCard />
+                  <NewItemCard moldeId={moldeid}/>
               </Grid>
           </Container>
       </Box>

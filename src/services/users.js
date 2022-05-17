@@ -170,3 +170,14 @@ export function getOperadores(id) {
     })
       .then(data => data.json()) 
 }
+
+export function getUserByMongoId(id) {
+  return fetch('/users/mongoId/'+id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      }
+    })
+      .then(data => data.json()) 
+}
