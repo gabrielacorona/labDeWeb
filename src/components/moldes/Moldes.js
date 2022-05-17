@@ -24,7 +24,6 @@ export default function Moldes() {
     const [user, setUser] = useState('');
     let id = useParams().id
     let {userId} = id ? id : useUserId()
-    // console.log(id)
 
     const fetchMoldeData = useCallback(async () => {
         console.log(userId, "userid")
@@ -42,6 +41,7 @@ export default function Moldes() {
     }, []);
 
     return (
+        user &&
         <Box
             component="main"
             sx={{
@@ -62,7 +62,9 @@ export default function Moldes() {
                     {moldes && moldes.map(({ id, nombreMolde}, index) => (
                     <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
                     ))}
-                    <NewMoldeCard id={userId}/>
+                    {user.userType != 'o' &&
+                        <NewMoldeCard id={userId}/>
+                    }
                 </Grid>
             </Container>
         </Box>

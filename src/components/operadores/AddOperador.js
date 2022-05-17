@@ -26,13 +26,14 @@ export default function AddOperador() {
         email: data.get('email'),
         company: userData.company,
         telephone: data.get('telephone'),
-        password: data.get('firstName')+userData.company,
+        password: "hola",
         userPicture: "NA",
         companyPicture: "NA",
         lastReportDate: "NA",
         memberSince: "12-01-2022",
         userType: "o"
       }
+      console.log(operador)
       const resRegister = await registerUser(operador)
       const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
       console.log(resAddOp)
