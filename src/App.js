@@ -24,6 +24,9 @@ import AddReporte from './components/reportes/AddReporte';
 import AddOperador from './components/operadores/AddOperador';
 import DetallesOperador from './components/operadores/DetallesOperador';
 import AddCliente from './components/clientes/AddCliente';
+import ListaCompanias from './components/pagos/ListaCompanias';
+import DetallePago from './components/pagos/DetallePago';
+import ListaPagos from './components/pagos/ListaPagos';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -145,6 +148,26 @@ function App() {
             }
           />
 
+          <Route path="/listacompanias" element={
+            <Protected token={token}>
+              <ListaCompanias/>
+            </Protected>
+            }
+          />
+
+          <Route path="/detallepago/:id" element={
+            <Protected token={token}>
+              <DetallePago/>
+            </Protected>
+            }
+          />
+
+          <Route path="/listapagos" element={
+            <Protected token={token}>
+              <ListaPagos/>
+            </Protected>
+            }
+          />
 
         </Routes>
         </Router>
