@@ -16,7 +16,6 @@ const mockProp = {
 }
 
 function SpecsWrapper(props){
-    // TODO - get encargado name
     return (
         <React.Fragment>
             <Grid item xs={12} md={6} lg={4}>

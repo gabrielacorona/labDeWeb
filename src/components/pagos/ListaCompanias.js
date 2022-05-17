@@ -1,7 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
-import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card';
@@ -34,7 +32,7 @@ function CompanyCard(props) {
         <Grid item xs={12} md={6} lg={4}>
             <Card style={{margin: 30}}>
                 <CardContent style={{padding: 20}} justifyContent="center">
-                    <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>
+                    <Typography color="text.primary" component="h2" variant="h5" justifyContent="center" textAlign="center" gutterBottom style={{fontWeight:500}}>
                         {props.name}
                     </Typography>
                     <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
@@ -67,7 +65,7 @@ export default function ListaCompanias() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
-                        <Title>Moldes </Title>
+                        <Title>Historial de pagos</Title>
                     </Grid>
                     {mockProp.company.map((item) => (
                         <CompanyCard name={item.nombre}/>

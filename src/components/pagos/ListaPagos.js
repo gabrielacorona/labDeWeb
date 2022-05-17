@@ -7,11 +7,8 @@ import Title from '../utils/Title';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useUserId, getOperadores } from '../../services/users';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button'
 
@@ -32,7 +29,7 @@ const mockProp = {
     ]    
 }
 
-function OperatorList(props) {
+function PaymentList(props) {
     return (
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             {props.pay.map((item, index) => (
@@ -50,7 +47,7 @@ function OperatorList(props) {
   );
 }
 
-function MisOperadores(props) {
+function MisPagos(props) {
     return (
         <Grid item xs={12} md={12} lg={12}>
             <Paper sx={{
@@ -58,7 +55,7 @@ function MisOperadores(props) {
                 display: 'flex',
                 flexDirection: 'column',
             }} >
-                <OperatorList pay={props.payments} />
+                <PaymentList pay={props.payments} />
             </Paper>
         </Grid>
     );
@@ -77,14 +74,13 @@ export default function ListaPagos() {
         height: '100vh',
         overflow: 'auto',
         }} >
-        {/* CONTAINER WITH TITLE AND LIST OF OPERATORS */}
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={9} md={9} lg={9}>
-                    <Title>Operadores</Title>
+                    <Title>Nombre Compania</Title>
                 </Grid>
                 <Grid item xs={3} md={3} lg={3}>
-                    <Link to={'/addoperador'}>
+                    <Link to={'/addpago'}>
                         <Button
                             color="primary"
                             variant="contained"
@@ -96,7 +92,7 @@ export default function ListaPagos() {
                     </Link>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
-                    <MisOperadores title="Descripcion" payments={mockProp.pagos}/>
+                    <MisPagos title="Descripcion" payments={mockProp.pagos}/>
                 </Grid>
             </Grid>
         </Container>
