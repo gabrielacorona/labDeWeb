@@ -45,9 +45,7 @@ function App() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
       <Router>
-        <Protected token={token}>
-          <Sidebar/>
-        </Protected>
+        <Sidebar/>
         <Routes>
           <Route path="/" element={
               token ? <Home /> : <Login setToken={setToken}/>

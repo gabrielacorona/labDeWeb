@@ -54,19 +54,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function Sidebar() {
     const [open, setOpen] = React.useState(true);
 
-    const [userType, setUserType] = useState('');
-    console.log(userType, "uss")
+    // const [userType, setUserType] = useState('');
+    // console.log(userType, "uss")
 
-    const fetchUserData = useCallback(async () => {
-        const userId = getUserId()
-        const userData = await getUserById(userId)
-        setUserType(userData.userType)
-    }, [])
-
-    useEffect(() => {
-      fetchUserData()
-      .catch(console.error);
-  }, []);
+    // const fetchUserData = useCallback(async () => {
+    //     const userId = getUserId()
+    //     const userData = await getUserById(userId)
+    //     setUserType(userData.userType)
+    // }, [])
 
     const toggleDrawer = () => {
       setOpen(!open);
@@ -95,7 +90,7 @@ function Sidebar() {
                 <ListItemText primary="Reportes" />
               </ListItemButton>
             </Link>
-            <Link href={userType == 'a' ? "/moldesadmin" : "/moldes"} >
+            <Link href="/moldes" >
               <ListItemButton>
                 <ListItemIcon>
                   <ShoppingCartIcon />
@@ -103,9 +98,7 @@ function Sidebar() {
                 <ListItemText primary="Moldes" />
               </ListItemButton>
             </Link>
-            
-            {(userType == 'c' || userType == 'a') &&
-              <Link href="/operadores">
+            <Link href="/operadores">
                 <ListItemButton>
                   <ListItemIcon>
                     <PeopleIcon />
@@ -113,8 +106,7 @@ function Sidebar() {
                   <ListItemText primary="Operadores" />
                 </ListItemButton>
               </Link>
-            }
-            {userType == 'a' &&
+      
               <Link href="/clientes">
                 <ListItemButton>
                   <ListItemIcon>
@@ -123,7 +115,7 @@ function Sidebar() {
                   <ListItemText primary="Clientes" />
                 </ListItemButton>
               </Link>
-            }
+            
             <Divider sx={{ my: 1 }} />
 
             </List>

@@ -8,7 +8,7 @@ const Protected = ({ token, children, noClient, noOperador}) => {
     }
 
     const [userType, setUserType] = useState()
-    console.log(userType, noOperador)
+    console.log(userType, noOperador, "hi")
     const fetchUserData = useCallback(async () => {
         const userId = getUserId()
         const userData = await getUserById(userId)
