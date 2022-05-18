@@ -20,7 +20,7 @@ function ClienteCard(props) {
     }
 
     const botonMoldes = async e => {
-        navigate('/moldes/'+props.id);
+        navigate('/moldesadmin?clienteid='+props.id);
     }
     
   return (

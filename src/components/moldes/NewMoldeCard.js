@@ -19,7 +19,7 @@ function NewMoldeCard(props) {
                 <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
                     <Link to={'/agregarmolde/'+ props.id}>
                         <Button variant="outlined" color="primary">
-                                Agregar Nuevo Molde
+                            Agregar Nuevo Molde
                         </Button>
                     </Link>
                 </CardActions>

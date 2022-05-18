@@ -31,6 +31,7 @@ import ListaCompanias from './components/pagos/ListaCompanias';
 import DetallePago from './components/pagos/DetallePago';
 import ListaPagos from './components/pagos/ListaPagos';
 import AddPago from './components/pagos/AddPago';
+import MoldesAdmin from './components/moldes/MoldesAdmin';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -41,12 +42,11 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
       <Router>
-        <Sidebar />
+        <Sidebar/>
         <Routes>
           <Route path="/" element={
               token ? <Home /> : <Login setToken={setToken}/>
@@ -187,10 +187,15 @@ function App() {
             </Protected>
             }
           />
-
           <Route path="/addpago/" element={
             <Protected token={token}>
               <AddPago/>
+            </Protected>
+            }
+          />
+          <Route path="/moldesadmin/" element={
+            <Protected token={token} noOperador={true} noClient={true}>
+              <MoldesAdmin/>
             </Protected>
             }
           />

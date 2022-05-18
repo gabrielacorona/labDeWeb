@@ -10,6 +10,7 @@ import { getUserById, useUserId, getUserMoldes } from '../../services/users';
 import NewMoldeCard from './NewMoldeCard';
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
+import MoldesFilter from './MoldesFilter';
 
 const mockProp = {
     moldes: [
@@ -19,29 +20,33 @@ const mockProp = {
     ]
 }
 
-export default function Moldes() {
+export default function MoldesAdmin() {
+    var clienteid = new URLSearchParams(location.search).get("clienteid")
+
     const [moldes, setMoldes] = useState([]);
     const [user, setUser] = useState('');
-    let id = useParams().id
-    let {userId} = id ? id : useUserId()
+    const [filter, setFilter] = useState(clienteid ? clienteid : 'Todos');
 
-    const fetchMoldeData = useCallback(async () => {
-        console.log(userId, "userid")
-        const userData = await getUserById(userId)
-        setUser(userData)
-        console.log(userData)
-        const userMoldes = await getMoldesByCompany(userData.company)
-        console.log(userMoldes)
-        setMoldes(userMoldes);
-    }, [])
+    const fetchMoldeData = (async () => {
+        if(filter != 'Todos'){
+            const userData = await getUserById(filter)
+            setUser(userData)
+            const userMoldes = await getMoldesByCompany(userData.company)
+            setMoldes(userMoldes);
+        } else{
+            const moldes = await getMoldes()
+            setMoldes(moldes);
+        }
+    })
+    console.log("filtro", filter, moldes)
 
     useEffect(() => {
         fetchMoldeData()
         .catch(console.error);
-    }, []);
+    }, [filter]);
 
     return (
-        user &&
+        moldes &&
         <Box
             component="main"
             sx={{
@@ -59,12 +64,14 @@ export default function Moldes() {
                     <Grid item xs={12} md={12} lg={12}>
                         <Title>Moldes </Title>
                     </Grid>
+                    <Grid item xs={4} md={4} lg={4}>
+                        <MoldesFilter filter={filter} setFilter={setFilter}/>
+                    </Grid>
+                    <Grid item xs={8} md={8} lg={8} />
+
                     {moldes && moldes.map(({ id, nombreMolde}, index) => (
-                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                        <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
                     ))}
-                    {user.userType != 'o' &&
-                        <NewMoldeCard id={userId}/>
-                    }
                 </Grid>
             </Container>
         </Box>
