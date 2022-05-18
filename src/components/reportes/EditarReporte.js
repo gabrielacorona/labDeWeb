@@ -37,7 +37,8 @@ export default function EditarReporte() {
       titulo: data.get('titulo'),
       fecha: data.get('fecha'),
       diagnostico: data.get('diagnostico'),
-      costo: data.get('costo')
+      costoEstimado: data.get('costo-estimado'),
+      descripcion: data.get('descripcion'),
     }
 
     const resEdit = await editReporte(operador)

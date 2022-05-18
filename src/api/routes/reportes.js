@@ -156,6 +156,7 @@ router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
 
 router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
     const id = req.body.id;
+    console.log("Este es el id UWU", id)
     Reportes
         .deleteReporteById(id)
         .then(result => {

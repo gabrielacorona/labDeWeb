@@ -10,7 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesForm from "./DetallesForm";
 import Descripcion from "./Descripcion";
 import ButtonAddImage from '../utils/ButtonAddImage';
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { deleteReporte } from '../../services/reportes';
+import { Link, useParams, useNavigate, useHistory } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -27,6 +28,13 @@ export default function InfoReportes() {
 
   const navigate = useNavigate();
   const reportID = useParams().reporteId;
+  
+  const handleDelete = async (e) => {
+    console.log("reporteID",reportID);
+    e.preventDefault();
+    let res = await deleteReporte({id: reportID})
+    navigate('/moldes');
+  };
 
   return (
       <ThemeProvider theme={themeMain}>
@@ -75,7 +83,7 @@ export default function InfoReportes() {
                       Editar
                     </Button>
                     </Link>
-                    <Button color="error" variant="outlined" type="submit">
+                    <Button color="error" variant="outlined" type="submit" onClick={handleDelete}>
                       Eliminar
                     </Button>
                   </Box>
