@@ -56,3 +56,14 @@ export function getReportesByID(reporteId){
   })
   .then(data => data.json())
 }
+
+export function getReportesByCompany(company){
+  return fetch('/reportes/company/'+ company, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': ',Bearer ' + getToken()
+    }
+  })
+  .then(data => data.json())
+}

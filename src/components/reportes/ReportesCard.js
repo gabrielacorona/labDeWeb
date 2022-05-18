@@ -13,8 +13,12 @@ function ReportesCard(props) {
     const [autor, setAutor] = useState();
 
     const fetchAutorData = useCallback(async () => {
-        let res = await getUserByMongoId(props.data.autor)
-        setAutor(res.firstName + " " + res.lastName)
+        if(props.filter != 'Todos'){
+            let res = await getUserByMongoId(props.data.autor)
+            setAutor(res.firstName + " " + res.lastName)
+        } else{
+            setAutor(props.data.autor[0].firstName + " "+ props.data.autor[0].lastName)
+        }
     }, [])
 
     useEffect(() => {

@@ -65,7 +65,7 @@ function App() {
             </Protected>
             }
           />
-          <Route path="/reportes/:moldeid" element={
+          <Route path="/reportes" element={
             <Protected token={token}>
               <Reportes />
             </Protected>
@@ -155,10 +155,11 @@ function App() {
             </Protected>
             }
           />
+
           <Route path="/notallowed/" element={
             <NotAllowed />
-          }/>
-          
+          } />
+
           <Route path="/listacompanias" element={
             <Protected token={token} noOperador={true} noClient={true}>
               <ListaCompanias/>
