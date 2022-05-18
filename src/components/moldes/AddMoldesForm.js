@@ -1,9 +1,26 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import EncargadoSelect from './EncargadoSelect';
+import { getUserId, getUserById } from "../../services/users";
+import CompanySelect from './CompanySelect';
 
 export default function AddMoldesForm(props) {
   const isEditing = props.editing;
+  const [userType, setUserType] = useState()
+  const [id, setId] = useState(props.id)
+
+  const fetchUserData = useCallback(async () => {
+      const userId = getUserId()
+      const userData = await getUserById(userId)
+      setUserType(userData.userType)
+  }, [])
+
+  useEffect(() => {
+      fetchUserData()
+      .catch(console.error);
+  }, []);
+
   return (
     <React.Fragment>  
         <Grid item xs={12} >
@@ -58,7 +75,6 @@ export default function AddMoldesForm(props) {
             defaultValue={isEditing ? props.mock.ultimaReparacion : ""}
           />
         </Grid>
-
         <Grid item xs={12} md={12} lg={12}
           sx={{
             p: 2,
@@ -77,6 +93,27 @@ export default function AddMoldesForm(props) {
             defaultValue={isEditing ? props.mock.descripcion : ""}
           />
         </Grid>
+        <Grid item xs={12} md={12} lg={12}
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <EncargadoSelect id={props.id} age={props.age} setAge={props.setAge}/>
+        </Grid>
+        {userType == 'a' &&
+        <Grid item xs={12} md={12} lg={12}
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+         <CompanySelect company={props.company} setCompany={props.setCompany} id={props.id} />
+        </Grid>
+        }
+
 
     </React.Fragment>
   );

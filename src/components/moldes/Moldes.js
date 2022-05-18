@@ -5,10 +5,11 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import DetailCard  from './DetailCard';
-import { getMoldes } from '../../services/moldes';
-import { getUserById, useUserId, getUserMoldes } from '../../services/users';
+import { getMoldes, getMoldesByCompany } from '../../services/moldes';
+import { getUserById, getUserId, useUserId, getUserMoldes } from '../../services/users';
 import NewMoldeCard from './NewMoldeCard';
 import { Link } from 'react-router-dom';
+import { useParams } from "react-router";
 
 const mockProp = {
     moldes: [
@@ -17,14 +18,23 @@ const mockProp = {
         {nombre: "molde3", id: "ghi"},
     ]
 }
-  
+
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
-    let {userId} = useUserId()
+    const [user, setUser] = useState('');
+
+    var companyParam = new URLSearchParams(location.search).get("company")
+    const userId = getUserId()
+
     const fetchMoldeData = useCallback(async () => {
-        const userMoldes = await getUserMoldes(userId)
+        const userData = await getUserById(userId)
+        setUser(userData)
+        var company = (companyParam == userData.company) || (companyParam == userData.userType == 'a') ? companyParam : userData.company
+
+        const userMoldes = await getMoldesByCompany(company)
+        console.log(userMoldes)
         setMoldes(userMoldes);
-      }, [])
+    }, [])
 
     useEffect(() => {
         fetchMoldeData()
@@ -32,6 +42,7 @@ export default function Moldes() {
     }, []);
 
     return (
+        user &&
         <Box
             component="main"
             sx={{
@@ -52,7 +63,9 @@ export default function Moldes() {
                     {moldes && moldes.map(({ id, nombreMolde}, index) => (
                     <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
                     ))}
-                    <NewMoldeCard/>
+                    {user.userType != 'o' &&
+                        <NewMoldeCard id={userId}/>
+                    }
                 </Grid>
             </Container>
         </Box>

@@ -24,6 +24,8 @@ import AddReporte from './components/reportes/AddReporte';
 import AddOperador from './components/operadores/AddOperador';
 import DetallesOperador from './components/operadores/DetallesOperador';
 import AddCliente from './components/clientes/AddCliente';
+import Clientes from './components/clientes/Clientes';
+import NotAllowed from './components/misc/NotAllowed';
 import ListaCompanias from './components/pagos/ListaCompanias';
 import DetallePago from './components/pagos/DetallePago';
 import ListaPagos from './components/pagos/ListaPagos';
@@ -94,70 +96,77 @@ function App() {
             }
           />
           <Route path="/operadores" element={
-            <Protected token={token}>
-              <Operadores/>
+            <Protected token={token} noOperador={true}>
+              <Operadores />
             </Protected>
             }
           />
           <Route path="/infooperador/:id" element={
-            <Protected token={token}>
-              <InfoOperador/>
+            <Protected token={token} noOperador={true}>
+              <InfoOperador />
             </Protected>
             }
           />
           <Route path="/editaroperador/:id" element={
-            <Protected token={token}>
-              <EditarOperador/>
+            <Protected token={token} noOperador={true}>
+              <EditarOperador />
             </Protected>
             }
           />
           <Route path="/infoclientes/:id" element={
-            <Protected token={token}>
-              <InfoClientes/>
+            <Protected token={token} noOperador={true} noClient={true}>
+              <InfoClientes  />
             </Protected>
             }
           />
           <Route path="/editarcliente/:id" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true} noClient={true} >
               <EditarCliente/>
             </Protected>
             }
           />
-          <Route path="/agregarmolde" element={
-            <Protected token={token}>
+          <Route path="/agregarmolde/:id" element={
+            <Protected token={token} noOperador={true}>
               <AgregarMolde/>
             </Protected>
             }
           />
           <Route path="/editarmolde/:id" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true}>
               <EditarMolde/>
             </Protected>
             }
           />
           <Route path="/addoperador/" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true}>
               <AddOperador/>
             </Protected>
             }
           />
-
           <Route path="/addcliente/" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true} noClient={true}>
               <AddCliente/>
             </Protected>
             }
           />
-
+        <Route path="/clientes/" element={
+            <Protected token={token} noOperador={true} noClient={true}>
+              <Clientes />
+            </Protected>
+            }
+          />
+          <Route path="/notallowed/" element={
+            <NotAllowed />
+            
           <Route path="/listacompanias" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true} noClient={true}>
               <ListaCompanias/>
             </Protected>
             }
           />
 
           <Route path="/detallepago/:id" element={
-            <Protected token={token}>
+            <Protected token={token} >
               <DetallePago/>
             </Protected>
             }

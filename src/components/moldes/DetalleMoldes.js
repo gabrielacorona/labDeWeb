@@ -8,9 +8,11 @@ import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { getMoldeById } from '../../services/moldes';
+import { deleteMolde, getMoldeById } from '../../services/moldes';
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { getUserByMongoId } from '../../services/users';
+import { useNavigate } from 'react-router-dom';
 
 const mockProp = {
     encargado : "Andres"
@@ -63,6 +65,14 @@ function DescrMolde(props) {
 }
 
 function TopHeader({id}){
+    const navigate = useNavigate();
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        let res = await deleteMolde({id: id})
+        navigate('/moldes');
+      };
+    
     return(
         <Grid item xs={12} md={3} lg={3}>
             <Grid container spacing={1}>
@@ -70,6 +80,9 @@ function TopHeader({id}){
                     <Link to={'/editarmolde/'+ id}>
                         <Button variant="outlined" style={{width: "100%"}}>Editar</Button>
                     </Link>
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Button color="error" onClick={handleDelete} variant="outlined" style={{width: "100%"}}>Eliminar</Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -96,12 +109,15 @@ function RightSidebar(props){
 
 export default function DetallesMoldes() {
     const [data, setData] = useState({});
+    const [encargado, setEncargado] = useState()
     let { id } = useParams();
-    
+    console.log(encargado)
+
     const fetchMoldeData = useCallback(async () => {
         const moldeData = await getMoldeById(id)
-
+        let res = await getUserByMongoId(moldeData.encargado)
         setData(moldeData);
+        setEncargado(res.firstName + " " + res.lastName)
     }, [])
 
     useEffect(() => {
@@ -132,7 +148,7 @@ export default function DetallesMoldes() {
                 <Grid item xs={12} md={9} lg={9}>
                     <Grid container spacing ={4}>
                         <DescrMolde title="Descripcion" descripcion={data.descripcion}/>
-                        <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={mockProp.encargado} tipoColada={data.tipoColada} idMolde={data.id} />
+                        <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={encargado} tipoColada={data.tipoColada} idMolde={data.id} />
                     </Grid>
                 </Grid>
                 <RightSidebar/>

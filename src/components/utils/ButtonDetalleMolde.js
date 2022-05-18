@@ -8,7 +8,6 @@ const useStyles = makeStyles({
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgb(221, 221, 221)',
-        color: 'white',
         height: 150,
         width: '100%',
     },

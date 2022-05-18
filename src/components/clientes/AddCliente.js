@@ -25,7 +25,7 @@ export default function AddCliente() {
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
         email: data.get('email'),
-        company: userData.company,
+        company: data.get('company'),
         telephone: data.get('telephone'),
         password: data.get('firstName')+data.get('company'),
         userPicture: "NA",
@@ -36,7 +36,7 @@ export default function AddCliente() {
       }
       const resRegister = await registerUser(cliente)
       console.log(resRegister)
-      navigate('/');
+      navigate('/clientes');
     }
   
   return (

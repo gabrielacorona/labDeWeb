@@ -8,7 +8,7 @@ export function getMoldes() {
           'Authorization': 'Bearer ' + getToken()
         }
       })
-      .then((response) => { 
+      .then((response) => {
           return response.json().then((data) => {
               return data;
           }).catch((err) => {
@@ -53,6 +53,24 @@ export function editMolde(data) {
       });
 }
 
+export function deleteMolde(data) {
+    return fetch('/moldes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(data)
+      })
+      .then((response) => { 
+          return response.json().then((data) => {
+              return data;
+          }).catch((err) => {
+              console.log(err);
+          }) 
+      });
+}
+
 export function addMoldeToUser(data) {
     return fetch('/users/addMolde', {
         method: 'PATCH',
@@ -72,8 +90,9 @@ export function addMoldeToUser(data) {
 }
 
 export function getMoldesByCompany(company) {
-    return fetch('/moldes/company', {
-        method: 'get',
+    console.log(company, "comp")
+    return fetch('/moldes/company/' + company, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()

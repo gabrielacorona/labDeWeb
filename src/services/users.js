@@ -75,8 +75,26 @@ export function getUserById(id){
   });
 }
 
+
 export function getUserMoldes(id){
   return fetch('/users/getMoldes/'+id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+      }) 
+  });
+}
+
+export function getClients(){
+  return fetch('/users/clientes/', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -144,6 +162,17 @@ export function addOperador(data) {
 
 export function getOperadores(id) {
   return fetch('/users/getOperadores/'+id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      }
+    })
+      .then(data => data.json()) 
+}
+
+export function getUserByMongoId(id) {
+  return fetch('/users/mongoId/'+id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
