@@ -33,7 +33,7 @@ function Copyright(props) {
  
 const theme = createTheme();
 
-export default function Login({ setToken }) {
+export default function Login({ setToken}) {
   const navigate = useNavigate();
 
   const handleSubmit = async e => {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
@@ -9,6 +9,19 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import { mainListItems, secondaryListItems } from './listItems';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
+import { getUserId, getUserById } from "../../services/users";
 
 const drawerWidth = 240;
 
@@ -38,11 +51,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   );
   
-function Sidebar(props) {
+function Sidebar() {
     const [open, setOpen] = React.useState(true);
+
+    const [userType, setUserType] = useState('');
+    console.log(userType, "uss")
+
+    const fetchUserData = useCallback(async () => {
+        const userId = getUserId()
+        const userData = await getUserById(userId)
+        setUserType(userData.userType)
+    }, [])
+
+    useEffect(() => {
+      fetchUserData()
+      .catch(console.error);
+  }, []);
+
     const toggleDrawer = () => {
       setOpen(!open);
-    };  
+    };
     return (
         <Drawer variant="permanent" open={open}>
             <Toolbar
@@ -53,15 +81,51 @@ function Sidebar(props) {
                 px: [1],
                 }}
             >
-                <IconButton onClick={toggleDrawer}>
-                <ChevronLeftIcon />
-                </IconButton>
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
             </Toolbar>
             <Divider />
             <List component="nav">
-                {mainListItems}
-                <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+            <Link href="/reportes">
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Reportes" />
+              </ListItemButton>
+            </Link>
+            <Link href={userType == 'a' ? "/moldesadmin" : "/moldes"} >
+              <ListItemButton>
+                <ListItemIcon>
+                  <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Moldes" />
+              </ListItemButton>
+            </Link>
+            
+            {(userType == 'c' || userType == 'a') &&
+              <Link href="/operadores">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Operadores" />
+                </ListItemButton>
+              </Link>
+            }
+            {userType == 'a' &&
+              <Link href="/clientes">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Clientes" />
+                </ListItemButton>
+              </Link>
+            }
+            <Divider sx={{ my: 1 }} />
+
             </List>
         </Drawer>
         );

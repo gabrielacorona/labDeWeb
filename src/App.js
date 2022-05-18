@@ -41,12 +41,13 @@ const mdTheme = createTheme();
 
 function App() {
   const { token, setToken } = useToken();
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
       <Router>
-        <Sidebar />
+        <Protected token={token}>
+          <Sidebar/>
+        </Protected>
         <Routes>
           <Route path="/" element={
               token ? <Home /> : <Login setToken={setToken}/>
@@ -188,12 +189,11 @@ function App() {
             }
           />
           <Route path="/moldesadmin/" element={
-            <Protected token={token}>
+            <Protected token={token} noOperador={true} noClient={true}>
               <MoldesAdmin/>
             </Protected>
             }
           />
-
 
         </Routes>
         </Router>
