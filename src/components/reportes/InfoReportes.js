@@ -10,9 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DetallesForm from "./DetallesForm";
 import Descripcion from "./Descripcion";
 import ButtonAddImage from '../utils/ButtonAddImage';
-import { postReporte, getReportesByID } from "../../services/reportes";
-import { getUserId } from "../../services/users";
-import { useParams } from "react-router";
+import { deleteReporte } from '../../services/reportes';
+import { Link, useParams, useNavigate, useHistory } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -26,20 +25,18 @@ const themeMain = createTheme();
 
 export default function InfoReportes() {
   const [reporteData, setReporteData] = React.useState();
-  let { reporteId } = useParams();
 
-  const fetchReporteData = useCallback(async () => {
-    const reporteData = await getReportesByID(reporteId);
-
-    setReporteData(reporteData);
-  }, []);
-
-  useEffect(() => {
-    fetchReporteData().catch(console.error);
-  }, []);
+  const navigate = useNavigate();
+  const reportID = useParams().reporteId;
+  
+  const handleDelete = async (e) => {
+    console.log("reporteID",reportID);
+    e.preventDefault();
+    let res = await deleteReporte({id: reportID})
+    navigate('/moldes');
+  };
 
   return (
-    reporteData && (
       <ThemeProvider theme={themeMain}>
         <CssBaseline />
         <Box
@@ -71,11 +68,12 @@ export default function InfoReportes() {
               <Box>
               <Box
                 component="form"
-                sx={{ display: "flex", justifyContent: "normal", flexGrow: 1, width: '100%'   }}
+                sx={{ display: "flex", justify: "normal", flexGrow: 1, width: '100%'   }}
               >
-                <DetallesForm isStatic={true} data={reporteData} />
+                <DetallesForm  reporteData={reporteData} />
                 <ThemeProvider theme={theme}>
                   <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
+                    <Link to={'/editarreporte/' + reportID}>
                     <Button
                       color="primary"
                       variant="outlined"
@@ -84,7 +82,8 @@ export default function InfoReportes() {
                     >
                       Editar
                     </Button>
-                    <Button color="error" variant="outlined" type="submit">
+                    </Link>
+                    <Button color="error" variant="outlined" type="submit" onClick={handleDelete}>
                       Eliminar
                     </Button>
                   </Box>
@@ -98,6 +97,5 @@ export default function InfoReportes() {
           </Container>
         </Box>
       </ThemeProvider>
-    )
   );
 }

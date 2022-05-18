@@ -5,51 +5,49 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import FormCliente from "./FormCliente";
-import { editUser, getUserById } from "../../services/users";
+import FormReporte from "./FormReporte";
 import { useParams } from "react-router";
+import { getReportesByID, editReporte } from "../../services/reportes";
 import { useNavigate } from 'react-router-dom';
-import Title from '../utils/Title'
-// import { postCliente } from "../../services/clientes";
 
 const theme = createTheme();
 
-export default function EditarCliente() {
-  const [clientData, setClientData] = useState();
-  
-  const clientID = useParams().id;
+export default function EditarReporte() {
+  const [reporteData, setReporteData] = React.useState();
+  let { reporteId } = useParams();
   const navigate = useNavigate();
 
-  const fetchClienteData = useCallback(async () => {
-    const op = await getUserById(clientID)
+  const fetchReporteData = useCallback(async () => {
+    const op = await getReportesByID(reporteId)
     console.log(op)
-    setClientData(op);
+    setReporteData(op);
   }, [])
 
   useEffect(() => {
-    fetchClienteData()
+    fetchReporteData()
     .catch(console.error);
   }, []);
-  
-  const handleSubmit = async e => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
-    let cliente = {
-      id: clientID,
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      company: data.get('company'),
-      telephone: data.get('telephone'),
+    let operador = {
+      id: reporteId,
+      titulo: data.get('titulo'),
+      fecha: data.get('fecha'),
+      diagnostico: data.get('diagnostico'),
+      costoEstimado: data.get('costo-estimado'),
+      descripcion: data.get('descripcion'),
     }
-    const resEdit = await editUser(cliente)
-    console.log(resEdit)
-    navigate('/infoclientes/'+clientID);
-  }
 
-return (
-  clientData &&
+    const resEdit = await editReporte(operador)
+    console.log(resEdit)
+    navigate('/inforeportes/'+ reporteId);
+  };
+
+  return (
+    reporteData &&
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -65,16 +63,13 @@ return (
         }}
       >
         <Container maxWidth="lg" sx={{ pt: 4, pb: 4, height: "100%", display: "flex", flexDirection: "column" }}>
-          <Typography component="h1" variant="h4" align="left">
-            Editar Cliente
-          </Typography>
           <React.Fragment>
             <Box
               component="form"
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
               onSubmit={handleSubmit}
             >
-              <FormCliente clienteData={clientData} isEditing={true} />
+              <FormReporte reporteData={reporteData} isEditing={true} />
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button
@@ -85,8 +80,8 @@ return (
                   >
                     Guardar
                   </Button>
-                </Box>
-              </ThemeProvider>
+                  </Box>
+                  </ThemeProvider>
             </Box>
           </React.Fragment>
         </Container>

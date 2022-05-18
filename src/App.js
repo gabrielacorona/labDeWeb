@@ -13,6 +13,7 @@ import FotosMoldes from './components/moldes/FotosMoldes'
 import {useToken} from './services/token';
 import { useUserId } from './services/users';
 import InfoReportes from './components/reportes/InfoReportes'
+import EditarReporte from './components/reportes/EditarReporte'
 import Operadores from './components/operadores/Operadores'
 import InfoOperador from './components/operadores/InfoOperador'
 import EditarOperador from './components/operadores/EditarOperador'
@@ -92,6 +93,12 @@ function App() {
           <Route path="/addreporte/:moldeId" element={
             <Protected token={token}>
               <AddReporte />
+            </Protected>
+            }
+          />
+          <Route path="/editarreporte/:reporteId" element={
+            <Protected token={token}>
+              <EditarReporte/>
             </Protected>
             }
           />

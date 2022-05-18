@@ -12,6 +12,18 @@ export function postReporte(data) {
         .then(data => data.json()) 
 }
 
+export function editReporte(data) {
+  return fetch('/reportes', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      },
+      body: JSON.stringify(data)
+    })
+      .then(data => data.json()) 
+}
+
 export function getReporte(data) {
   return fetch('/reportes', {
       method: 'GET',
@@ -66,4 +78,15 @@ export function getReportesByCompany(company){
     }
   })
   .then(data => data.json())
+}
+
+export function deleteReporte(data){
+  return fetch('/reportes', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    },
+    body: JSON.stringify(data)
+  })
 }
