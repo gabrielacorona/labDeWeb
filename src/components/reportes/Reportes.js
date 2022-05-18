@@ -7,8 +7,10 @@ import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import ReportesCard  from './ReportesCard';
 import NewItemCard from './NewItemCard';
-import { getReportesByMolde } from '../../services/reportes';
+import { getReportesByMolde, getReportesByCompany} from '../../services/reportes';
 import { useParams } from "react-router";
+import ReporteFilter from './ReporteFilter';
+import { getUserById, getUserId } from '../../services/users';
 
 const mockProp = {
     reportes: [
@@ -19,18 +21,29 @@ const mockProp = {
 }
 
 export default function Reportes() {
-    const [reportes, setReportes] = useState([]);
-    let { moldeid } = useParams();
+    var moldeid = new URLSearchParams(location.search).get("moldeid")
 
-    const fetchReporteData = useCallback(async () => {
-        const moldeReportes = await getReportesByMolde(moldeid)
+    const [reportes, setReportes] = useState();
+    const [filter, setFilter] = useState(moldeid ? moldeid : 'Todos');
+
+    const fetchReporteData = (async () => {
+        var moldeReportes
+        if(filter != 'Todos'){
+            moldeReportes = await getReportesByMolde(filter)
+        } else {
+            const userId = getUserId()
+            const userData = await getUserById(userId)
+            var company = userData.company
+          
+            moldeReportes = await getReportesByCompany(company)
+        }
         setReportes(moldeReportes);
-      }, [])
+      });
 
     useEffect(() => {
         fetchReporteData()
         .catch(console.error);
-    }, []);
+    }, [filter]);
 
     return (
       <Box
@@ -48,12 +61,19 @@ export default function Reportes() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Grid container spacing={3}>
                   <Grid item xs={12} md={12} lg={12}>
-                      <Title>Reportes - </Title>
+                      <Title>Reportes</Title>
                   </Grid>
-                  {reportes.map((data, index) => (
-                    <ReportesCard data={data} cardNumber={index + 1}/>
-                  ))}
-                  <NewItemCard moldeId={moldeid}/>
+                  <Grid item xs={3} md={3} lg={3}>
+                  <ReporteFilter filter={filter} setFilter={setFilter} />
+                  </Grid>
+                  <Grid item xs={9} md={9} lg={9}>
+                  </Grid>
+                  {reportes &&
+                    reportes.map((data, index) => (
+                        <ReportesCard data={data} cardNumber={index + 1} filter={filter}/>
+                    ))}
+                {filter != 'Todos' &&
+                  <NewItemCard moldeId={filter}/> }
               </Grid>
           </Container>
       </Box>
