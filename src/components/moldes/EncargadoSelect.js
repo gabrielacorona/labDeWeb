@@ -17,7 +17,6 @@ export default function EncargadoSelect({age, setAge, id}) {
     const operadores = await getOperadores(id)
     setEncargados(operadores);
   }, [])
-  console.log(encargados, "misencargados")
 
   useEffect(() => {
     fetchEncargados()
@@ -39,9 +38,6 @@ export default function EncargadoSelect({age, setAge, id}) {
           {encargados && encargados.map(({ firstName, lastName, _id}) => (
             <MenuItem value={_id}> {firstName + " " + lastName} </MenuItem>
           ))}
-          {/* <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
         </Select>
       </FormControl>
     </Box>

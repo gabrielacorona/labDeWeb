@@ -37,6 +37,8 @@ function RightSidebar(){
 export default function EditarMolde() {
 
   const [mockProp, setMockProp] = useState();
+  const [age, setAge] = useState('');
+
   let { id } = useParams();
   const navigate = useNavigate();
 
@@ -60,12 +62,11 @@ export default function EditarMolde() {
       id: id,
       nombreMolde: data.get('nombreMolde'),
       fechaAdquisicion: data.get('fechaAdquisicion'),
-      encargado: data.get('encargado'),
       tipoColada: data.get('tipoColada'),
       descripcion: data.get('descripcion'),
       costo: data.get('costo'),
       ultimaReparacion: data.get('reparacion'),
-      encargado: objID._id
+      encargado: age
     }
     let res = await editMolde(molde)
     navigate('/detallemolde/' + id);
@@ -95,7 +96,7 @@ export default function EditarMolde() {
                     <Grid item xs={12} md={9} lg={9}>
                         <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                <AddMoldesForm mock={mockProp} editing={editingStatus} />
+                                <AddMoldesForm mock={mockProp} id={getUserId()} editing={editingStatus} age={age} setAge={setAge}/>
                                 <Grid item xs={12} md={12} lg={12}>
                                     <Button
                                         variant="contained"
