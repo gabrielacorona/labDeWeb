@@ -157,7 +157,8 @@ function App() {
           />
           <Route path="/notallowed/" element={
             <NotAllowed />
-            
+          }/>
+          
           <Route path="/listacompanias" element={
             <Protected token={token} noOperador={true} noClient={true}>
               <ListaCompanias/>
