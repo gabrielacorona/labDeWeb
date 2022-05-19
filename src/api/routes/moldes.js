@@ -233,14 +233,31 @@ router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
 router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
     const id = req.body.id;
     Moldes
-        .deleteMoldeById(id)
-        .then(result => {
-            return res.status(201).json(result)
+        .getReportesByMolde(id)
+        .then(reporteIds => {
+            Reportes
+                .deleteMultipleByMongoId(reporteIds)
+                .then(delResp => {
+                    console.log(delResp);
+                    Moldes
+                    .deleteMoldeById(id)
+                    .then(deleteRes => {
+                        return res.status(201).json(deleteRes)
+                    })
+                    .catch(err => {
+                        res.statusMessage = "Could not delete Molde with that Id";
+                        return res.status(500).end()
+                    });
+                })
+                .catch(err => {
+                    res.statusMessage = "Could not delete Molde with that Id";
+                    return res.status(500).end()
+                });
         })
         .catch(err => {
             res.statusMessage = "Could not delete Molde with that Id";
             return res.status(500).end()
-        })
+        });
 });
 
 module.exports = router;
