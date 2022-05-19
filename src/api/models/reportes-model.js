@@ -142,6 +142,18 @@ const Reportes = {
                 return err;
             });
     },
+    deleteMultipleByMongoId: function (reporteIds){
+        return ReportesCollection
+                .deleteMany({
+                    _id: {$in: reporteIds}
+                })
+                .then(reporteToDelete => {
+                    return reporteToDelete;
+                })
+                .catch(err => {
+                    return err;
+                });
+    },
     patchReporteById: function (id, titulo, fecha, autor, descripcion, diagnostico, costoEstimado, fotos){
         return ReportesCollection
             .updateOne({
