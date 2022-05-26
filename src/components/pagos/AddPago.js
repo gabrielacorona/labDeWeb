@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect, useState, useCallback} from 'react';
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -7,12 +7,14 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormPago from "./FormPago";
 import { useNavigate } from 'react-router-dom';
+import { addPagoToUser, postPago } from '../../services/pagos';
 
 const theme = createTheme();
 
 export default function AddPago() {
     const navigate = useNavigate();
-    
+    const [company, setCompany] = useState('');
+
     const handleSubmit = async e => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
@@ -23,9 +25,11 @@ export default function AddPago() {
         cobroPorMes: data.get('cobroPorMes'),
         dirFactura: data.get('dirFactura'),
         deuda: data.get('deuda'),
-        cliente: data.get('cliente')
+        cliente: company
       }
-      console.log(pago)
+      const res = await postPago(pago)
+      const res2 = await addPagoToUser({userId: company, pagoId: res.id})
+      console.log(res2)
       navigate('/listapagos');
     }
   
@@ -54,7 +58,7 @@ export default function AddPago() {
               sx={{ display: "flex", justifyContent: "normal", flexGrow: 1 }}
               onSubmit={handleSubmit}
             >
-              <FormPago />
+              <FormPago company={company} setCompany={setCompany} />
               <ThemeProvider theme={theme}>
                 <Box sx={{ flexDirection: "column", display: "flex", pt: 2 }}>
                   <Button

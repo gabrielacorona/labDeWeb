@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import EncargadoSelect from './EncargadoSelect';
 import { getUserId, getUserById } from "../../services/users";
-import CompanySelect from './CompanySelect';
+import CompanySelect from '../utils/CompanySelect';
 
 export default function AddMoldesForm(props) {
   const isEditing = props.editing;

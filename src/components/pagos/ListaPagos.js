@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button'
+import { getPagosByCliente } from '../../services/pagos';
+import { useParams } from "react-router";
 
 const mockProp = {
     pagos: [
@@ -62,6 +64,21 @@ function MisPagos(props) {
 }
 
 export default function ListaPagos() {
+    let id = useParams().id
+    const [pagos, setPagos] = useState([]);
+    const [user, setUser] = useState('');
+
+    const fetchPagoData = useCallback(async () => {
+        const userPagos = await getPagosByCliente(id)
+        setPagos(userPagos);
+        console.log(pagos, userPagos);
+    }, [])
+
+    useEffect(() => {
+        fetchPagoData()
+        .catch(console.error);
+    }, []);
+
   return (
     <Box
         component="main"
