@@ -27,7 +27,7 @@ export default function CompanySelect({company, setCompany, id}) {
 
   return (
     allCompanies &&
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 240 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Company</InputLabel>
         <Select
@@ -37,12 +37,9 @@ export default function CompanySelect({company, setCompany, id}) {
           label="Company"
           onChange={handleChange}
         >
-        { allCompanies.map(({ company, _id}) => (
-            <MenuItem value={_id}> {company} </MenuItem>
+        { allCompanies.map(({ firstName, lastName, _id}) => (
+            <MenuItem value={_id}> {firstName + ' ' + lastName}</MenuItem>
           ))}
-          {/* <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
         </Select>
       </FormControl>
     </Box>

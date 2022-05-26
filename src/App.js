@@ -31,6 +31,7 @@ import DetallePago from './components/pagos/DetallePago';
 import ListaPagos from './components/pagos/ListaPagos';
 import AddPago from './components/pagos/AddPago';
 import MoldesAdmin from './components/moldes/MoldesAdmin';
+import Logout from './components/auth/Logout'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -149,31 +150,27 @@ function App() {
             </Protected>
             }
           />
-        <Route path="/clientes/" element={
+          <Route path="/clientes/" element={
             <Protected token={token} noOperador={true} noClient={true}>
               <Clientes />
             </Protected>
             }
           />
-
           <Route path="/notallowed/" element={
             <NotAllowed />
           } />
-
           <Route path="/listacompanias" element={
             <Protected token={token} noOperador={true} noClient={true}>
               <ListaCompanias/>
             </Protected>
             }
           />
-
           <Route path="/detallepago/:id" element={
             <Protected token={token} >
               <DetallePago/>
             </Protected>
             }
           />
-
           <Route path="/listapagos" element={
             <Protected token={token}>
               <ListaPagos/>
@@ -192,7 +189,12 @@ function App() {
             </Protected>
             }
           />
-
+          <Route path="/logout/" element={
+            <Protected token={token}>
+              <Logout/>
+            </Protected>
+            }
+          />
         </Routes>
         </Router>
       </Box>

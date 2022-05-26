@@ -55,13 +55,16 @@ function ClienteCard(props) {
                         Moldes
                     </Button>
                 </Grid>
-                <Grid item lg={2} />
-                <Grid item lg={8}>
+                <Grid item lg={6}>
                     <Button variant="outlined" color="warning">
                         Reportes
                     </Button>
                 </Grid>
-                <Grid item lg={2} />
+                <Grid item lg={6}>
+                    <Button variant="outlined" color="success">
+                        Pagos
+                    </Button>
+                </Grid>
             </Grid>
         </CardContent>
     </Card>

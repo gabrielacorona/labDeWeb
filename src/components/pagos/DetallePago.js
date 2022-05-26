@@ -4,16 +4,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title';
 import Typography from '@mui/material/Typography';
-
-const mockProp = {
-    id : "1234567",
-    fecha : "12 de agosto de 2022",
-    ultimoPago : "14 de abril de 2022",
-    cobroPorMes : 1000000,
-    dirFactura : "Nuevo Sur",
-    deuda : 20000,
-    cliente : "Andres"
-}
+import { getPagoById } from '../../services/pagos';
+import { useParams } from "react-router";
+import { getUserByMongoId } from '../../services/users';
 
 function SpecsWrapper(props){
     return (
@@ -27,7 +20,7 @@ function SpecsWrapper(props){
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
                 <div style={{marginLeft: 24}}>
-                    <Typography component="body1" variant="body1" gutterBottom>
+                    <Typography component="h2" variant="body1" gutterBottom>
                         {props.descripcion}
                     </Typography>
                 </div>
@@ -37,7 +30,27 @@ function SpecsWrapper(props){
 }
 
 export default function DetallePago() {
+    const [mockProp, setMockProp] = useState({});
+    const [cliente, setCliente] = useState()
+
+    let { id } = useParams();
+
+    const fetchPagoData = useCallback(async () => {
+        const data = await getPagoById(id)
+        let clienteData = await getUserByMongoId(data.cliente)
+        console.log(clienteData)
+        setMockProp(data);
+        setCliente(clienteData)
+    }, [])
+
+    useEffect(() => {
+        fetchPagoData()
+        .catch(console.error);
+    }, []);
+
+
   return (
+      mockProp && cliente &&
     <Box
         component="main"
         sx={{
@@ -60,7 +73,7 @@ export default function DetallePago() {
                 <SpecsWrapper title="Cobro por mes" descripcion={mockProp.cobroPorMes} />
                 <SpecsWrapper title="Direccion de factura" descripcion={mockProp.dirFactura} />
                 <SpecsWrapper title="Deuda a la fecha" descripcion={mockProp.deuda} />
-                <SpecsWrapper title="Cliente" descripcion={mockProp.cliente} />
+                <SpecsWrapper title="Cliente" descripcion={cliente.firstName + ' ' + cliente.lastName} />
             </Grid>
         </Container>
     </Box>

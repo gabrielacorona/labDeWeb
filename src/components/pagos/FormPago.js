@@ -2,8 +2,9 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import CompanySelect from '../utils/CompanySelect';
 
-export default function FormPago() {
+export default function FormPago(props) {
   return (
     <React.Fragment>
       <Box sx={{ height: "100%", flexDirection: "column", display: "flex" }}>
@@ -66,13 +67,7 @@ export default function FormPago() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                id="cliente"
-                name="cliente"
-                label="Cliente"
-                variant="standard"
-              />
+              <CompanySelect company={props.company} setCompany={props.setCompany} dbId={true}/>
             </Grid>
           </Box>
         </Box>

@@ -22,6 +22,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { getUserId, getUserById } from "../../services/users";
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -54,15 +55,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function Sidebar() {
     const [open, setOpen] = React.useState(true);
 
-    // const [userType, setUserType] = useState('');
-    // console.log(userType, "uss")
+    let navigate = useNavigate();
 
-    // const fetchUserData = useCallback(async () => {
-    //     const userId = getUserId()
-    //     const userData = await getUserById(userId)
-    //     setUserType(userData.userType)
-    // }, [])
-
+    function handleLogOut() {
+      sessionStorage.setItem("userToken", '');
+      sessionStorage.clear();
+      navigate("/login"); // whichever component you want it to route to
+    }
+  
     const toggleDrawer = () => {
       setOpen(!open);
     };
@@ -106,16 +106,12 @@ function Sidebar() {
                   <ListItemText primary="Operadores" />
                 </ListItemButton>
               </Link>
-      
-              <Link href="/clientes">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <PeopleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Clientes" />
-                </ListItemButton>
-              </Link>
-            
+              <ListItemButton onClick={handleLogOut}>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
             <Divider sx={{ my: 1 }} />
 
             </List>
