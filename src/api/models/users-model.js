@@ -151,7 +151,7 @@ const Users = {
     addPago: function (idUser, idPago) {
         return usersCollection
         .findOne({
-            id: idUser
+            _id: idUser
         })
         .then(user => {
             if (!user) {
