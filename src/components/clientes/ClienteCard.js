@@ -22,6 +22,11 @@ function ClienteCard(props) {
     const botonMoldes = async e => {
         navigate('/moldesadmin?clienteid='+props.id);
     }
+
+    const botonPagos = async e => {
+        navigate('/listaPagos?clienteid='+props.mongoId);
+    }
+
     
   return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
@@ -61,7 +66,7 @@ function ClienteCard(props) {
                     </Button>
                 </Grid>
                 <Grid item lg={6}>
-                    <Button variant="outlined" color="success">
+                    <Button variant="outlined" color="success" onClick={botonPagos}>
                         Pagos
                     </Button>
                 </Grid>

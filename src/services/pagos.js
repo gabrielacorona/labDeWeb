@@ -69,3 +69,20 @@ export function getPagoById(id) {
           }) 
       });
 }
+
+export function getPagosByCliente(cliente) {
+    return fetch('/pagos/cliente/' + cliente, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        }
+      })
+      .then((response) => { 
+          return response.json().then((data) => {
+              return data;
+          }).catch((err) => {
+              console.log(err);
+          }) 
+      });
+}

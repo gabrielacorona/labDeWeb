@@ -48,8 +48,8 @@ export default function Clientes() {
                     <Grid item xs={12} md={12} lg={12}>
                         <Title>Clientes </Title>
                     </Grid>
-                    {clientes && clientes.map(({ id, firstName, lastName }, index) => (
-                        <ClienteCard id={id} firstName={firstName} lastName={lastName}/>
+                    {clientes && clientes.map(({ id, firstName, lastName, _id }, index) => (
+                        <ClienteCard id={id} firstName={firstName} lastName={lastName} mongoId={_id}/>
                     ))}
                     <NewClienteCard/>
                 </Grid>
