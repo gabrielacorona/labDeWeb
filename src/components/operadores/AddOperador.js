@@ -33,10 +33,8 @@ export default function AddOperador() {
         memberSince: "12-01-2022",
         userType: "o"
       }
-      console.log(operador)
       const resRegister = await registerUser(operador)
       const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
-      console.log(resAddOp)
       navigate('/operadores');
     }
   

@@ -111,7 +111,6 @@ export default function DetallesMoldes() {
     const [data, setData] = useState({});
     const [encargado, setEncargado] = useState()
     let { id } = useParams();
-    console.log(encargado)
 
     const fetchMoldeData = useCallback(async () => {
         const moldeData = await getMoldeById(id)

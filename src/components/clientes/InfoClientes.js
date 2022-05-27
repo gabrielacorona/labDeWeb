@@ -30,7 +30,6 @@ export default function InfoClientes() {
 
   const fetchClienteData = useCallback(async () => {
     const op = await getUserById(clientID)
-    console.log(op)
     setClientData(op);
   }, [])
 

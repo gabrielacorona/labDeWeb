@@ -38,7 +38,6 @@ export default function DetallePago() {
     const fetchPagoData = useCallback(async () => {
         const data = await getPagoById(id)
         let clienteData = await getUserByMongoId(data.cliente)
-        console.log(clienteData)
         setMockProp(data);
         setCliente(clienteData)
     }, [])

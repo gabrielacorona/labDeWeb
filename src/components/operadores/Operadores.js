@@ -91,7 +91,6 @@ export default function Operadores() {
 
     const fetchOperadores = useCallback(async () => {
         const res = await getOperadores(userId)
-        console.log(res)
         setOperadores(res);
     }, [])
 

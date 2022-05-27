@@ -22,7 +22,6 @@ export default function EditarCliente() {
 
   const fetchClienteData = useCallback(async () => {
     const op = await getUserById(clientID)
-    console.log(op)
     setClientData(op);
   }, [])
 
@@ -44,7 +43,6 @@ export default function EditarCliente() {
       telephone: data.get('telephone'),
     }
     const resEdit = await editUser(cliente)
-    console.log(resEdit)
     navigate('/infoclientes/'+clientID);
   }
 

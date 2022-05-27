@@ -22,17 +22,13 @@ const mockProp = {
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
     const [user, setUser] = useState('');
-    console.log("params", useParams())
     let id = useParams().id
     let {userId} = id ? id : useUserId()
 
     const fetchMoldeData = useCallback(async () => {
-        console.log(userId, "userid")
         const userData = await getUserById(userId)
         setUser(userData)
-        console.log(userData)
         const userMoldes = await getMoldesByCompany(userData.company)
-        console.log(userMoldes)
         setMoldes(userMoldes);
     }, [])
 

@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 
 export default function FormCliente({ isEditing, isStatic, clienteData }) {
   let showingData = isEditing || isStatic
-  console.log(clienteData, showingData)
 
   return (
     <React.Fragment>

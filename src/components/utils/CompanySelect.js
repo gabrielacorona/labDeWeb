@@ -18,7 +18,6 @@ export default function CompanySelect({company, setCompany, id}) {
         setAllCompanies(clientes);
     }, [])
 
-    console.log(allCompanies, "misclientes")
 
     useEffect(() => {
         fetchCompanies()

@@ -4,9 +4,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 export default function FormOperador({ isEditing, isStatic, operatorData }) {
-  console.log(operatorData)
   let showingData = isEditing || isStatic
-  console.log(operatorData, showingData)
 
   return (
     <React.Fragment>

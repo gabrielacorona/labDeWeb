@@ -38,12 +38,10 @@ export default function AgregarMolde(props) {
   const [age, setAge] = useState('');
   const [company, setCompany] = useState('');
   let userId = useParams().id;
-  console.log("currage", age, userId)
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(age, "edad")
     const data = new FormData(e.currentTarget);
     let molde = {
       nombreMolde: data.get('nombreMolde'),

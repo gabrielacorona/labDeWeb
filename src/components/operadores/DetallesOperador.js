@@ -19,7 +19,6 @@ export default function DetallesOperador() {
 
   const fetchOperadorData = useCallback(async () => {
     const op = await getUserById(id)
-    console.log(op)
     setOperatorData(op);
   }, [])
 

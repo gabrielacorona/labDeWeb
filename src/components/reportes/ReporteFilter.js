@@ -17,7 +17,6 @@ export default function ReporteFilter({filter, setFilter}) {
         var company = userData.company
 
         const userMoldes = await getMoldesByCompany(company)
-        console.log(userMoldes)
         setMoldes(userMoldes);
     }, [])
 

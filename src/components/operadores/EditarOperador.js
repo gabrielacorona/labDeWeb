@@ -19,7 +19,6 @@ export default function EditarOperador() {
 
   const fetchOperadorData = useCallback(async () => {
     const op = await getUserById(id)
-    console.log(op)
     setOperatorData(op);
   }, [])
 
@@ -41,7 +40,6 @@ export default function EditarOperador() {
     }
 
     const resEdit = await editUser(operador)
-    console.log(resEdit)
     navigate('/infooperador/'+id);
   };
 

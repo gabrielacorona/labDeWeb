@@ -30,7 +30,6 @@ export default function InfoReportes() {
   const reportID = useParams().reporteId;
   
   const handleDelete = async (e) => {
-    console.log("reporteID",reportID);
     e.preventDefault();
     let res = await deleteReporte({id: reportID})
     navigate('/moldes');

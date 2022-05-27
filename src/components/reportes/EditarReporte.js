@@ -42,7 +42,6 @@ export default function EditarReporte() {
     }
 
     const resEdit = await editReporte(operador)
-    console.log(resEdit)
     navigate('/inforeportes/'+ reporteId);
   };
 

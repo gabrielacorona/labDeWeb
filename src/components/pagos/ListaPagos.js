@@ -14,23 +14,6 @@ import Button from '@mui/material/Button'
 import { getPagosByCliente } from '../../services/pagos';
 import { useParams } from "react-router";
 
-const mockProp = {
-    pagos: [
-        {
-            fecha: "10 de enero de 2022"
-        },
-        {
-            fecha: "10 de febrero de 2022"
-        },
-        {
-            fecha: "10 de marzo de 2022"
-        },
-        {
-            fecha: "10 de abril de 2022"
-        },
-    ]    
-}
-
 function PaymentList(props) {
     return (
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -65,14 +48,12 @@ function MisPagos(props) {
 
 export default function ListaPagos() {
     var id = new URLSearchParams(location.search).get("clienteid")
-    console.log("id", id)
     const [pagos, setPagos] = useState([]);
     const [user, setUser] = useState('');
-    console.log(pagos, pagos.length)
+
     const fetchPagoData = useCallback(async () => {
         const userPagos = await getPagosByCliente(id)
         setPagos(userPagos);
-        console.log(pagos, userPagos);
     }, [])
 
     useEffect(() => {

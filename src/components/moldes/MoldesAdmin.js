@@ -38,7 +38,6 @@ export default function MoldesAdmin() {
             setMoldes(moldes);
         }
     })
-    console.log("filtro", filter, moldes)
 
     useEffect(() => {
         fetchMoldeData()

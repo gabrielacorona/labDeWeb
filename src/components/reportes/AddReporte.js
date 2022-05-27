@@ -38,7 +38,7 @@ export default function AddReporte(props) {
       moldeId: moldeId,
     };
     const res = await addReporteToMolde(obj);
-    console.log(res);
+
     setSumbitted(true);
   };
   if (submitted) {

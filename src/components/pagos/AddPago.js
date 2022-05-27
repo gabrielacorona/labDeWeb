@@ -29,7 +29,6 @@ export default function AddPago() {
       }
       const res = await postPago(pago)
       const res2 = await addPagoToUser({userId: company, pagoId: res.id})
-      console.log(res2)
       navigate('/listapagos');
     }
   
