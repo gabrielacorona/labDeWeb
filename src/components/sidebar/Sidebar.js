@@ -82,6 +82,14 @@ function Sidebar() {
             </Toolbar>
             <Divider />
             <List component="nav">
+            <Link href="/">
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItemButton>
+            </Link>
             <Link href="/reportes">
               <ListItemButton>
                 <ListItemIcon>
@@ -104,6 +112,14 @@ function Sidebar() {
                     <PeopleIcon />
                   </ListItemIcon>
                   <ListItemText primary="Operadores" />
+                </ListItemButton>
+              </Link>
+              <Link href="/clientes">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Clientes" />
                 </ListItemButton>
               </Link>
               <ListItemButton onClick={handleLogOut}>

@@ -64,10 +64,11 @@ function MisPagos(props) {
 }
 
 export default function ListaPagos() {
-    let id = useParams().id
+    var id = new URLSearchParams(location.search).get("clienteid")
+    console.log("id", id)
     const [pagos, setPagos] = useState([]);
     const [user, setUser] = useState('');
-
+    console.log(pagos, pagos.length)
     const fetchPagoData = useCallback(async () => {
         const userPagos = await getPagosByCliente(id)
         setPagos(userPagos);
@@ -80,6 +81,7 @@ export default function ListaPagos() {
     }, []);
 
   return (
+    pagos &&
     <Box
         component="main"
         sx={{
@@ -94,7 +96,7 @@ export default function ListaPagos() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={9} md={9} lg={9}>
-                    <Title>Nombre Compania</Title>
+                    <Title>Lista de pagos</Title>
                 </Grid>
                 <Grid item xs={3} md={3} lg={3}>
                     <Link to={'/addpago'}>
@@ -109,7 +111,8 @@ export default function ListaPagos() {
                     </Link>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
-                    <MisPagos title="Descripcion" payments={mockProp.pagos}/>
+                    {!pagos.length ? <h1> No hay pagos! </h1> : 
+                    <MisPagos title="Descripcion" payments={pagos}/>}
                 </Grid>
             </Grid>
         </Container>

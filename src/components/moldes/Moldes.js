@@ -18,10 +18,11 @@ const mockProp = {
         {nombre: "molde3", id: "ghi"},
     ]
 }
-
+// http://localhost:3000/moldesadmin?clienteid=86a357f6-085f-4c2f-8c70-f616af4af992
 export default function Moldes() {
     const [moldes, setMoldes] = useState([]);
     const [user, setUser] = useState('');
+    console.log("params", useParams())
     let id = useParams().id
     let {userId} = id ? id : useUserId()
 
