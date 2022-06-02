@@ -261,7 +261,6 @@ router.get('/email/:email',  checkAdminAuth, jsonParser, (req, res, next) => {
 router.post('/signIn', jsonParser, (req, res, next) => {
     let email = req.body.email
     let password = req.body.password
-    console.log(req)
     Users
         .getUserByEmail(email)
         .then(user => {
