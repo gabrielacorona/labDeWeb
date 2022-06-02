@@ -7,7 +7,7 @@ async function postImage(image, description) {
   const formData = new FormData();
   formData.append("image", image)
   formData.append("description", description)
-  const result=""
+  var result=""
   try{
     result = await axios.post('/fotos', formData, { headers: {'Content-Type': 'multipart/form-data'}})
     

@@ -188,7 +188,7 @@ router.get('/getPagos/:userId', checkAdminAuth, jsonParser, (req, res, next) => 
 
 //get users by id
 router.get('/id/:id', jsonParser, (req, res, next) => {
-    console.log("getting user by their id", req.params.id);
+    //console.log("getting user by their id", req.params.id);
     let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";
@@ -211,7 +211,7 @@ router.get('/id/:id', jsonParser, (req, res, next) => {
 });
 
 router.get('/mongoId/:id', checkUserAuth, jsonParser, (req, res, next) => {
-    console.log("getting user by their id");
+    //console.log("getting user by their id");
     let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";

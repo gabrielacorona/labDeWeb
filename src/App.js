@@ -53,6 +53,10 @@ function App() {
               token ? <Home /> : <Login setToken={setToken}/>
             }
             />
+          <Route path="/photos" element={
+            <Photos setToken={setToken}/>
+            }
+          />
           <Route path="/login" element={
             <Login setToken={setToken}/>
             }
