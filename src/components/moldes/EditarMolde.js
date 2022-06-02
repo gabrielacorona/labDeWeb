@@ -15,6 +15,7 @@ import Title from '../utils/Title';
 import { useParams } from "react-router";
 import { getMoldeById, editMolde } from '../../services/moldes';
 import { getUserById, getUserId } from '../../services/users';
+import { postFoto } from '../../services/fotos';
 import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();

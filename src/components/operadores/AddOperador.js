@@ -1,6 +1,7 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -8,8 +9,25 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormOperador from "./FormOperador";
 import { addOperador, getUserId, getUserById, registerUser} from "../../services/users";
 import { useNavigate } from 'react-router-dom';
+import ButtonAddImage from "../utils/ButtonAddImage";
+import { postFoto } from "../../services/fotos";
+import axios from 'axios';
 
 const theme = createTheme();
+
+async function postImage(image, description) {
+  const formData = new FormData();
+  formData.append("image", image)
+  formData.append("description", description)
+  const result=""
+  try{
+    result = await axios.post('/fotos', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    
+  }catch(err){
+    console.log(err.message)
+  }
+  return result.data
+}
 
 export default function AddOperador() {
     const [operador, setOperador] = React.useState({});
@@ -31,7 +49,8 @@ export default function AddOperador() {
         companyPicture: "NA",
         lastReportDate: "NA",
         memberSince: "12-01-2022",
-        userType: "o"
+        userType: "o",
+        userPicture: data.get('')
       }
       const resRegister = await registerUser(operador)
       const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
@@ -77,6 +96,9 @@ export default function AddOperador() {
                 </Box>
               </ThemeProvider>
             </Box>
+            <Grid sx={{width:"20%"}}>
+              <ButtonAddImage title="AGREGAR IMAGEN"/>
+            </Grid>
           </React.Fragment>
         </Container>
       </Box>

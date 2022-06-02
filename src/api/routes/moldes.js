@@ -27,6 +27,8 @@ router.get('/', checkAdminAuth, (req, res, next) => {
 });
 
 router.post('/', checkClienteAuth, jsonParser, (req, res, next) => {
+    console.log("=================================FOTOS==============")
+    console.log(req.body.fotos)
     let id = uuid.v4();
     let nombreMolde = req.body.nombreMolde;
     let descripcion = req.body.descripcion;

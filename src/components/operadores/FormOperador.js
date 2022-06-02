@@ -91,6 +91,28 @@ export default function FormOperador({ isEditing, isStatic, operatorData }) {
             </Grid>
             </>}
           </Box>
+          <Grid
+          item
+          xs={12}
+          md={12}
+          lg={12}
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 240,
+          }}
+        >
+          {operatorData?.fotos?.forEach((foto) => (
+            <CardMedia
+              component="img"
+              alt="molde Botella"
+              height="140"
+              image={foto.image}
+              style={{ objectFit: "scale-down" }}
+            />
+          ))}
+        </Grid>
         </Box>
       </Box>
     </React.Fragment>

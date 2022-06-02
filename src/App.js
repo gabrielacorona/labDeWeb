@@ -97,6 +97,12 @@ function App() {
             </Protected>
             }
           />
+          <Route path="/fotosA" element={
+            <Protected token={token}>
+              <Photos />
+            </Protected>
+            }
+          />
           <Route path="/editarreporte/:reporteId" element={
             <Protected token={token}>
               <EditarReporte/>
