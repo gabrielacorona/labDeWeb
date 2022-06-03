@@ -24,7 +24,12 @@ function RightSidebar(){
     return (
         <Grid container spacing={6}>
             <Grid item xs={12} md={12} lg={12}>
+                <input
+                id="imageDesc"
+                type="text"
+                ></input>
                 <ButtonAddImage title="AGREGAR IMAGEN"/>
+                
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
                 <ButtonAddImage title="AGREGAR REPORTE"/>
@@ -43,17 +48,24 @@ export default function AgregarMolde(props) {
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    let molde = {
-      nombreMolde: data.get('nombreMolde'),
-      fechaAdquisicion: data.get('fechaAdquisicion'),
-      tipoColada: data.get('tipoColada'),
-      descripcion: data.get('descripcion'),
-      costo: data.get('costo'),
-      ultimaReparacion: data.get('reparacion'),
-      ultimoReporte: "NA",
-      encargado: age
-    }
-    const res = await postMolde(molde)
+    const picture = document.getElementById("addImage")
+    let file = picture.files[0]
+    const imgDescription = document.getElementById("imageDesc")
+
+    const fd = new FormData();
+    fd.append('nombreMolde',data.get('nombreMolde'))
+    fd.append('fechaAdquisicion',data.get('fechaAdquisicion'))
+    fd.append('tipoColada',data.get('tipoColada'))
+    fd.append('descripcion',data.get('descripcion'))
+    fd.append('costo',data.get('costo'))
+    fd.append('ultimaReparacion',data.get('reparacion'))
+    fd.append('ultimoReporte',"NA")
+    fd.append('encargado',age)
+    fd.append('image', file)
+    fd.append('fotoDescription', imgDescription.value)
+
+
+    const res = await postMolde(fd)
     const resmolde = await addMoldeToUser({userId: userId, moldeId: res.id})
     navigate('/moldes');
   }
