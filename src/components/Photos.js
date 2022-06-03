@@ -34,7 +34,7 @@ const Photos = () => {
 
   const fileSelected = event => {
     const file = event.target.files[0]
-    console.log(file)
+    //console.log(file)
 		setFile(file)
 	}
 

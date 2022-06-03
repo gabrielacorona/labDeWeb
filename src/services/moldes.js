@@ -89,7 +89,7 @@ export function addMoldeToUser(data) {
 }
 
 export function getMoldesByCompany(company) {
-    console.log(company, "comp")
+    //console.log(company, "comp")
     return fetch('/moldes/company/' + company, {
         method: 'GET',
         headers: {

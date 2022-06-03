@@ -142,7 +142,6 @@ router.post('/', upload.single('image'), jsonParser, async(req, res, next) => {
 
 router.get('/id/:id', checkUserAuth,  jsonParser,(req, res, next) => {
     const id = req.params.id;
-    console.log(id)
     Reportes
         .getReporteById(id)
         .then(result => {
@@ -192,7 +191,6 @@ router.get('/company/:company', checkUserAuth, jsonParser, (req, res, next) => {
 
 router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a reporte owo");
-    console.log(req.body)
     const {
         id,
         titulo,

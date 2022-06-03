@@ -68,7 +68,7 @@ router.get('/:fotoId', (req, res, next) => {
         .getFotoByID(id)
         .then(fotos => {
             if (fotos.length === 0) {
-                console.log(fotos)
+                //console.log(fotos)
                 res.statusMessage = `no pictures with the provided id ${id}"`;
                 return res.status(404).end();
             } else {
@@ -138,11 +138,9 @@ router.patch('/:fotoId', checkUserAuth, (req, res, next) => {
                 res.statusMessage = "id not found";
                 return res.status(404).end();
             } else {
-                console.log(fotoToUpdate)
                 Fotos
                     .patchFotoByID(id, description, image)
                     .then(result => {
-                        //console.log("Entra", result)
                         if (!result) {
                             res.statusMessage = "Id not found";
                             return res.status(404).end();
@@ -166,7 +164,6 @@ router.patch('/:fotoId', checkUserAuth, (req, res, next) => {
 router.delete('/:fotoId', checkUserAuth, (req, res, next) => {
     console.log("deleting a picture u.u")
     let id = req.params.id;
-    console.log(id);
     Fotos
         .getFotoByID(id)
         .then(fotoToRemove => {

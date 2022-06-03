@@ -233,7 +233,6 @@ router.get('/getReportes/:moldeId', checkUserAuth, jsonParser, (req, res, next) 
 });
 
 router.patch('/addReporte', jsonParser, (req, res, next) => {
-    console.log(req.body, req)
     const {
         moldeId,
         reporteId
@@ -268,7 +267,6 @@ router.patch('/addReporte', jsonParser, (req, res, next) => {
 
 router.patch('/', checkClienteAuth, jsonParser, (req, res, next) => {
     console.log("updating a molde owo");
-    console.log(req.body)
     const {
         id,
         nombreMolde,
@@ -324,7 +322,6 @@ router.delete('/', checkClienteAuth, jsonParser,(req, res, next) => {
             Reportes
                 .deleteMultipleByMongoId(reporteIds)
                 .then(delResp => {
-                    console.log(delResp);
                     Moldes
                     .deleteMoldeById(id)
                     .then(deleteRes => {
