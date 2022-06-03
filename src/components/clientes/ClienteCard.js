@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 function ClienteCard(props) {
     const navigate = useNavigate();
 
-    console.log(props)
+    //console.log(props)
     const botonInfo = async e => {
         navigate('/infoclientes/'+props.id);
     }
