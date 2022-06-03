@@ -3,14 +3,52 @@ const express = require('express');
 const { Moldes } = require('../models/moldes-model');
 const router = express.Router();
 const uuid = require('uuid');
+const multer = require('multer');
+const fs = require('fs');
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
 const jsonParser = bodyParser.json();
 
 const {Reportes} = require('./../models/reportes-model');
+const {Fotos} = require('./../models/fotos-model')
+const {uploadFile} = require('../aws/s3')
 
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
 
+let today = new Date();
+let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+let dateTime = date + ' ' + time;
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, dateTime + " " + file.originalname)
+    }
+});
+
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({
+    dest:'uploads/', 
+    storage: storage,
+    limits: {
+        //5mb limit
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
 
 //get all reports
 router.get('/', checkAdminAuth, (req, res, next) => {
@@ -26,7 +64,7 @@ router.get('/', checkAdminAuth, (req, res, next) => {
         });
 });
 
-router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
+router.post('/', upload.single('image'), jsonParser, async(req, res, next) => {
     let id = uuid.v4();
     let titulo = req.body.titulo;
     let fecha = req.body.fecha;
@@ -45,8 +83,51 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
         costoEstimado,
         fotos
     };
-    //console.log(newReporte)
-    Reportes
+    if(req.file){
+        let fotoId = uuid.v4();
+        let image = req.file;
+        let fotoDescription = req.body.fotoDescription;
+        try{
+            result = await uploadFile(image)
+            await unlinkFile(image.path)
+        }catch(e){
+            console.log(e)
+        }
+        image = result["Location"]
+
+        if (!fotoDescription || !image) {
+            res.statusMessage = "missing param";
+            return res.status(406).end(); //not accept status
+        }
+        let id = fotoId
+        let description = fotoDescription
+
+        let newPicture = {
+            id,
+            description,
+            image
+        };
+
+        Fotos
+            .createImage(newPicture)
+            .then(resultFotos => {
+                newReporte.fotos.push(resultFotos._id)
+                Reportes
+                .createReporte(newReporte)
+                .then(result =>{
+                    return res.status(201).json(result);
+                })
+                .catch(err => {
+                    res.statusMessage = "Something went wrong with the DB. Try again later.";
+                    return res.status(500).end()
+                });
+            })
+            .catch(err => {
+                res.statusMessage = "Something went wrong with the DB. Try again later. " + err;
+                return res.status(500).end();
+            })
+    }else{
+        Reportes
         .createReporte(newReporte)
         .then(result =>{
             return res.status(201).json(result);
@@ -55,6 +136,7 @@ router.post('/', checkUserAuth, jsonParser, (req, res, next) => {
             res.statusMessage = "Something went wrong with the DB. Try again later.";
             return res.status(500).end()
         });
+    }
 
 });
 

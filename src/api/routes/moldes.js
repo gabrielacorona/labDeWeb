@@ -65,7 +65,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', upload.single('image'), jsonParser, async (req, res, next) => {
+router.post('/', upload.single('image'), checkClienteAuth, jsonParser, async (req, res, next) => {
     let id = uuid.v4();
     let nombreMolde = req.body.nombreMolde;
     let descripcion = req.body.descripcion;
