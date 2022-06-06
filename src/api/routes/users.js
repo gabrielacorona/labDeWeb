@@ -4,6 +4,10 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 const checkAdmin = require('./../middleware/check-admin-auth');
 const uuid = require('uuid');
+const multer = require('multer');
+const fs = require('fs');
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
@@ -12,10 +16,45 @@ const {Reportes} = require('./../models/reportes-model');
 const {Moldes} = require('./../models/moldes-model');
 const {Pagos} = require('./../models/pagos-model');
 const { JWT_KEY } = require('../../config');
+const {Fotos} = require('./../models/fotos-model')
+const {uploadFile} = require('../aws/s3')
 
 const checkUserAuth = require('../middleware/check-user-auth');
 const checkAdminAuth = require('./../middleware/check-admin-auth');
 const checkClienteAuth = require('./../middleware/check-cliente-auth');
+
+let today = new Date();
+let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+let dateTime = date + ' ' + time;
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, dateTime + " " + file.originalname)
+    }
+});
+
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({
+    dest:'uploads/', 
+    storage: storage,
+    limits: {
+        //5mb limit
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
 
 //get all users
 router.get('/', checkAdminAuth, (req, res, next) => {
@@ -188,7 +227,7 @@ router.get('/getPagos/:userId', checkAdminAuth, jsonParser, (req, res, next) => 
 
 //get users by id
 router.get('/id/:id', jsonParser, (req, res, next) => {
-    console.log("getting user by their id", req.params.id);
+    //console.log("getting user by their id", req.params.id);
     let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";
@@ -211,7 +250,7 @@ router.get('/id/:id', jsonParser, (req, res, next) => {
 });
 
 router.get('/mongoId/:id', checkUserAuth, jsonParser, (req, res, next) => {
-    console.log("getting user by their id");
+    //console.log("getting user by their id");
     let id = req.params.id;
     if(!id){
         res.statusMessage = "please send 'ID' as body";
@@ -261,7 +300,6 @@ router.get('/email/:email',  checkAdminAuth, jsonParser, (req, res, next) => {
 router.post('/signIn', jsonParser, (req, res, next) => {
     let email = req.body.email
     let password = req.body.password
-    console.log(req)
     Users
         .getUserByEmail(email)
         .then(user => {
@@ -446,8 +484,110 @@ router.patch('/addPago', jsonParser, (req, res, next) => {
 });
 
 //TODO: hacer config para que solo cliente de misma compañía puedan crear users
-router.post('/',  jsonParser, (req, res, next) => {
-    Users
+router.post('/', upload.single('image'),  jsonParser, async(req, res, next) => {
+    if(req.file){
+        let fotoId = uuid.v4();
+        let image = req.file;
+        let fotoDescription = req.body.fotoDescription;
+        try{
+            result = await uploadFile(image)
+            await unlinkFile(image.path)
+        }catch(e){
+            console.log(e)
+        }
+        image = result["Location"]
+
+        if (!fotoDescription || !image) {
+            res.statusMessage = "missing param";
+            return res.status(406).end(); //not accept status
+        }
+        let id = fotoId
+        let description = fotoDescription
+
+        let newPicture = {
+            id,
+            description,
+            image
+        };
+        Fotos
+            .createImage(newPicture)
+            .then(resultFotos => {
+                Users
+                .getUserByEmail(req.body.email)
+                .then(person => {
+                    if (person) {
+                        res.statusMessage = `User with the provided email ${req.body.email} already exists"`;
+                        return res.status(409).end();
+                    } else {
+                        bcrypt.hash(req.body.password, 5, (err, hash) => {
+                            if (err) {
+                                res.statusMessage = "Something went wrong with the DB. Try again later.";
+                                return res.status(500).end();
+                            } else {
+                                let id = uuid.v4();
+                                let firstName = req.body.firstName;
+                                let lastName = req.body.lastName;
+                                let email = req.body.email;
+                                let password = hash;
+                                let company = req.body.company;
+                                let telephone = req.body.telephone;
+                                let userPicture = resultFotos.image;
+                                let companyPicture = "pendiente";
+                                let lastReportDate = req.body.lastReportDate;
+                                let memberSince = req.body.memberSince;
+                                let userType =req.body.userType;
+                                let pagos = [];
+                                let reportes = [];
+                                let moldes = [];
+                                let operadores = [];
+                                if (!email || !password) {
+                                    res.statusMessage = "missing param";
+                                    console.log(req.body.title);
+                                    return res.status(406).end(); //not accept status
+                                }
+                                let newUser = {
+                                    id,
+                                    firstName,
+                                    lastName,
+                                    email,
+                                    password,
+                                    company,
+                                    telephone,
+                                    userPicture,
+                                    companyPicture,
+                                    lastReportDate,
+                                    memberSince,
+                                    userType,
+                                    pagos,
+                                    reportes,
+                                    moldes,
+                                    operadores
+                                };
+                                Users
+                                    .createUser(newUser)
+                                    .then(result => {
+                                        return res.status(201).json(result);
+                                    })
+                                    .catch(err => {
+                                        res.statusMessage = "Something went wrong with the DB. Try again later.";
+                                        return res.status(500).end();
+                                    })
+                                }
+                            })
+                        }
+                    })
+                    .catch(err => {
+                        res.statusMessage = "Something went wrong with the DB. Try again later.";
+                        return res.status(500).end();
+                    });
+
+                    })
+                    .catch(err => {
+                        res.statusMessage = "Something went wrong with the DB. Try again later. " + err;
+                        return res.status(500).end();
+                    })
+    }else{
+        Users
         .getUserByEmail(req.body.email)
         .then(person => {
             if (person) {
@@ -515,6 +655,9 @@ router.post('/',  jsonParser, (req, res, next) => {
                 res.statusMessage = "Something went wrong with the DB. Try again later.";
                 return res.status(500).end();
             });
+
+    }
+    
 });
 
 

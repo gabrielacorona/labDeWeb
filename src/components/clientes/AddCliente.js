@@ -35,7 +35,7 @@ export default function AddCliente() {
         userType: "c"
       }
       const resRegister = await registerUser(cliente)
-      console.log(resRegister)
+      //console.log(resRegister)
       navigate('/clientes');
     }
   

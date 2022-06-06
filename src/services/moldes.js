@@ -21,10 +21,9 @@ export function postMolde(data) {
     return fetch('/moldes', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify(data)
+        body: data  
       })
       .then((response) => { 
           return response.json().then((data) => {
@@ -90,7 +89,7 @@ export function addMoldeToUser(data) {
 }
 
 export function getMoldesByCompany(company) {
-    console.log(company, "comp")
+    //console.log(company, "comp")
     return fetch('/moldes/company/' + company, {
         method: 'GET',
         headers: {

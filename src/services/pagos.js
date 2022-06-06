@@ -71,7 +71,6 @@ export function getPagoById(id) {
 }
 
 export function getPagosByCliente(cliente) {
-    console.log("clcl", cliente)
     return fetch('/pagos/cliente/' + cliente, {
         method: 'GET',
         headers: {

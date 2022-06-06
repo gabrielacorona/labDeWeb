@@ -41,7 +41,6 @@ router.post('/', checkAdminAuth, jsonParser, (req, res, next) => {
         deuda,
         cliente
     };
-    console.log(newPago);
     Pagos
         .createPago(newPago)
         .then(result => {
@@ -69,7 +68,6 @@ router.get('/id/:id', checkAdminAuth, jsonParser, (req, res, next) => {
 // param cliente: id del usuario que es el cliente
 router.get('/cliente/:cliente', checkClienteAuth, jsonParser,(req, res, next) => {
     const cliente = req.params.cliente;
-    console.log(cliente)
     Pagos
         .getPagosByUserId(cliente)
         .then(result => {

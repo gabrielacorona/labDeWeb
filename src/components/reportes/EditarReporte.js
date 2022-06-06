@@ -19,7 +19,7 @@ export default function EditarReporte() {
 
   const fetchReporteData = useCallback(async () => {
     const op = await getReportesByID(reporteId)
-    console.log(op)
+    //console.log(op)
     setReporteData(op);
   }, [])
 
