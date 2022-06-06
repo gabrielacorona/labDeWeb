@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 function NewMoldeCard(props) {
     return (
-        <Card sx={{ minWidth: 300, maxHeight: 200}} style={{margin: 30}}>
+        <Card sx={{ minWidth: 300, maxHeight: 300}} style={{margin: 30}}>
             <CardContent style={{padding: 20}} justifyContent="center">
                 <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>
                     Nuevo molde

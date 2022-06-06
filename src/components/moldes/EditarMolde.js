@@ -38,6 +38,7 @@ export default function EditarMolde() {
 
   const [mockProp, setMockProp] = useState();
   const [age, setAge] = useState('');
+  const [company, setCompany] = useState('');
 
   let { id } = useParams();
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ export default function EditarMolde() {
                     <Grid item xs={12} md={9} lg={9}>
                         <Box component="form" sx={{ display: 'flex', justifyContent: 'normal' }} onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                <AddMoldesForm mock={mockProp} id={getUserId()} editing={editingStatus} age={age} setAge={setAge}/>
+                                <AddMoldesForm mock={mockProp} id={getUserId()} editing={editingStatus} age={age} setAge={setAge} company={company} setCompany={setCompany}/>
                                 <Grid item xs={12} md={12} lg={12}>
                                     <Button
                                         variant="contained"

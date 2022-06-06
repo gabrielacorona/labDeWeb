@@ -134,7 +134,7 @@ function DashboardContent() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
+              justify: 'flex-end',
               px: [1],
             }}
           >

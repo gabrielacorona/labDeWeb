@@ -56,12 +56,12 @@ export default function Moldes() {
                     <Grid item xs={12} md={12} lg={12}>
                         <Title>Moldes </Title>
                     </Grid>
-                    {moldes && moldes.map(({ id, nombreMolde}, index) => (
-                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
-                    ))}
                     {user.userType != 'o' &&
                         <NewMoldeCard id={userId}/>
                     }
+                    {moldes && moldes.map(({ id, nombreMolde}, index) => (
+                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                    ))}
                 </Grid>
             </Container>
         </Box>
