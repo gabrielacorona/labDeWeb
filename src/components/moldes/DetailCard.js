@@ -11,15 +11,17 @@ import { getMoldeById } from '../../services/moldes';
 import { Link } from 'react-router-dom';
 
 function DetailCard(props) {
-  return (
+    console.log(props.foto, "mifoto")
+    let pic = props.foto ?  props.foto : null
+    console.log(pic)
+    return (
     <Card sx={{ maxWidth: 300 }} style={{margin: 30}}>
-        <CardMedia
+        {props.foto && <CardMedia
             component="img"
-            alt="molde Botella"
             height="140"
-            image="https://cdn.picpng.com/water_bottle/water-bottle-transparent-27778.png"
+            image={pic}
             style={{objectFit: 'scale-down'}}
-        />
+        />}
 
         <CardContent style={{padding: 20}} justifyContent="center">
             <Typography color="text.primary" component="h2" variant="h5" gutterBottom style={{fontWeight:500}}>

@@ -124,7 +124,7 @@ export function getMoldeById(id) {
 }
 
 export function getMoldePicture(id) {
-    return fetch('/fotos/' + id, {
+    return fetch('/fotos/id/' + id, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
