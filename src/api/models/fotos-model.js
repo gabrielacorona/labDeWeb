@@ -45,7 +45,7 @@ const Fotos = {
     getFotoByID: function (idFoto) {
         return fotosCollection
             .findOne({
-                id: idFoto
+                _id: idFoto
             })
             .then(foto => {
                 if (!foto) {
