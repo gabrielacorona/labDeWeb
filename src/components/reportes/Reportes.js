@@ -44,6 +44,18 @@ export default function Reportes() {
         fetchReporteData()
         .catch(console.error);
     }, [filter]);
+    
+    var content
+
+    if(reportes) { 
+        if(!reportes.length){
+            content = <h1>No hay reportes</h1>
+        } else {
+            content = reportes.map((data, index) => (
+                <ReportesCard data={data} cardNumber={index + 1} filter={filter}/>
+            ))
+        }
+    }
 
     return (
       <Box
@@ -68,10 +80,7 @@ export default function Reportes() {
                   </Grid>
                   <Grid item xs={9} md={9} lg={9}>
                   </Grid>
-                  {reportes &&
-                    reportes.map((data, index) => (
-                        <ReportesCard data={data} cardNumber={index + 1} filter={filter}/>
-                    ))}
+                  {content}
                 {filter != 'Todos' &&
                   <NewItemCard moldeId={filter}/> }
               </Grid>

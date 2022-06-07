@@ -36,8 +36,8 @@ export default function CompanySelect({company, setCompany, id}) {
           label="Company"
           onChange={handleChange}
         >
-        { allCompanies.map(({ firstName, lastName, _id}) => (
-            <MenuItem value={_id}> {firstName + ' ' + lastName}</MenuItem>
+        { allCompanies.map(({ company, _id}) => (
+            <MenuItem value={_id}> {company}</MenuItem>
           ))}
         </Select>
       </FormControl>
