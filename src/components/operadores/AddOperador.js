@@ -15,25 +15,36 @@ export default function AddOperador() {
     const [operador, setOperador] = React.useState({});
     const navigate = useNavigate();
     const userId = getUserId()
-    
+
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  
     const handleSubmit = async e => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       const userData = await getUserById(getUserId())
-      let operador = {
-        firstName: data.get('firstName'),
-        lastName: data.get('lastName'),
-        email: data.get('email'),
-        company: userData.company,
-        telephone: data.get('telephone'),
-        password: "hola",
-        userPicture: "NA",
-        companyPicture: "NA",
-        lastReportDate: "NA",
-        memberSince: "12-01-2022",
-        userType: "o"
-      }
-      const resRegister = await registerUser(operador)
+      
+      const picture = document.getElementById("addImage")
+      let file = picture.files[0]
+
+      const fd = new FormData();
+      fd.append('firstName', data.get('firstName'))
+      fd.append('lastName', data.get('lastName'))
+      fd.append('email', data.get('email'))
+      fd.append('company', userData.company)
+      fd.append('telephone', data.get('telephone'))
+      fd.append('password', data.get('firstName') + userData.company)
+      fd.append('image', file)
+      fd.append('fotoDescription', 'userpict')
+      fd.append('userPicture', 'NA')
+      fd.append('companyPicture', 'NA')
+      fd.append('lastReportDate', 'NA')
+      fd.append('memberSince', "fecha")
+      fd.append('userType', 'o')
+      console.log(fd.get('firstName'))
+
+      const resRegister = await registerUser(fd)
+      console.log(resRegister, "reg")
       const resAddOp = await addOperador({operadorId: resRegister.id, userId: userId})
       navigate('/operadores');
     }

@@ -136,16 +136,21 @@ export function registerMockAdmin(credentials) {
         .then(data => data.json()) 
 }
 
-export function registerUser(operadorData) {
+export function registerUser(data) {
   return fetch('/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getToken()
-      },
-      body: JSON.stringify(operadorData)
-    })
-      .then(data => data.json()) 
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    body: data  
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+      }) 
+  });
 }
 
 export function addOperador(data) {
