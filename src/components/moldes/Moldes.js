@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../utils/Title'
 import DetailCard  from './DetailCard';
-import { getMoldes, getMoldesByCompany } from '../../services/moldes';
+import { getMoldePicture, getMoldes, getMoldesByCompany } from '../../services/moldes';
 import { getUserById, useUserId, getUserMoldes } from '../../services/users';
 import NewMoldeCard from './NewMoldeCard';
 import { Link } from 'react-router-dom';
@@ -29,9 +29,18 @@ export default function Moldes() {
         const userData = await getUserById(userId)
         setUser(userData)
         const userMoldes = await getMoldesByCompany(userData.company)
+        
+        for (const obj of userMoldes) {
+            if (obj.fotos && obj.fotos[0] != null) {
+                let foto = await getMoldePicture(obj.fotos[0])
+                console.log("foto", foto, obj.fotos[0])
+            //   obj.fotos = await getMoldePicture(obj.fotos[0])
+            }
+        }
         setMoldes(userMoldes);
     }, [])
 
+    console.log(moldes)
     useEffect(() => {
         fetchMoldeData()
         .catch(console.error);
@@ -60,7 +69,7 @@ export default function Moldes() {
                         <NewMoldeCard id={userId}/>
                     }
                     {moldes && moldes.map(({ id, nombreMolde}, index) => (
-                    <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                        <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
                     ))}
                 </Grid>
             </Container>

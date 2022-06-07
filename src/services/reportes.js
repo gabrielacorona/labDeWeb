@@ -54,7 +54,20 @@ export function getReportesByMolde(moldeId){
       'Authorization': ',Bearer ' + getToken()
     }
   })
-  .then(data => data.json())
+  .then(function(response) {
+    if (!response.ok) {
+        // make the promise be rejected if we didn't get a 2xx response
+        const err = new Error("Not 2xx response");
+        err.response = response;
+        throw err;
+    } else {
+      return response.json()
+         // got the desired response
+    }
+}).catch(function(err) {
+    // some error here
+});
+
 }
 
 export function getReportesByID(reporteId){

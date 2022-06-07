@@ -19,24 +19,6 @@ import { useParams } from "react-router";
 const theme = createTheme();
 
 const editingStatus = false;
-
-function RightSidebar(){
-    return (
-        <Grid container spacing={6}>
-            <Grid item xs={12} md={12} lg={12}>
-                <input
-                id="imageDesc"
-                type="text"
-                ></input>
-                <ButtonAddImage title="AGREGAR IMAGEN"/>
-                
-            </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-                <ButtonAddImage title="AGREGAR REPORTE"/>
-            </Grid>
-        </Grid>
-    );
-}
   
 export default function AgregarMolde(props) {
   const [moldeData, setMoldeData] = React.useState({});
@@ -104,9 +86,6 @@ export default function AgregarMolde(props) {
                             </Grid>
                         </Grid>
                     </Box>
-                </Grid>
-                <Grid item xs={12} md={3} lg={3}>
-                    <RightSidebar/>
                 </Grid>
             </Grid>
         </Container>

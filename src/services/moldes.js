@@ -122,3 +122,20 @@ export function getMoldeById(id) {
           }) 
       });
 }
+
+export function getMoldePicture(id) {
+    return fetch('/fotos/' + id, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        }
+      })
+      .then((response) => { 
+          return response.json().then((data) => {
+              return data;
+          }).catch((err) => {
+              console.log(err);
+          }) 
+      });
+}

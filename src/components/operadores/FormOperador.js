@@ -1,7 +1,17 @@
 import * as React from "react";
+import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import ButtonAddImage from '../utils/ButtonAddImage';
+import Typography from '@mui/material/Typography';
+
+const BottomText = styled(Typography)`
+    font-weight: 400;
+    margin-bottom: 0;
+    color: #555555;
+    font-size: 1rem;
+`;
 
 export default function FormOperador({ isEditing, isStatic, operatorData }) {
   let showingData = isEditing || isStatic
@@ -55,6 +65,14 @@ export default function FormOperador({ isEditing, isStatic, operatorData }) {
                 disabled={isStatic}
               />
             </Grid>
+            <br></br>
+            <Grid item xs={12}>
+              <BottomText component="h6" variant="h6" align="left">
+                  Agregar Imagen
+              </BottomText>
+              <ButtonAddImage title="AGREGAR IMAGEN"/>
+            </Grid>
+
             {showingData && <>
             <Grid item xs={12}>
               <TextField

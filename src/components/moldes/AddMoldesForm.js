@@ -1,9 +1,19 @@
 import React, {useEffect, useState, useCallback} from 'react';
+import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import EncargadoSelect from './EncargadoSelect';
 import { getUserId, getUserById } from "../../services/users";
 import CompanySelect from '../utils/CompanySelect';
+import Typography from '@mui/material/Typography';
+import ButtonAddImage from '../utils/ButtonAddImage';
+
+const BottomText = styled(Typography)`
+    font-weight: 400;
+    margin-bottom: 0;
+    color: #555555;
+    font-size: 1rem;
+`;
 
 export default function AddMoldesForm(props) {
   const isEditing = props.editing;
@@ -113,6 +123,21 @@ export default function AddMoldesForm(props) {
          <CompanySelect company={props.company} setCompany={props.setCompany} id={props.id} />
         </Grid>
         }
+        <Grid item xs={12} md={12} lg={12}>
+          <BottomText component="h6" variant="h6" align="left">
+                Agregar Imagen
+            </BottomText>
+            <ButtonAddImage title="AGREGAR IMAGEN"/>
+            <br></br>
+            <br></br>
+            <BottomText component="h6" variant="h6" align="left">
+                Descripcion de Imagen
+            </BottomText>
+            <input
+                id="imageDesc"
+                type="text" />
+
+        </Grid>
 
 
     </React.Fragment>
