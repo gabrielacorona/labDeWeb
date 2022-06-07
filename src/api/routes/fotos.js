@@ -7,6 +7,8 @@ const multer = require('multer');
 const uuid = require('uuid');
 const fs = require('fs');
 const util = require('util')
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const unlinkFile = util.promisify(fs.unlink)
 
 const { uploadFile } = require('../aws/s3');
@@ -57,7 +59,7 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.get('/:fotoId', (req, res, next) => {
+router.get('/id/:id', jsonParser,(req, res, next) => {
     console.log("getting a picture by their id =w=");
     let id = req.params.id;
     if (!id) {
@@ -76,6 +78,7 @@ router.get('/:fotoId', (req, res, next) => {
             }
         })
         .catch(err => {
+            console.log(err)
             res.statusMessage = "Something went wrong with the DB. Try again later.";
             return res.status(500).end();
         });
@@ -118,13 +121,13 @@ router.post('/', upload.single('image'), async (req, res, next) => {
 });
 
 
-router.patch('/:fotoId', checkUserAuth, (req, res, next) => {
+router.patch('/', jsonParser, checkUserAuth, (req, res, next) => {
     console.log("updating a picture owo")
 
     let image = req.files[0].path
     let description = req.body.description;
 
-    let id = req.params.id;
+    let id = req.body.id;
 
     if (!id) {
         res.statusMessage = "missing id, verify  query"
@@ -161,9 +164,9 @@ router.patch('/:fotoId', checkUserAuth, (req, res, next) => {
         })
 });
 
-router.delete('/:fotoId', checkUserAuth, (req, res, next) => {
+router.delete('/',jsonParser, (req, res, next) => {
     console.log("deleting a picture u.u")
-    let id = req.params.id;
+    let id = req.body.id;
     Fotos
         .getFotoByID(id)
         .then(fotoToRemove => {
