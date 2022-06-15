@@ -24,15 +24,21 @@ export default function AddReporte(props) {
     const data = new FormData(e.currentTarget);
     const userId = getUserId();
     const objID = await getUserById(getUserId());
-    let reporteData = {
-      titulo: data.get("titulo"),
-      fecha: data.get("fecha"),
-      autor: objID._id,
-      diagnostico: data.get("diagnostico"),
-      costoEstimado: data.get("costo-estimado"),
-      descripcion: data.get("descripcion"),
-    };
-    const reporteId = await postReporte(reporteData);
+
+    const picture = document.getElementById("addImage")
+    let file = picture.files[0]
+    const imgDescription = document.getElementById("imageDesc")
+    const fd = new FormData();
+    fd.append('titulo', data.get("titulo"))
+    fd.append('fecha', data.get('fecha'))
+    fd.append('autor', objID._id)
+    fd.append('diagnostico', data.get("diagnostico"))
+    fd.append('costoEstimado', data.get("costo-estimado"))
+    fd.append('descripcion', data.get("descripcion"))
+    fd.append('image', file)
+    fd.append('fotoDescription', imgDescription.value)
+
+    const reporteId = await postReporte(fd);
     let obj = {
       reporteId: reporteId.id,
       moldeId: moldeId,

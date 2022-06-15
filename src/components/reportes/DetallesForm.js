@@ -9,6 +9,7 @@ import FormReporte from "./FormReporte";
 import { useParams } from "react-router";
 import { getReportesByID } from "../../services/reportes";
 import { useNavigate } from "react-router-dom";
+import { getReportePicture } from '../../services/reportes';
 
 const theme = createTheme();
 
@@ -18,8 +19,14 @@ export default function DetallesForm() {
   const navigate = useNavigate();
 
   const fetchReporteData = useCallback(async () => {
-    const op = await getReportesByID(reporteId);
-    setReporteData(op);
+    const rep = await getReportesByID(reporteId);
+      if (rep.fotos && rep.fotos[0] != null) {
+          let foto = await getReportePicture(rep.fotos[0])
+          let img = foto.image
+          rep.foto = img
+      }
+
+    setReporteData(rep);
   }, []);
 
   useEffect(() => {

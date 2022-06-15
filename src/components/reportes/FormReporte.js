@@ -1,11 +1,22 @@
 import * as React from "react";
+import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import ButtonAddImage from '../utils/ButtonAddImage';
+import Image from "material-ui-image";
+
+const BottomText = styled(Typography)`
+    font-weight: 400;
+    margin-bottom: 0;
+    color: #555555;
+    font-size: 1rem;
+`;
 
 export default function FormReporte({ isEditing, isStatic, reporteData }) {
   let showingData = isEditing || isStatic;
-
+  console.log(reporteData)
   return (
     <React.Fragment>
       <Box
@@ -91,6 +102,25 @@ export default function FormReporte({ isEditing, isStatic, reporteData }) {
               disabled={isStatic}
             />
           </Grid>
+          { !isStatic  
+          ?
+          <Grid item xs={12} md={12} lg={12}>
+            <BottomText component="h6" variant="h6" align="left">
+                  Agregar Imagen
+              </BottomText>
+              <ButtonAddImage title="AGREGAR IMAGEN"/>
+              <br></br>
+              <br></br>
+              <BottomText component="h6" variant="h6" align="left">
+                  Descripcion de Imagen
+              </BottomText>
+              <input
+                  id="imageDesc"
+                  type="text" />
+        </Grid>
+          : reporteData.foto && 
+          <Image src={reporteData.foto} />
+          }
         </Box>
       </Box>
     </React.Fragment>
