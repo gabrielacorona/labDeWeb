@@ -21,21 +21,37 @@ export default function AddCliente() {
       const data = new FormData(e.currentTarget);
       const userData = await getUserById(getUserId())
 
-      let cliente = {
-        firstName: data.get('firstName'),
-        lastName: data.get('lastName'),
-        email: data.get('email'),
-        company: data.get('company'),
-        telephone: data.get('telephone'),
-        password: data.get('firstName')+data.get('company'),
-        userPicture: "NA",
-        companyPicture: "NA",
-        lastReportDate: "NA",
-        memberSince: "12-01-2022",
-        userType: "c"
-      }
-      const resRegister = await registerUser(cliente)
-      //console.log(resRegister)
+      const picture = document.getElementById("addImage")
+
+      const fd = new FormData();
+      fd.append('firstName', data.get('firstName'))
+      fd.append('lastName', data.get('lastName'))
+      fd.append('email', data.get('email'))
+      fd.append('company', userData.company)
+      fd.append('telephone', data.get('telephone'))
+      fd.append('password', data.get('firstName') + userData.company)
+      fd.append('fotoDescription', 'userpict')
+      fd.append('userPicture', 'NA')
+      fd.append('companyPicture', 'NA')
+      fd.append('lastReportDate', 'NA')
+      fd.append('memberSince', "fecha")
+      fd.append('userType', 'c')
+
+      // let cliente = {
+      //   firstName: data.get('firstName'),
+      //   lastName: data.get('lastName'),
+      //   email: data.get('email'),
+      //   company: data.get('company'),
+      //   telephone: data.get('telephone'),
+      //   password: data.get('firstName')+data.get('company'),
+      //   userPicture: "NA",
+      //   companyPicture: "NA",
+      //   lastReportDate: "NA",
+      //   memberSince: "12-01-2022",
+      //   userType: "c"
+      // }
+
+      const resRegister = await registerUser(fd)
       navigate('/clientes');
     }
   

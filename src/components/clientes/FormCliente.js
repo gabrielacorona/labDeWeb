@@ -65,7 +65,7 @@ export default function FormCliente({ isEditing, isStatic, clienteData }) {
                 defaultValue={showingData ? clienteData.company : ""}
                 disabled={isStatic}
                 />
-            </Grid> 
+            </Grid>
             {showingData && <>
               <Grid item xs={12}>
                 <TextField
