@@ -115,10 +115,11 @@ function RightSidebar({foto, id}){
                 <Grid item xs={12} md={12} lg={12}>
                     <Button onClick={openReporte} variant="contained" style={{width: "100%"}}>Ver reportes</Button>
                 </Grid>
-
+                { foto &&
                 <Grid item xs={12} md={12} lg={12}>
                     <Image src={foto}/>
                 </Grid>
+                }
             </Grid>
         </Grid>       
     )
@@ -132,10 +133,13 @@ export default function DetallesMoldes() {
 
     const fetchMoldeData = useCallback(async () => {
         const moldeData = await getMoldeById(id)
+        console.log(moldeData)
         let res = await getUserByMongoId(moldeData.encargado)
-        let foto = await getMoldePicture(moldeData.fotos[0])
-        let img = foto.image
-        moldeData.foto = img
+        if(moldeData.fotos[0]){
+            let foto = await getMoldePicture(moldeData.fotos[0])
+            let img = foto.image
+            moldeData.foto = img
+        }
         setData(moldeData);
         setEncargado(res.firstName + " " + res.lastName)
     }, [])
