@@ -13,6 +13,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getUserByMongoId } from '../../services/users';
 import { useNavigate } from 'react-router-dom';
+import Image from "material-ui-image";
+import { getMoldePicture } from '../../services/moldes';
 
 const mockProp = {
     encargado : "Andres"
@@ -89,18 +91,33 @@ function TopHeader({id}){
     )
 }
 
-function RightSidebar(props){
+function RightSidebar({foto, id}){
+    let navigate = useNavigate();
+
+    const openReporte = async (e) => {
+        e.preventDefault();
+        console.log("rep")
+        navigate('/reportes?moldeid='+id);
+      };
+
+    const addReporte = async (e) => {
+        e.preventDefault();
+        console.log("rep")
+        navigate('/addreporte/'+id);
+    };
+
     return(
         <Grid item xs={12} md={3} lg={3}>
             <Grid container spacing={4}>
             <Grid item xs={12} md={12} lg={12}>
-                    <Button variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Reporte</Button>
+                    <Button onClick={addReporte} variant="contained" style={{width: "100%", height:"100%"}} endIcon={<ArrowForwardIcon />}>Agregar Reporte</Button>
                 </Grid> 
                 <Grid item xs={12} md={12} lg={12}>
-                    <ButtonDetalleMolde title="Fotos"/>
+                    <Button onClick={openReporte} variant="contained" style={{width: "100%"}}>Ver reportes</Button>
                 </Grid>
+
                 <Grid item xs={12} md={12} lg={12}>
-                    <ButtonDetalleMolde title="Reportes"/>
+                    <Image src={foto}/>
                 </Grid>
             </Grid>
         </Grid>       
@@ -111,10 +128,14 @@ export default function DetallesMoldes() {
     const [data, setData] = useState({});
     const [encargado, setEncargado] = useState()
     let { id } = useParams();
+    console.log(data)
 
     const fetchMoldeData = useCallback(async () => {
         const moldeData = await getMoldeById(id)
         let res = await getUserByMongoId(moldeData.encargado)
+        let foto = await getMoldePicture(moldeData.fotos[0])
+        let img = foto.image
+        moldeData.foto = img
         setData(moldeData);
         setEncargado(res.firstName + " " + res.lastName)
     }, [])
@@ -150,7 +171,7 @@ export default function DetallesMoldes() {
                         <SpecsWrapper fechaAdquisicion={data.fechaAdquisicion} encargado={encargado} tipoColada={data.tipoColada} idMolde={data.id} />
                     </Grid>
                 </Grid>
-                <RightSidebar/>
+                <RightSidebar foto={data.foto} id={id}/>
             </Grid>
         </Container>
     </Box>

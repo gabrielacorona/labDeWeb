@@ -88,9 +88,6 @@ export default function InfoReportes() {
                   </Box>
                 </ThemeProvider>
               </Box>
-              <Grid sx={{width: "20%"}}>
-                <ButtonAddImage title="AGREGAR IMAGEN"/>
-              </Grid>
               </Box>
             </React.Fragment>
           </Container>

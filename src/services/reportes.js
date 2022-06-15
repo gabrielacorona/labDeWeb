@@ -1,14 +1,20 @@
 import { getToken } from './token';
 
 export function postReporte(data) {
-    return fetch('/reportes', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + getToken()
-        },
-        body: JSON.stringify(data)
-      })
-        .then(data => data.json()) 
+  return fetch('/reportes', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    body: data  
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+      }) 
+  });
 }
 
 export function editReporte(data) {
@@ -101,4 +107,21 @@ export function deleteReporte(data){
     },
     body: JSON.stringify(data)
   })
+}
+
+export function getReportePicture(id) {
+  return fetch('/fotos/id/' + id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      }
+    })
+    .then((response) => { 
+        return response.json().then((data) => {
+            return data;
+        }).catch((err) => {
+            console.log(err);
+        }) 
+    });
 }

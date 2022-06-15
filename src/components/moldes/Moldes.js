@@ -33,8 +33,9 @@ export default function Moldes() {
         for (const obj of userMoldes) {
             if (obj.fotos && obj.fotos[0] != null) {
                 let foto = await getMoldePicture(obj.fotos[0])
-                console.log("foto", foto, obj.fotos[0])
-            //   obj.fotos = await getMoldePicture(obj.fotos[0])
+                let img = foto.image
+                console.log("foto", foto, obj.fotos[0], img)
+                obj.foto = img
             }
         }
         setMoldes(userMoldes);
@@ -68,8 +69,8 @@ export default function Moldes() {
                     {user.userType != 'o' &&
                         <NewMoldeCard id={userId}/>
                     }
-                    {moldes && moldes.map(({ id, nombreMolde}, index) => (
-                        <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1}/>
+                    {moldes && moldes.map(({ id, nombreMolde, foto}, index) => (
+                        <DetailCard idMolde={id} nombreMolde={nombreMolde} cardNumber={index + 1} foto={foto}/>
                     ))}
                 </Grid>
             </Container>
